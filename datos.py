@@ -445,19 +445,6 @@ def f_calendarios(corte, man, carpeta):
     except Exception as e:  # noqa: BLE001
         man["calendario_tentativo"] = {"ok": False, "parte": "P2-B/P2-E", "error": str(e), "url": url}
 
-    # Calendario macro con consenso (ForexFactory, feed abierto). "thisweek" = semana dom–sáb en curso;
-    # "nextweek" solo aparece algunos días. Se guardan solo los eventos de USD.
-    for clave, url in (("consenso_semana_actual", "https://nfs.faireconomy.media/ff_calendar_thisweek.json"),
-                       ("consenso_semana_siguiente", "https://nfs.faireconomy.media/ff_calendar_nextweek.json")):
-        try:
-            datos = [e for e in json.loads(get(url, intentos=2)) if e.get("country") == "USD"]
-            guardar_csv(os.path.join(carpeta, f"{clave}.csv"), datos)
-            fechas = sorted(e.get("date", "")[:10] for e in datos)
-            man[clave] = {"ok": bool(datos), "parte": "P3-C/P3-D", "filas": len(datos),
-                          "desde": fechas[0] if fechas else None, "hasta": fechas[-1] if fechas else None,
-                          "url": url, "fuente": "ForexFactory (SECONDARY); hora en ET con desfase incluido"}
-        except Exception as e:  # noqa: BLE001
-            man[clave] = {"ok": False, "parte": "P3-C/P3-D", "error": str(e), "url": url}
 
 
 def f_audjpy(corte, desde, filas, man):

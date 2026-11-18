@@ -26,8 +26,7 @@ Paquete de datos semanal para el diagnóstico de liquidez global (Guiver Researc
 
 | P3-A | Fails de primary dealers (Treasuries y total, entregar/recibir) | OFR (principal, la del método) + API del NY Fed (contraste) |
 | P1/P2/P3 | Calendario del FOMC, comunicados de la Fed, página del QRA, calendario tentativo de subastas y buybacks (PDF → texto), calendario del BEA, festivos de SIFMA | Páginas oficiales guardadas como `.txt` |
-| P3-C/D | Consenso macro de EE. UU. (consenso, anterior, hora ET, impacto) | ForexFactory, feed abierto (SECONDARY). `consenso_semana_siguiente.csv` aparece solo algunos días |
 
-**Siguen con WebFetch (no tienen fuente abierta o bloquean el acceso automático):** MOVE (ICE), Russell 2000 (FTSE Russell), FedWatch y XEURBI (CME), WI y tail de las subastas (no hay fuente pública), calendario del BLS (bloquea), vencimientos de la Ruta 3b, texto de los documentos del QRA, earnings, ofertas de acciones y resultados de los bancos.
+**Siguen con WebFetch (no tienen fuente abierta o bloquean el acceso automático):** consenso macro (Investing, decisión del usuario 18-nov; ForexFactory descartado), MOVE (ICE), Russell 2000 (FTSE Russell), FedWatch y XEURBI (CME), WI y tail de las subastas (no hay fuente pública), calendario del BLS (bloquea), vencimientos de la Ruta 3b, texto de los documentos del QRA, earnings, ofertas de acciones y resultados de los bancos.
 
 **Regla:** solo fuentes oficiales o feeds abiertos, identificándose como bot. No se usan trucos para entrar en webs que bloquean el acceso automático.

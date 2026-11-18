@@ -1,0 +1,73 @@
+{
+ "ff_esta_semana": {
+  "ok": true,
+  "http": 200,
+  "bytes": 16848,
+  "seg": 0.1,
+  "muestra": "[{\"title\":\"BusinessNZ Services Index\",\"country\":\"NZD\",\"date\":\"2026-11-15T16:30:00-05:00\",\"impact\":\"Low\",\"forecast\":\"\",\"previous\":\"50.9\"},{\"title\":\"Prelim GDP Price Index y\\/y\",\"country\":\"JPY\",\"date\":\"2026-11-15T18:50:00-05:00\",\"impact\":\"Low\",\"forecast\":\"2.6%\",\"previous\":\"2.6%\"},{\"title\":\"Prelim GDP "
+ },
+ "ff_semana_siguiente": {
+  "ok": false,
+  "error": "HTTPError: HTTP Error 404: Not Found",
+  "seg": 0.1
+ },
+ "te_guest": {
+  "ok": false,
+  "error": "HTTPError: HTTP Error 410: Gone",
+  "seg": 0.3
+ },
+ "nyfed_pd_lista": {
+  "ok": true,
+  "http": 200,
+  "bytes": 335616,
+  "seg": 0.2,
+  "muestra": "{\"pd\": { \"timeseries\": [ { \"seriesbreak\": \"SBN2024\", \"keyid\": \"PDPOSMBS-TOT\", \"description\": \"Total - Mortgage-backed Securities: Federal Agency and GSE MBS: Long - Mortgage-backed Securities: Federal Agency and GSE MBS: Short\" }, { \"seriesbreak\": \"SBN2024\", \"keyid\": \"PDPOSABS-TOT\", \"description\": \""
+ },
+ "ofr_mnemonics": {
+  "ok": true,
+  "http": 200,
+  "bytes": 27452,
+  "seg": 0.6,
+  "muestra": "[{\"mnemonic\": \"NYPD-PD_AFtD_AG-A\", \"series_name\": \"Primary Dealer Aggregate Fails to Deliver: Federal Agency and GSE Securities\"}, {\"mnemonic\": \"NYPD-PD_AFtD_AG_MBS-A\", \"series_name\": \"Primary Dealer Aggregate Fails to Deliver: Federal Agency and GSE MBS\"}, {\"mnemonic\": \"NYPD-PD_AFtD_AG_eMBS-A\", \"se"
+ },
+ "bls_schedule_ics": {
+  "ok": false,
+  "error": "HTTPError: HTTP Error 403: Forbidden",
+  "seg": 0.1
+ },
+ "bea_schedule": {
+  "ok": true,
+  "http": 200,
+  "bytes": 69008,
+  "seg": 0.3,
+  "muestra": " <!DOCTYPE html> <html  lang=\"en\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioc"
+ },
+ "fed_calendar": {
+  "ok": true,
+  "http": 200,
+  "bytes": 168039,
+  "seg": 0.3,
+  "muestra": "﻿<!doctype html>\r <html lang=\"en\" class=\"no-js\">\r     <head>\r         <meta charset=\"utf-8\">\r         <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/>\r         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, minimum-scale=1.0 maximum-scale=1.6, user-scalable=1\"/>\r        "
+ },
+ "treasury_qra": {
+  "ok": true,
+  "http": 200,
+  "bytes": 73577,
+  "seg": 10.1,
+  "muestra": "<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content=\"width=device-width,initial-scale=1\"><meta http-equiv=X-UA-Compatible content=\"IE=edge\"><title>Treasury Quarterly Refunding | U.S. Department of the Treasury</title><meta name=MobileOptimized content=\"width\"><meta "
+ },
+ "treasury_tentativo": {
+  "ok": true,
+  "http": 200,
+  "bytes": 26050,
+  "seg": 9.1,
+  "muestra": "%PDF-1.5 %���� 3 0 obj <</Filter/FlateDecode/Length 8186>>stream x��]]�#�q|�_�G)B�0_�x�LҖB$-�� ?��%y\u0012y��wr��\u001b�]�\u000bTWf\u0016\u0010 �\u0014WY;@&f��=S����\u001f\u001f���4n\u001e�y�m>\u0019v���>{|���?���\u001f����\u000f������i����p\u001c7˴�\u000e�s���7g��\u000f\u000e���?�f�M�\u00154o\u001e|�����y���W���><}x�����>~���O�6o������?<o~�v�_�7����租?��e������~x���\u001f���\u001c�b��\u00173o������"
+ },
+ "sifma_festivos": {
+  "ok": true,
+  "http": 200,
+  "bytes": 298693,
+  "seg": 0.3,
+  "muestra": "<!DOCTYPE html><html lang=\"en\" class=\"themelight branda __variable_c5c5cc\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/0f7a2661e0e57bce-s.p.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel"
+ }
+}

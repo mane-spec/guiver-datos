@@ -1,9 +1,9 @@
 {
  "corte": "2026-11-13",
  "desde": "2026-08-21",
- "generado_utc": "2026-11-18T08:39:51+00:00",
- "fuentes_ok": 31,
- "fuentes_total": 33,
+ "generado_utc": "2026-11-18T08:45:46+00:00",
+ "fuentes_ok": 30,
+ "fuentes_total": 31,
  "fuentes": {
   "IORB": {
    "ok": true,
@@ -219,21 +219,6 @@
    "bytes": 27527,
    "url": "https://home.treasury.gov/system/files/221/Tentative-Auction-Schedule.pdf"
   },
-  "consenso_semana_actual": {
-   "ok": true,
-   "parte": "P3-C/P3-D",
-   "filas": 46,
-   "desde": "2026-11-16",
-   "hasta": "2026-11-20",
-   "url": "https://nfs.faireconomy.media/ff_calendar_thisweek.json",
-   "fuente": "ForexFactory (SECONDARY); hora en ET con desfase incluido"
-  },
-  "consenso_semana_siguiente": {
-   "ok": false,
-   "parte": "P3-C/P3-D",
-   "error": "HTTPError: HTTP Error 404: Not Found",
-   "url": "https://nfs.faireconomy.media/ff_calendar_nextweek.json"
-  },
   "audjpy": {
    "ok": true,
    "parte": "P3-F",
@@ -249,18 +234,18 @@
  },
  "archivos": {
   "anunciadas_td.csv": "1ce93460ddc8468ce67240a5285f5e80830f1d2a8147303398793025323fd343",
-  "bea_calendario.txt": "fd663a4c3f73a438ea881adbc31e287f0a2d2d66c94433bbc512eca5f4024b29",
+  "bea_calendario.txt": "4b4494acd8598fb85c6bbfd38521aeb89e592332976c09df3e71f0420359a93d",
   "buybacks.csv": "78c79be138b8174ff928979018aea911acf2de7d3ddd0b0d8abc050aa6926317",
   "calendario_tentativo.txt": "6a2fa98ab844368a0afb005849dd1d3c7a7c34b0f49b2441a2540275641ec700",
   "consenso_semana_actual.csv": "3c33124238a0803748822a2152f7283dbfced88415ec9cbe18db79536d4848a3",
   "dts_saldo_bruto.csv": "af40ab3c088558f6b630f8045819de7627a639eff7fdbebcecb513595b543273",
-  "fed_comunicados.txt": "281a4f4f81316a13e0e89d88d16f5739c5fe4d3150ea90d110eb8127468b0285",
-  "fomc_calendario.txt": "8cf1ff51a6572d52a17014eb2f209abeb5eb933633510125d249d05994ebb31e",
+  "fed_comunicados.txt": "5eb16c7f503495f0318b9e4ab18bac9a301fb9386d1359b5af5607588cee6213",
+  "fomc_calendario.txt": "c5b0434f314500822fbea7f8450de83462615ce629297d9570988a56f4dee240",
   "nyfed_rp_bruto.json": "3cd840f526d4abde5054c452b4de80138894fb971c1cc679dd11210173660404",
   "proximas_td.csv": "211cbd6ff9487a3ca29f24e2f06d5e1aaaf44da619a406ca5618a8cce6dee6af",
-  "qra_pagina.txt": "4a956e299726ddec9fa2b8d4fafdbd61a3afd6743077d43589756e8426a6a5bd",
+  "qra_pagina.txt": "a77102b960e9650c5c48c10ec41a51723aea61db8f7586c8c9776daf1ea73320",
   "series.csv": "18d8c117f032844f64d5448f30f5a2100a9fae517cfb30cfd5fa43df4b7ffb83",
-  "sifma_festivos.txt": "f72cd56be352c71d68070caa81b9a1bd0d0b0bbab63831a4256e5699795706e8",
+  "sifma_festivos.txt": "477c6360f0e4364a0de6adb7289367b1d8f026c29b513863fec2d81de0744770",
   "subastas.csv": "b8351564fe1c8d9f20145f2a75472e5a7aab3cf7cc7a006d62728d5dafb9b863",
   "subastas_proximas.csv": "65748b2b95f4bc791a997a94164a10eb4b01f27d9e1d7e7bf12433784f1393ba",
   "subastas_td.csv": "a40cc71ab6b3a1978461b8625a99a323919311210a964fdba911990ab365fc8a"

@@ -1,9 +1,9 @@
 {
  "corte": "2026-11-13",
  "desde": "2026-08-21",
- "generado_utc": "2026-11-18T07:49:17+00:00",
- "fuentes_ok": 19,
- "fuentes_total": 21,
+ "generado_utc": "2026-11-18T07:52:21+00:00",
+ "fuentes_ok": 22,
+ "fuentes_total": 24,
  "fuentes": {
   "IORB": {
    "ok": true,
@@ -111,35 +111,65 @@
    "url": "https://markets.newyorkfed.org/api/rates/all/search.json?startDate=2026-08-21&endDate=2026-11-13"
   },
   "nyfed_rp": {
-   "ok": false,
+   "ok": true,
    "parte": "P1-B",
-   "error": "HTTPError: HTTP Error 400: Bad Request",
-   "url": "https://markets.newyorkfed.org/api/rp/all/all/results/search.json?startDate=2026-08-21&endDate=2026-11-13"
+   "filas": 116,
+   "ultima": "2026-11-13",
+   "url": "https://markets.newyorkfed.org/api/rp/results/search.json?startDate=2026-08-21&endDate=2026-11-13",
+   "intentos_fallidos": [
+    "/rp/all/all/results/search.json?startDate=2026-08-21&endDate=2026-11-13 → HTTPError: HTTP Error 400: Bad Request"
+   ]
   },
   "tga": {
    "ok": true,
    "parte": "P2-A",
    "filas": 58,
    "ultima": "2026-11-13",
-   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance?filter=record_date:gte:2026-08-21,record_date:lte:2026-11-13&sort=-record_date&page[size]=1000&page[number]=1"
+   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance?sort=-record_date&page[size]=1000&page[number]=1&filter=record_date:gte:2026-08-21,record_date:lte:2026-11-13"
   },
   "subastas": {
    "ok": true,
    "parte": "P2-C/P2-D",
    "filas": 631,
-   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?filter=auction_date:gte:2025-05-12,auction_date:lte:2026-11-13&sort=-auction_date&page[size]=1000&page[number]=1"
+   "ultima": "2026-10-22",
+   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1&filter=auction_date:gte:2025-05-12,auction_date:lte:2026-11-13",
+   "fuente": "fiscaldata (secundaria para subastas: puede ir semanas atrasada)"
   },
   "subastas_proximas": {
    "ok": true,
    "parte": "P2-B/P2-E",
-   "filas": 0,
-   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/upcoming_auctions?filter=auction_date:gte:2026-11-13&sort=auction_date&page[size]=1000&page[number]=1"
+   "filas": 101,
+   "ultima": "2026-10-29",
+   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/upcoming_auctions?sort=auction_date&page[size]=1000&page[number]=1",
+   "fuente": "fiscaldata (secundaria para subastas: puede ir semanas atrasada)"
   },
   "buybacks": {
    "ok": true,
    "parte": "P2-A/P2-B",
    "filas": 18,
-   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/buybacks_operations?filter=operation_date:gte:2026-08-21&sort=-operation_date&page[size]=1000&page[number]=1"
+   "ultima": "2026-11-17",
+   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/buybacks_operations?sort=-operation_date&page[size]=1000&page[number]=1&filter=operation_date:gte:2026-08-21",
+   "fuente": "fiscaldata (secundaria para subastas: puede ir semanas atrasada)"
+  },
+  "subastas_td": {
+   "ok": false,
+   "parte": "P2-C/P2-D",
+   "error": "HTTPError: HTTP Error 500: ",
+   "url": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=05/12/2025&endDate=11/13/2026&dateFieldName=auctionDate&format=json"
+  },
+  "anunciadas_td": {
+   "ok": true,
+   "parte": "P2-B/P2-E",
+   "filas": 38,
+   "ultima": "",
+   "url": "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json&days=30"
+  },
+  "proximas_td": {
+   "ok": true,
+   "parte": "P2-B/P2-E",
+   "filas": 13,
+   "ultima": "",
+   "url": "https://www.treasurydirect.gov/TA_WS/securities/upcoming?format=json"
   },
   "audjpy": {
    "ok": true,
@@ -155,11 +185,14 @@
   }
  },
  "archivos": {
+  "anunciadas_td.csv": "1ce93460ddc8468ce67240a5285f5e80830f1d2a8147303398793025323fd343",
   "buybacks.csv": "78c79be138b8174ff928979018aea911acf2de7d3ddd0b0d8abc050aa6926317",
   "dts_saldo_bruto.csv": "af40ab3c088558f6b630f8045819de7627a639eff7fdbebcecb513595b543273",
-  "series.csv": "9d36b4501f8896951a5e76c6db08687c9da6729c15ee36203986fddc95d39078",
+  "nyfed_rp_bruto.json": "3cd840f526d4abde5054c452b4de80138894fb971c1cc679dd11210173660404",
+  "proximas_td.csv": "211cbd6ff9487a3ca29f24e2f06d5e1aaaf44da619a406ca5618a8cce6dee6af",
+  "series.csv": "9134428cc94fbb9d4644da0ea1c6a38c8572d9af36bd96c412668f1c0c30c316",
   "subastas.csv": "b8351564fe1c8d9f20145f2a75472e5a7aab3cf7cc7a006d62728d5dafb9b863",
-  "subastas_proximas.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  "subastas_proximas.csv": "65748b2b95f4bc791a997a94164a10eb4b01f27d9e1d7e7bf12433784f1393ba"
  },
  "aviso": "Lo que no esté aquí con ok=true se busca con WebFetch como siempre."
 }

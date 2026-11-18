@@ -1,9 +1,9 @@
 {
  "corte": "2026-11-13",
  "desde": "2026-08-21",
- "generado_utc": "2026-11-18T07:56:32+00:00",
- "fuentes_ok": 23,
- "fuentes_total": 24,
+ "generado_utc": "2026-11-18T08:32:56+00:00",
+ "fuentes_ok": 31,
+ "fuentes_total": 33,
  "fuentes": {
   "IORB": {
    "ok": true,
@@ -175,6 +175,64 @@
    "url": "https://www.treasurydirect.gov/TA_WS/securities/upcoming?format=json",
    "intentos_fallidos": []
   },
+  "fails": {
+   "ok": true,
+   "parte": "P3-A",
+   "series": 288,
+   "filas": 2282,
+   "ultima": "2026-11-04"
+  },
+  "fomc_calendario": {
+   "ok": true,
+   "parte": "P1-A/P3-C/P3-D",
+   "caracteres": 17787,
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  "qra_pagina": {
+   "ok": true,
+   "parte": "P2-E",
+   "caracteres": 11006,
+   "url": "https://home.treasury.gov/policy-issues/financing-the-government/quarterly-refunding"
+  },
+  "bea_calendario": {
+   "ok": true,
+   "parte": "P3-D",
+   "caracteres": 3220,
+   "url": "https://www.bea.gov/news/schedule"
+  },
+  "sifma_festivos": {
+   "ok": true,
+   "parte": "P1-C/P2-E/P3-D",
+   "caracteres": 6017,
+   "url": "https://www.sifma.org/resources/general/holiday-schedule/"
+  },
+  "fed_comunicados": {
+   "ok": true,
+   "parte": "P1-C",
+   "caracteres": 9134,
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases.htm"
+  },
+  "calendario_tentativo": {
+   "ok": true,
+   "parte": "P2-B/P2-E",
+   "bytes": 27527,
+   "url": "https://home.treasury.gov/system/files/221/Tentative-Auction-Schedule.pdf"
+  },
+  "consenso_semana_actual": {
+   "ok": true,
+   "parte": "P3-C/P3-D",
+   "filas": 46,
+   "desde": "2026-11-16",
+   "hasta": "2026-11-20",
+   "url": "https://nfs.faireconomy.media/ff_calendar_thisweek.json",
+   "fuente": "ForexFactory (SECONDARY); hora en ET con desfase incluido"
+  },
+  "consenso_semana_siguiente": {
+   "ok": false,
+   "parte": "P3-C/P3-D",
+   "error": "HTTPError: HTTP Error 404: Not Found",
+   "url": "https://nfs.faireconomy.media/ff_calendar_nextweek.json"
+  },
   "audjpy": {
    "ok": true,
    "parte": "P3-F",
@@ -190,11 +248,19 @@
  },
  "archivos": {
   "anunciadas_td.csv": "1ce93460ddc8468ce67240a5285f5e80830f1d2a8147303398793025323fd343",
+  "bea_calendario.txt": "b3c7389144bce59a1e0514b9864962b206405f1c441f6f79c6be4e78e08afbb6",
   "buybacks.csv": "78c79be138b8174ff928979018aea911acf2de7d3ddd0b0d8abc050aa6926317",
+  "calendario_tentativo.txt": "6a2fa98ab844368a0afb005849dd1d3c7a7c34b0f49b2441a2540275641ec700",
+  "consenso_semana_actual.csv": "3c33124238a0803748822a2152f7283dbfced88415ec9cbe18db79536d4848a3",
   "dts_saldo_bruto.csv": "af40ab3c088558f6b630f8045819de7627a639eff7fdbebcecb513595b543273",
+  "fails_series.json": "52d06ffb7943e4ac8b09d0313b0a1538e3068562917b002adbf8c9a9116c27f1",
+  "fed_comunicados.txt": "87f043a8363f707e3bce299b9c23636926490228173a873a9df115d22d68ab94",
+  "fomc_calendario.txt": "8f830d790217019a2f330fee6d5daf76defffd26b15f3ef32d18c53fb2b9adc4",
   "nyfed_rp_bruto.json": "3cd840f526d4abde5054c452b4de80138894fb971c1cc679dd11210173660404",
   "proximas_td.csv": "211cbd6ff9487a3ca29f24e2f06d5e1aaaf44da619a406ca5618a8cce6dee6af",
-  "series.csv": "9134428cc94fbb9d4644da0ea1c6a38c8572d9af36bd96c412668f1c0c30c316",
+  "qra_pagina.txt": "413a87234ece96113266e60dc91070b01b5508b1373f12fddbb6ad144a3c406f",
+  "series.csv": "441719b7b41539c8ae1282edfde9e504029ce3a46514653b4f0f42fcf729f9f0",
+  "sifma_festivos.txt": "afe641cba0a3fd26481c3fb33ae6d27843b5b7d519e1a307927357f4470eb53a",
   "subastas.csv": "b8351564fe1c8d9f20145f2a75472e5a7aab3cf7cc7a006d62728d5dafb9b863",
   "subastas_proximas.csv": "65748b2b95f4bc791a997a94164a10eb4b01f27d9e1d7e7bf12433784f1393ba",
   "subastas_td.csv": "a40cc71ab6b3a1978461b8625a99a323919311210a964fdba911990ab365fc8a"

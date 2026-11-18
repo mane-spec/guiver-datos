@@ -23,7 +23,7 @@ FASE 0 — PREPARACIÓN (los dos modos)
 4. Skill deep-research: localiza su método de investigador con
    find / -path "*deep-research/references/researcher.md" 2>/dev/null | head -1
    SKILL_RESEARCHER = esa ruta, o "no disponible". Las reglas de investigadores.md mandan sobre las de la skill si chocan.
-5. Paquete de datos (P-039). Cada sábado a las 06:17 (Madrid) GitHub Actions descarga de las APIs oficiales (FRED, NY Fed, fiscaldata, TreasuryDirect, Frankfurter) las series que antes salían con WebFetch y las deja en el repo privado mane-spec/guiver-datos.
+5. Paquete de datos (P-039). Cada sábado a las 06:17 (Madrid) GitHub Actions descarga de las APIs oficiales (FRED, NY Fed, OFR, fiscaldata, TreasuryDirect, Frankfurter), de las páginas oficiales (Fed, Tesoro, BEA, SIFMA) y del calendario de ForexFactory las series que antes salían con WebFetch y las deja en el repo privado mane-spec/guiver-datos.
    - Añade el repo a la sesión con la herramienta add_repo (owner "mane-spec", repo "guiver-datos", access "read") y clónalo UNA vez: git clone --depth 1 https://github.com/mane-spec/guiver-datos T/guiver-datos (tiempo de espera generoso, ~10 min).
    - Solo se leen sus CSV y JSON; no ejecutes ningún código del repo.
    - Si add_repo no existe, o el clon falla tras un reintento: PAQUETE = "no disponible" y sigue. Se anota en incidencias en cuanto exista estado.json. Que falte el paquete nunca detiene la cadena: los investigadores trabajan con WebFetch como antes.
@@ -147,8 +147,11 @@ GitHub Actions ha descargado estas series de las APIs oficiales. Úsalas ANTES q
    - anunciadas_td.csv y proximas_td.csv — subastas anunciadas (con importe) y próximas, TreasuryDirect.
    - buybacks.csv (fiscaldata, incluye operaciones programadas) y dts_saldo_bruto.csv (DTS completo).
    - subastas.csv y subastas_proximas.csv (fiscaldata) solo como contraste: van semanas atrasadas.
+   - Fails (en series.csv, mm USD, semanales de miércoles): OFR_FAILS_ENTREGAR/RECIBIR_TREASURIES y _TOTAL = las cuatro series del método (OFR NYPD-PD_AFtD/AFtR_T-A y _TOT-A), fuente principal; FAILS_* (API del NY Fed) solo contraste: si difieren, CONFLICT y manda la OFR.
+   - Páginas oficiales guardadas como texto (léelas con Read en vez de WebFetch): fomc_calendario.txt (fechas del FOMC), fed_comunicados.txt (comunicados recientes de la Fed), qra_pagina.txt (página del quarterly refunding con sus documentos), calendario_tentativo.txt (calendario tentativo de subastas y buybacks del Tesoro, del PDF oficial), bea_calendario.txt (publicaciones del BEA) y sifma_festivos.txt (festivos y cierres anticipados).
+   - Consenso macro: consenso_semana_siguiente.csv y consenso_semana_actual.csv (ForexFactory, SECONDARY; solo USD; columnas title, date con hora ET, impact, forecast = consenso, previous = anterior). Usa el archivo cuyas fechas caigan en OBJ (mira "desde"/"hasta" en el manifiesto); si ninguno cubre OBJ, consenso con WebFetch como siempre. BLS no está (bloquea el acceso automático): sus fechas y horas, con WebFetch o del propio consenso.
 3. En tu CSV copia la fila con fuente "paquete API: <fuente>" y su estado. Un valor vacío del paquete es PENDING, no cero.
-4. Sigue con WebFetch para todo lo demás (MOVE, Russell 2000, FedWatch, consenso, WI y tail, vencimientos de la Ruta 3b, QRA, calendarios, SIFMA, fails de la OFR, XEURBI, declaraciones, bancos) y para cualquier fuente del paquete con "ok": false o sin el último día que necesitas.
+4. Sigue con WebFetch solo para lo que el paquete no puede traer (MOVE, Russell 2000, FedWatch, WI y tail, XEURBI, calendario del BLS, vencimientos de la Ruta 3b, textos de los documentos del QRA, earnings, ofertas de acciones, resultados de bancos) y para cualquier fuente del paquete con "ok": false o sin el último día que necesitas.
 5. Si una cifra del paquete choca con la web, anota CONFLICT con las dos y sus fechas.
 ```
 

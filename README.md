@@ -24,4 +24,10 @@ Paquete de datos semanal para el diagnóstico de liquidez global (Guiver Researc
 | P3-F | S&P 500 y Nasdaq 100 | FRED |
 | P3-F | AUD/JPY | Frankfurter (fixing del BCE, **no** el cierre de NY) |
 
-**Siguen con WebFetch:** MOVE, Russell 2000, FedWatch, consenso macro, WI y tail de las subastas (InvestingLive), vencimientos de la Ruta 3b, QRA, calendarios (BLS/BEA/ISM/earnings/IPO), SIFMA, fails de la OFR, declaraciones de la Fed y resultados de los bancos.
+| P3-A | Fails de primary dealers (Treasuries y total, entregar/recibir) | OFR (principal, la del método) + API del NY Fed (contraste) |
+| P1/P2/P3 | Calendario del FOMC, comunicados de la Fed, página del QRA, calendario tentativo de subastas y buybacks (PDF → texto), calendario del BEA, festivos de SIFMA | Páginas oficiales guardadas como `.txt` |
+| P3-C/D | Consenso macro de EE. UU. (consenso, anterior, hora ET, impacto) | ForexFactory, feed abierto (SECONDARY). `consenso_semana_siguiente.csv` aparece solo algunos días |
+
+**Siguen con WebFetch (no tienen fuente abierta o bloquean el acceso automático):** MOVE (ICE), Russell 2000 (FTSE Russell), FedWatch y XEURBI (CME), WI y tail de las subastas (no hay fuente pública), calendario del BLS (bloquea), vencimientos de la Ruta 3b, texto de los documentos del QRA, earnings, ofertas de acciones y resultados de los bancos.
+
+**Regla:** solo fuentes oficiales o feeds abiertos, identificándose como bot. No se usan trucos para entrar en webs que bloquean el acceso automático.

@@ -352,27 +352,39 @@ def html_a_texto(html):
 
 
 def f_fails(corte, filas, man, carpeta):
-    """Fails de primary dealers (NY Fed, semanal): todas las series de fails."""
+    """Fails de primary dealers (NY Fed, semanal, miércoles). Treasuries sin TIPS (D/R) y totales
+    (suma de las seis clases: Treasuries sin TIPS, TIPS, agencias, MBS de agencia, otros MBS, corporativos)."""
+    clases = {"USTET": "Treasuries sin TIPS", "UST": "TIPS", "FGEM": "agencias sin MBS",
+              "FGM": "MBS de agencia", "OM": "otros MBS", "CS": "corporativos"}
     try:
-        lista = json.loads(get(f"{NYFED}/pd/list/timeseries.json"))["pd"]["timeseries"]
-        fails = [s for s in lista if "fail" in (s.get("description") or "").lower()]
-        with open(os.path.join(carpeta, "fails_series.json"), "w") as fh:
-            json.dump(fails, fh, indent=1)
         hace20 = (corte - dt.timedelta(weeks=20)).isoformat()
-        n, ultima = 0, None
-        for s in fails:
-            kid = s["keyid"]
-            js = json.loads(get(f"{NYFED}/pd/get/{kid}.json", intentos=2))
-            for o in js.get("pd", {}).get("timeseries", []):
-                f = o.get("asofdate")
-                if not f or f < hace20 or f > corte.isoformat():
-                    continue
-                v = a_num(o.get("value"))
-                filas.append(fila(f"FAILS_{kid}", f, v, "mm USD", "NY Fed primary dealer API", corte,
-                                  s.get("description", "")[:120]))
+        n, ultima, totales = 0, None, {}
+        for lado, nombre in (("TD", "entregar"), ("TR", "recibir")):
+            for cl, desc in clases.items():
+                kid = f"PDF{lado}-{cl}"
+                js = json.loads(get(f"{NYFED}/pd/get/{kid}.json", intentos=2))
+                for o in js.get("pd", {}).get("timeseries", []):
+                    f = o.get("asofdate")
+                    if not f or f < hace20 or f > corte.isoformat():
+                        continue
+                    v = a_num(o.get("value"))
+                    if v is not None:
+                        totales.setdefault((lado, f), []).append(v)
+                    if cl == "USTET":
+                        filas.append(fila(f"FAILS_{nombre.upper()}_TREASURIES", f, v, "mm USD",
+                                          "NY Fed primary dealer API", corte,
+                                          f"{kid}: fails to {'deliver' if lado == 'TD' else 'receive'}, {desc}"))
+                        n += 1
+                        ultima = max(ultima or "", f)
+        for (lado, f), vals in sorted(totales.items()):
+            nombre = "ENTREGAR" if lado == "TD" else "RECIBIR"
+            if len(vals) == len(clases):
+                filas.append(fila(f"FAILS_{nombre}_TOTAL", f, round(sum(vals), 1), "mm USD",
+                                  "NY Fed primary dealer API (suma de 6 clases)", corte,
+                                  "Treasuries+TIPS+agencias+MBS agencia+otros MBS+corporativos"))
                 n += 1
-                ultima = max(ultima or "", f)
-        man["fails"] = {"ok": n > 0, "parte": "P3-A", "series": len(fails), "filas": n, "ultima": ultima,
+        man["fails"] = {"ok": n > 0, "parte": "P3-A", "filas": n, "ultima": ultima,
+                        "nota": "semanal (miércoles), se publica el jueves de la semana siguiente",
                         **({} if n else {"error": "sin observaciones en 20 semanas"})}
     except Exception as e:  # noqa: BLE001
         man["fails"] = {"ok": False, "parte": "P3-A", "error": str(e)}

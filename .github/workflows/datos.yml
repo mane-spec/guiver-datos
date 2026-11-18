@@ -2,8 +2,8 @@ name: Paquete de datos semanal
 
 on:
   schedule:
-    # Sábado 05:17 UTC (06:17 Madrid en invierno), antes del orquestador
-    - cron: "17 5 * * 6"
+    # Sábado 21:17 UTC = 22:17 Madrid (invierno): deja margen a la reparación antes del orquestador (domingo 01:31)
+    - cron: "17 21 * * 6"
   workflow_dispatch:
     inputs:
       corte:

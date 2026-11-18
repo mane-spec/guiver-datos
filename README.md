@@ -2,7 +2,7 @@
 
 Paquete de datos semanal para el diagnóstico de liquidez global (Guiver Research). Es la parte "local" del sistema híbrido, pero corre en GitHub Actions, así que no hace falta tener el PC encendido.
 
-- **Cuándo:** el sábado a las 05:17 UTC, o a mano desde la pestaña Actions → "Paquete de datos semanal" → Run workflow.
+- **Cuándo:** el sábado a las 21:17 UTC (22:17 en Madrid), con margen para la reparación automática antes del informe del domingo a las 01:31, o a mano desde la pestaña Actions → "Paquete de datos semanal" → Run workflow.
 - **Qué deja:** `paquete/<CORTE>/series.csv`, con el mismo formato que el CSV de los investigadores, más los archivos en bruto (subastas, DTS, operaciones del NY Fed) y `manifiesto.json`, que indica qué fuente salió bien y con qué última fecha. `paquete/ultimo.json` apunta a la semana más reciente.
 - **Respaldo:** lo que no salga con `ok: true` se sigue buscando con WebFetch.
 - **Sin claves:** todas las fuentes son públicas y no necesitan registro.

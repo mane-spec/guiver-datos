@@ -358,7 +358,7 @@ def f_fails(corte, filas, man, carpeta):
               "FGM": "MBS de agencia", "OM": "otros MBS", "CS": "corporativos"}
     try:
         hace20 = (corte - dt.timedelta(weeks=20)).isoformat()
-        n, ultima, totales = 0, None, {}
+        n, ultima, totales, tes = 0, None, {}, {}
         for lado, nombre in (("TD", "entregar"), ("TR", "recibir")):
             for cl, desc in clases.items():
                 kid = f"PDF{lado}-{cl}"
@@ -370,20 +370,40 @@ def f_fails(corte, filas, man, carpeta):
                     v = a_num(o.get("value"))
                     if v is not None:
                         totales.setdefault((lado, f), []).append(v)
-                    if cl == "USTET":
-                        filas.append(fila(f"FAILS_{nombre.upper()}_TREASURIES", f, v, "mm USD",
-                                          "NY Fed primary dealer API", corte,
-                                          f"{kid}: fails to {'deliver' if lado == 'TD' else 'receive'}, {desc}"))
-                        n += 1
+                    if cl in ("USTET", "UST") and v is not None:
+                        tes.setdefault((lado, f), []).append(v)
                         ultima = max(ultima or "", f)
+        for (lado, f), vals in sorted(tes.items()):
+            nombre = "ENTREGAR" if lado == "TD" else "RECIBIR"
+            if len(vals) == 2:
+                filas.append(fila(f"FAILS_{nombre}_TREASURIES", f, round(sum(vals), 1), "mm USD",
+                                  "NY Fed primary dealer API (Treasuries sin TIPS + TIPS)", corte,
+                                  "equivale a OFR NYPD-PD_AFt%s_T-A" % ("D" if lado == "TD" else "R")))
+                n += 1
         for (lado, f), vals in sorted(totales.items()):
             nombre = "ENTREGAR" if lado == "TD" else "RECIBIR"
             if len(vals) == len(clases):
                 filas.append(fila(f"FAILS_{nombre}_TOTAL", f, round(sum(vals), 1), "mm USD",
                                   "NY Fed primary dealer API (suma de 6 clases)", corte,
-                                  "Treasuries+TIPS+agencias+MBS agencia+otros MBS+corporativos"))
+                                  "equivale a OFR NYPD-PD_AFt%s_TOT-A" % ("D" if lado == "TD" else "R")))
                 n += 1
-        man["fails"] = {"ok": n > 0, "parte": "P3-A", "filas": n, "ultima": ultima,
+        # La misma serie en la OFR (fuente que cita el método); valores en dólares → mm USD
+        ofr_ok = 0
+        for mn, nombre in (("NYPD-PD_AFtD_T-A", "OFR_FAILS_ENTREGAR_TREASURIES"),
+                           ("NYPD-PD_AFtR_T-A", "OFR_FAILS_RECIBIR_TREASURIES"),
+                           ("NYPD-PD_AFtD_TOT-A", "OFR_FAILS_ENTREGAR_TOTAL"),
+                           ("NYPD-PD_AFtR_TOT-A", "OFR_FAILS_RECIBIR_TOTAL")):
+            try:
+                url = f"https://data.financialresearch.gov/v1/series/timeseries?mnemonic={mn}&start_date={hace20}"
+                for f, v in json.loads(get(url, intentos=2)):
+                    if f <= corte.isoformat():
+                        v = a_num(v)
+                        filas.append(fila(nombre, f, None if v is None else round(v / 1e6, 1), "mm USD",
+                                          "OFR (FR 2004)", corte, mn))
+                ofr_ok += 1
+            except Exception:  # noqa: BLE001
+                pass
+        man["fails"] = {"ok": n > 0, "parte": "P3-A", "filas": n, "ultima": ultima, "ofr_series_ok": ofr_ok,
                         "nota": "semanal (miércoles), se publica el jueves de la semana siguiente",
                         **({} if n else {"error": "sin observaciones en 20 semanas"})}
     except Exception as e:  # noqa: BLE001

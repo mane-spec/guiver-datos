@@ -286,20 +286,33 @@ def f_treasurydirect(corte, man, carpeta):
     """Fuente PRINCIPAL de subastas (resultados al día y anunciadas)."""
     base = "https://www.treasurydirect.gov/TA_WS/securities"
     hace18 = corte - dt.timedelta(days=550)
-    for clave, url, parte in (
-        ("subastas_td", f"{base}/search?startDate={hace18:%m/%d/%Y}&endDate={corte:%m/%d/%Y}"
-                        f"&dateFieldName=auctionDate&format=json", "P2-C/P2-D"),
-        ("anunciadas_td", f"{base}/announced?format=json&days=30", "P2-B/P2-E"),
-        ("proximas_td", f"{base}/upcoming?format=json", "P2-B/P2-E"),
+    dias = (dt.date.today() - hace18).days
+    for clave, urls, parte in (
+        ("subastas_td", [f"{base}/auctioned?format=json&days={dias}",
+                         f"{base}/auctioned?format=json&days=365",
+                         f"{base}/search?startDate={hace18:%m/%d/%Y}&endDate={corte:%m/%d/%Y}"
+                         f"&dateFieldName=auctionDate&format=json"], "P2-C/P2-D"),
+        ("anunciadas_td", [f"{base}/announced?format=json&days=30"], "P2-B/P2-E"),
+        ("proximas_td", [f"{base}/upcoming?format=json"], "P2-B/P2-E"),
     ):
+        datos, url, errores = None, None, []
+        for u in urls:
+            try:
+                datos, url = json.loads(get(u, intentos=2)), u
+                break
+            except Exception as e:  # noqa: BLE001
+                errores.append(f"{u.split('securities/')[1][:40]} → {e}")
         try:
-            datos = json.loads(get(url, intentos=2))
+            if datos is None:
+                raise RuntimeError(" | ".join(errores))
             if isinstance(datos, dict):
                 datos = datos.get("securityList") or datos.get("data") or []
             datos = [{k: v for k, v in d.items() if not isinstance(v, (dict, list))} for d in datos]
             guardar_csv(os.path.join(carpeta, f"{clave}.csv"), datos)
-            ultima = max(((d.get("auctionDate") or "")[:10] for d in datos), default=None)
-            man[clave] = {"ok": True, "parte": parte, "filas": len(datos), "ultima": ultima, "url": url}
+            # fecha de subasta en TreasuryDirect = competitiveAuctionCloseDate
+            ultima = max(((d.get("competitiveAuctionCloseDate") or "")[:10] for d in datos), default=None)
+            man[clave] = {"ok": True, "parte": parte, "filas": len(datos), "ultima": ultima, "url": url,
+                          "intentos_fallidos": errores}
         except Exception as e:  # noqa: BLE001
             man[clave] = {"ok": False, "parte": parte, "error": str(e), "url": url}
 

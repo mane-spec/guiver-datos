@@ -320,6 +320,114 @@ def f_treasurydirect(corte, man, carpeta):
             man[clave] = {"ok": False, "parte": parte, "error": str(e), "url": url}
 
 
+def html_a_texto(html):
+    """Texto plano de una página HTML (sin scripts ni estilos)."""
+    from html.parser import HTMLParser
+
+    class P(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.trozos, self.saltar = [], 0
+
+        def handle_starttag(self, tag, attrs):
+            if tag in ("script", "style", "noscript"):
+                self.saltar += 1
+            if tag in ("br", "p", "tr", "li", "h1", "h2", "h3", "h4", "div", "td", "th"):
+                self.trozos.append("\n" if tag != "td" and tag != "th" else " | ")
+
+        def handle_endtag(self, tag):
+            if tag in ("script", "style", "noscript") and self.saltar:
+                self.saltar -= 1
+
+        def handle_data(self, d):
+            if not self.saltar and d.strip():
+                self.trozos.append(d.strip() + " ")
+
+    p = P()
+    p.feed(html)
+    import re
+    t = "".join(p.trozos)
+    t = re.sub(r"[ \t]+", " ", t)
+    return re.sub(r"\n\s*\n+", "\n", t).strip()
+
+
+def f_fails(corte, filas, man, carpeta):
+    """Fails de primary dealers (NY Fed, semanal): todas las series de fails."""
+    try:
+        lista = json.loads(get(f"{NYFED}/pd/list/timeseries.json"))["pd"]["timeseries"]
+        fails = [s for s in lista if "fail" in (s.get("description") or "").lower()]
+        with open(os.path.join(carpeta, "fails_series.json"), "w") as fh:
+            json.dump(fails, fh, indent=1)
+        hace20 = (corte - dt.timedelta(weeks=20)).isoformat()
+        n, ultima = 0, None
+        for s in fails:
+            kid = s["keyid"]
+            js = json.loads(get(f"{NYFED}/pd/get/{kid}.json", intentos=2))
+            for o in js.get("pd", {}).get("timeseries", []):
+                f = o.get("asofdate")
+                if not f or f < hace20 or f > corte.isoformat():
+                    continue
+                v = a_num(o.get("value"))
+                filas.append(fila(f"FAILS_{kid}", f, v, "mm USD", "NY Fed primary dealer API", corte,
+                                  s.get("description", "")[:120]))
+                n += 1
+                ultima = max(ultima or "", f)
+        man["fails"] = {"ok": n > 0, "parte": "P3-A", "series": len(fails), "filas": n, "ultima": ultima,
+                        **({} if n else {"error": "sin observaciones en 20 semanas"})}
+    except Exception as e:  # noqa: BLE001
+        man["fails"] = {"ok": False, "parte": "P3-A", "error": str(e)}
+
+
+def f_calendarios(corte, man, carpeta):
+    """Páginas oficiales guardadas como texto, para no depender de WebFetch."""
+    paginas = {
+        "fomc_calendario": ("https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm", "P1-A/P3-C/P3-D"),
+        "qra_pagina": ("https://home.treasury.gov/policy-issues/financing-the-government/quarterly-refunding", "P2-E"),
+        "bea_calendario": ("https://www.bea.gov/news/schedule", "P3-D"),
+        "sifma_festivos": ("https://www.sifma.org/resources/general/holiday-schedule/", "P1-C/P2-E/P3-D"),
+        "fed_comunicados": ("https://www.federalreserve.gov/newsevents/pressreleases.htm", "P1-C"),
+    }
+    for clave, (url, parte) in paginas.items():
+        try:
+            texto = html_a_texto(get(url, intentos=2))
+            with open(os.path.join(carpeta, f"{clave}.txt"), "w") as fh:
+                fh.write(f"Fuente: {url}\nDescargado: {dt.datetime.now(dt.timezone.utc):%Y-%m-%d %H:%M} UTC\n\n{texto}")
+            man[clave] = {"ok": len(texto) > 500, "parte": parte, "caracteres": len(texto), "url": url,
+                          **({} if len(texto) > 500 else {"error": "página casi vacía (¿se carga con JavaScript?)"})}
+        except Exception as e:  # noqa: BLE001
+            man[clave] = {"ok": False, "parte": parte, "error": str(e), "url": url}
+
+    # Calendario tentativo de subastas (PDF) → texto con pdftotext
+    url = "https://home.treasury.gov/system/files/221/Tentative-Auction-Schedule.pdf"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            pdf = r.read()
+        ruta = os.path.join(carpeta, "calendario_tentativo.pdf")
+        with open(ruta, "wb") as fh:
+            fh.write(pdf)
+        import subprocess
+        subprocess.run(["pdftotext", "-layout", ruta, ruta[:-4] + ".txt"], check=True, timeout=60)
+        os.remove(ruta)
+        man["calendario_tentativo"] = {"ok": True, "parte": "P2-B/P2-E", "bytes": len(pdf), "url": url}
+    except Exception as e:  # noqa: BLE001
+        man["calendario_tentativo"] = {"ok": False, "parte": "P2-B/P2-E", "error": str(e), "url": url}
+
+    # Calendario macro con consenso (ForexFactory, feed abierto). "thisweek" = semana dom–sáb en curso;
+    # "nextweek" solo aparece algunos días. Se guardan solo los eventos de USD.
+    for clave, url in (("consenso_semana_actual", "https://nfs.faireconomy.media/ff_calendar_thisweek.json"),
+                       ("consenso_semana_siguiente", "https://nfs.faireconomy.media/ff_calendar_nextweek.json")):
+        try:
+            datos = [e for e in json.loads(get(url, intentos=2)) if e.get("country") == "USD"]
+            guardar_csv(os.path.join(carpeta, f"{clave}.csv"), datos)
+            fechas = sorted(e.get("date", "")[:10] for e in datos)
+            man[clave] = {"ok": bool(datos), "parte": "P3-C/P3-D", "filas": len(datos),
+                          "desde": fechas[0] if fechas else None, "hasta": fechas[-1] if fechas else None,
+                          "url": url, "fuente": "ForexFactory (SECONDARY); hora en ET con desfase incluido"}
+        except Exception as e:  # noqa: BLE001
+            man[clave] = {"ok": False, "parte": "P3-C/P3-D", "error": str(e), "url": url}
+
+
 def f_audjpy(corte, desde, filas, man):
     url = f"https://api.frankfurter.app/{desde}..{corte}?from=AUD&to=JPY"
     try:
@@ -355,6 +463,8 @@ def construir(corte, base="paquete"):
     f_nyfed(corte, desde, filas, man, carpeta)
     f_fiscal(corte, desde, filas, man, carpeta)
     f_treasurydirect(corte, man, carpeta)
+    f_fails(corte, filas, man, carpeta)
+    f_calendarios(corte, man, carpeta)
     f_audjpy(corte, desde, filas, man)
     f_xeurbi(corte, man, carpeta)
 
@@ -406,6 +516,8 @@ def selftest():
         {"operationDate": "2026-11-12", "operationType": "Reverse Repo", "totalAmtSubmitted": 3e9, "totalAmtAccepted": 3e9}]}})
     srf = [d for d in rp if d["tipo"] == "Repo"][0]
     assert srf["accepted"] == 5e9 and srf["n"] == 2
+    t = html_a_texto("<html><script>x()</script><h1>FOMC</h1><p>November 3-4</p><style>a{}</style></html>")
+    assert "FOMC" in t and "November 3-4" in t and "x()" not in t
     f = fila("X", "2026-11-12", 1.0, "%", "t", dt.date(2026, 11, 13))
     assert f["retraso_dias"] == 1 and f["estado"] == "CONFIRMED"
     print("selftest OK")

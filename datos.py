@@ -308,6 +308,9 @@ def f_treasurydirect(corte, man, carpeta):
             if isinstance(datos, dict):
                 datos = datos.get("securityList") or datos.get("data") or []
             datos = [{k: v for k, v in d.items() if not isinstance(v, (dict, list))} for d in datos]
+            if clave == "subastas_td":  # nada posterior al CORTE
+                datos = [d for d in datos
+                         if (d.get("competitiveAuctionCloseDate") or "")[:10] <= corte.isoformat()]
             guardar_csv(os.path.join(carpeta, f"{clave}.csv"), datos)
             # fecha de subasta en TreasuryDirect = competitiveAuctionCloseDate
             ultima = max(((d.get("competitiveAuctionCloseDate") or "")[:10] for d in datos), default=None)

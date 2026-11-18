@@ -15,11 +15,11 @@ Paquete de datos semanal para el diagnóstico de liquidez global (Guiver Researc
 | P1-A | IORB (contraste) | FRED |
 | P1-B | ON RRP y SRF por día (solicitado/aceptado, nº de operaciones) | API del NY Fed |
 | P1-B | WRESBAL | FRED |
-| P1-C | XEURBI | CSV de CME (puede bloquear; si falla → WebFetch) |
+| P1-C | XEURBI | CSV de CME: **falla** (CME bloquea los servidores de GitHub) → sigue con WebFetch |
 | P2-A | TGA diario | fiscaldata DTS |
-| P2-C/D | Subastas de 18 meses (high yield, BTC, directs, indirects, dealers) | fiscaldata auctions_query |
-| P2-B/E | Subastas próximas | fiscaldata upcoming_auctions |
-| P2-A/B | Buybacks | fiscaldata (endpoint por confirmar en la primera ejecución) |
+| P2-C/D | Subastas de 18 meses (high yield, BTC, directs, indirects, dealers) | **TreasuryDirect** `subastas_td.csv` (principal, al día). La fecha de subasta es `competitiveAuctionCloseDate`; las reaperturas llevan plazos como "9-Year 8-Month". `subastas.csv` (fiscaldata) es secundaria: el 18-nov iba atrasada hasta el 22-oct |
+| P2-B/E | Subastas anunciadas (con importe) y próximas | TreasuryDirect `anunciadas_td.csv` y `proximas_td.csv`; fiscaldata `subastas_proximas.csv` como secundaria |
+| P2-A/B | Buybacks (incluye operaciones programadas) | fiscaldata `buybacks.csv` |
 | P3-B | OAS IG/HY/B/CCC y rentabilidades, DGS2 y DGS5 | FRED |
 | P3-F | S&P 500 y Nasdaq 100 | FRED |
 | P3-F | AUD/JPY | Frankfurter (fixing del BCE, **no** el cierre de NY) |

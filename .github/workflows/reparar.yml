@@ -1,0 +1,96 @@
+name: Reparar paquete (Claude)
+
+# Se lanza solo al terminar "Paquete de datos semanal". Si alguna fuente que
+# debería funcionar ha fallado, Claude arregla datos.py, vuelve a generar el
+# paquete y lo sube, antes de que arranque el orquestador.
+on:
+  workflow_run:
+    workflows: ["Paquete de datos semanal"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: reparar-paquete
+  cancel-in-progress: false
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: ¿Hay fuentes rotas?
+        id: rotas
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json, os
+          SIEMPRE_FALLAN = {"xeurbi"}
+          try:
+              u = json.load(open("paquete/ultimo.json"))
+              m = json.load(open(os.path.join(u["carpeta"], "manifiesto.json")))
+              rotas = [k for k, v in m["fuentes"].items() if not v.get("ok") and k not in SIEMPRE_FALLAN]
+              print("carpeta=" + u["carpeta"])
+              print("corte=" + u["corte"])
+          except Exception as e:
+              rotas = ["paquete_inexistente: " + str(e)[:100]]
+          print("lista=" + ",".join(rotas))
+          print("hay=" + ("si" if rotas else "no"))
+          EOF
+          cat "$GITHUB_OUTPUT"
+
+      - name: Herramientas
+        if: steps.rotas.outputs.hay == 'si'
+        run: which pdftotext || (sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils)
+
+      - name: Claude arregla datos.py
+        if: steps.rotas.outputs.hay == 'si'
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            El paquete de datos con CORTE ${{ steps.rotas.outputs.corte }} tiene fuentes con "ok": false
+            que deberían funcionar: ${{ steps.rotas.outputs.lista }}.
+            Lee CLAUDE.md y cúmplelo. Después:
+            1. Lee ${{ steps.rotas.outputs.carpeta }}/manifiesto.json para ver el error de cada fuente.
+            2. Averigua la causa probando la URL con Python (cambio de ruta, de formato, de nombre de campo...).
+            3. Corrige datos.py con el cambio mínimo. No toques las fuentes que funcionan.
+            4. python3 datos.py --selftest debe decir "selftest OK".
+            5. python3 datos.py --corte ${{ steps.rotas.outputs.corte }} y comprueba en el manifiesto nuevo que la fuente vuelve a estar ok y que no se ha roto ninguna otra.
+            6. git add datos.py paquete/ && git commit (mensaje en español: qué fuente, por qué falló, qué cambiaste) && git push origin main.
+            Si una fuente no tiene arreglo legítimo (bloqueo, web caída), no la fuerces: déjala con ok=false y explícalo.
+            Al final escribe un resumen de 3 líneas: qué estaba roto, qué arreglaste y qué sigue roto.
+          claude_args: |
+            --max-turns 40
+            --allowedTools "Bash(python3:*),Bash(git:*),Bash(curl:*),Bash(pdftotext:*),Read,Edit,Write,Grep,Glob"
+
+      - name: Aviso si sigue roto
+        if: steps.rotas.outputs.hay == 'si'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git pull -q origin main || true
+          python3 - <<'EOF' > aviso.md
+          import json, os
+          u = json.load(open("paquete/ultimo.json"))
+          m = json.load(open(os.path.join(u["carpeta"], "manifiesto.json")))
+          rotas = {k: v.get("error", "") for k, v in m["fuentes"].items() if not v.get("ok") and k != "xeurbi"}
+          if rotas:
+              print(f"Paquete {u['corte']}: siguen rotas tras el intento de Claude → el orquestador las buscará con WebFetch.\n")
+              for k, e in rotas.items():
+                  print(f"- **{k}**: {e}")
+          EOF
+          if [ -s aviso.md ]; then
+            gh issue create --title "Paquete $(date -u +%F): fuentes rotas" --body-file aviso.md || true
+          else
+            echo "Todo arreglado"
+          fi

@@ -1,8 +1,8 @@
 {
  "corte": "2026-11-13",
  "desde": "2026-08-21",
- "generado_utc": "2026-11-18T07:52:21+00:00",
- "fuentes_ok": 22,
+ "generado_utc": "2026-11-18T07:54:29+00:00",
+ "fuentes_ok": 23,
  "fuentes_total": 24,
  "fuentes": {
   "IORB": {
@@ -152,24 +152,28 @@
    "fuente": "fiscaldata (secundaria para subastas: puede ir semanas atrasada)"
   },
   "subastas_td": {
-   "ok": false,
+   "ok": true,
    "parte": "P2-C/P2-D",
-   "error": "HTTPError: HTTP Error 500: ",
-   "url": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=05/12/2025&endDate=11/13/2026&dateFieldName=auctionDate&format=json"
+   "filas": 250,
+   "ultima": "2026-11-17",
+   "url": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=555",
+   "intentos_fallidos": []
   },
   "anunciadas_td": {
    "ok": true,
    "parte": "P2-B/P2-E",
    "filas": 38,
-   "ultima": "",
-   "url": "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json&days=30"
+   "ultima": "2026-11-19",
+   "url": "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json&days=30",
+   "intentos_fallidos": []
   },
   "proximas_td": {
    "ok": true,
    "parte": "P2-B/P2-E",
    "filas": 13,
-   "ultima": "",
-   "url": "https://www.treasurydirect.gov/TA_WS/securities/upcoming?format=json"
+   "ultima": "2026-11-25",
+   "url": "https://www.treasurydirect.gov/TA_WS/securities/upcoming?format=json",
+   "intentos_fallidos": []
   },
   "audjpy": {
    "ok": true,
@@ -192,7 +196,8 @@
   "proximas_td.csv": "211cbd6ff9487a3ca29f24e2f06d5e1aaaf44da619a406ca5618a8cce6dee6af",
   "series.csv": "9134428cc94fbb9d4644da0ea1c6a38c8572d9af36bd96c412668f1c0c30c316",
   "subastas.csv": "b8351564fe1c8d9f20145f2a75472e5a7aab3cf7cc7a006d62728d5dafb9b863",
-  "subastas_proximas.csv": "65748b2b95f4bc791a997a94164a10eb4b01f27d9e1d7e7bf12433784f1393ba"
+  "subastas_proximas.csv": "65748b2b95f4bc791a997a94164a10eb4b01f27d9e1d7e7bf12433784f1393ba",
+  "subastas_td.csv": "260ec4048e5f2bbf71bdf693dfc91f9ac13ba861faa9ab67e8705d621155465e"
  },
  "aviso": "Lo que no esté aquí con ok=true se busca con WebFetch como siempre."
 }

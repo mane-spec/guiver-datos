@@ -1,0 +1,347 @@
+{
+ "version": 1,
+ "nota": "Registro acumulado del sistema. Lo actualiza el orquestador con motor.py registrar. No editar a mano salvo para corregir un error documentado.",
+ "semilla": [
+  {"periodo": "2026-09-28..2026-10-22", "on": 3, "neu": 11, "off": 5, "nota": "19 sesiones clasificadas con la regla de 9.0; frecuencia 16/58/26 que fijó la base 20/50/30 del método v6 (recalibrar() la reproduce)."}
+ ],
+ "base_vigente": [25, 50, 25],
+ "fecha_recalibracion": "2026-11-14",
+ "ultima_recalibracion_semanas": 3,
+ "semanas": [
+  {
+   "obj": ["2026-11-02", "2026-11-06"],
+   "rev": ["2026-10-26", "2026-10-30"],
+   "corte": "2026-10-31",
+   "prompt": "P3 v6.3",
+   "base_usada": [25, 50, 25],
+   "modo": "normal",
+   "regimen": "estrés incipiente",
+   "prob_emitidas": [
+    {"fecha": "2026-11-02", "on": 34, "neu": 40, "off": 26},
+    {"fecha": "2026-11-03", "on": 28, "neu": 40, "off": 32},
+    {"fecha": "2026-11-04", "on": 31, "neu": 40, "off": 29, "ajuste_manual": "analista 1-nov; motor 32/40/28"},
+    {"fecha": "2026-11-05", "on": 27, "neu": 42, "off": 31},
+    {"fecha": "2026-11-06", "on": 29, "neu": 40, "off": 31, "ajuste_manual": "analista 1-nov; motor 32/40/28"}
+   ],
+   "evaluacion_rev": {"recuento": {"on": 2, "neu": 2, "off": 1, "nc": 0}, "brier_emitido": 0.782, "brier_base": 0.7, "brier_304030": 0.66, "dias_puntuados": 5},
+   "recuento": {"on": 2, "neu": 2, "off": 1},
+   "resultados_rev": [
+    {"fecha": "2026-10-26", "resultado": "on"},
+    {"fecha": "2026-10-27", "resultado": "on"},
+    {"fecha": "2026-10-28", "resultado": "neu"},
+    {"fecha": "2026-10-29", "resultado": "neu"},
+    {"fecha": "2026-10-30", "resultado": "off"}
+   ],
+   "pistas_rev": {
+    "nasdaq100": {"recuento": {"on": 2, "neu": 1, "off": 2, "nc": 0}, "brier_emitido": 0.722, "brier_base": 0.78, "dias_puntuados": 5, "dias": [
+     {"fecha": "2026-10-26", "valor": 1.09, "resultado": "on"},
+     {"fecha": "2026-10-27", "valor": 1.29, "resultado": "on"},
+     {"fecha": "2026-10-28", "valor": 0.55, "resultado": "neu"},
+     {"fecha": "2026-10-29", "valor": -1.38, "resultado": "off"},
+     {"fecha": "2026-10-30", "valor": -3.46, "resultado": "off"}]},
+    "russell2000": {"recuento": {"on": 2, "neu": 2, "off": 1, "nc": 0}, "brier_emitido": 0.6983, "brier_base": 0.7133, "dias_puntuados": 3, "dias": [
+     {"fecha": "2026-10-26", "valor": 0.38, "resultado": "neu"},
+     {"fecha": "2026-10-27", "valor": 1.16, "resultado": "on"},
+     {"fecha": "2026-10-28", "valor": 0.41, "resultado": "neu"},
+     {"fecha": "2026-10-29", "valor": 1.01, "resultado": "on"},
+     {"fecha": "2026-10-30", "valor": -1.66, "resultado": "off"}]},
+    "audjpy": {"recuento": {"on": 2, "neu": 2, "off": 1, "nc": 0}, "brier_emitido": 0.782, "brier_base": 0.7, "dias_puntuados": 5, "dias": [
+     {"fecha": "2026-10-26", "valor": 0.45, "resultado": "on"},
+     {"fecha": "2026-10-27", "valor": 0.34, "resultado": "on"},
+     {"fecha": "2026-10-28", "valor": 0.1, "resultado": "neu"},
+     {"fecha": "2026-10-29", "valor": -0.04, "resultado": "neu"},
+     {"fecha": "2026-10-30", "valor": -0.53, "resultado": "off"}]}
+   },
+   "retrasos_fuentes": {
+    "NY Fed API rates search.json": 1,
+    "FRED IORB.txt": 17,
+    "Fed nota de implementación 28-oct-2026": 0,
+    "NY Fed API rp lastTwoWeeks.json": 4,
+    "FRED RRPONTSYD (ON RRP)": 0,
+    "FRED RPONTTLD (SRF overnight)": 1,
+    "CME XEURBI CSV": 0,
+    "FRED WRESBAL.txt": 2,
+    "SIFMA holiday schedule": 0,
+    "fiscaldata auctions_query": 6,
+    "fiscaldata upcoming_auctions": 10,
+    "fiscaldata DTS operating_cash_balance": 3,
+    "fiscaldata buybacks_operations": 3,
+    "Tentative Buyback Schedule Q3 2026": 37,
+    "Treasury QRA ago-2026 (sb0590, sb0584, sb0607)": 62,
+    "InvestingLive / espejo (A-Q5)": 1,
+    "Newsquawk (titulares de anuncio y resultado)": 3,
+    "SafeRate / The Vault Report / helious / rallies.ai": 1,
+    "PrimeRates (importes cupones)": 5,
+    "TFTC treasury-bills": 1,
+    "Investing MOVE (?end_date=2026-10-31)": 0,
+    "OFR FR 2004 fails (4 series)": 7,
+    "FRED OAS IG/HY/B/CCC": 1,
+    "Investing Fed Rate Monitor": 0,
+    "Trading Economics calendario EE. UU.": 0,
+    "BLS/BEA/Census/ISM/Fed/SIFMA/home.treasury.gov": 0,
+    "FRED WALCL/WTREGEN/WLRRAOL": 2,
+    "FRED ECBASSETSW": 5,
+    "Frankfurter EUR y AUD": 0,
+    "Investing S&P 500": 4,
+    "FRED NASDAQ100": 1,
+    "Investing Russell 2000": 5
+   },
+   "nota_reemision": "Reemitida el 2026-11-01 con el método v6.3 (P-012 a P-014); la emisión v6.2 del 31-oct fue 25/35/40 · 20/30/50 · 25/30/45 · 20/35/45 · 25/30/45.",
+   "factores_dias": [
+    {"fecha": "2026-11-02", "prob": {"on": 34, "neu": 40, "off": 26}, "base": [25, 50, 25], "modo": "normal", "confianza": "alta", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "fedwatch_dovish_credito_estable", "hy_le_m10"], "dispersion": ["macro2", "settle_cupones_nnc10"], "direccion": ["settle_neto_inyeccion20"], "componentes": {"fondo_off": 1.0, "fondo_on": 2.0, "disp": 1.5, "dir_off": 0.0, "dir_on": 1.0}, "nota": "rellenado el 2026-11-07 desde semanas/2026-11-02/datos3.json (P-020)"},
+    {"fecha": "2026-11-03", "prob": {"on": 28, "neu": 40, "off": 32}, "base": [25, 50, 25], "modo": "normal", "confianza": "alta", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "fedwatch_dovish_credito_estable", "hy_le_m10"], "dispersion": ["macro2"], "direccion": ["settle_neto_absorcion20"], "componentes": {"fondo_off": 1.0, "fondo_on": 2.0, "disp": 1.0, "dir_off": 2.0, "dir_on": 0.0}, "nota": "rellenado el 2026-11-07 desde semanas/2026-11-02/datos3.json (P-020)"},
+    {"fecha": "2026-11-04", "prob": {"on": 31, "neu": 40, "off": 29}, "base": [25, 50, 25], "modo": "normal", "confianza": "alta", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "fedwatch_dovish_credito_estable", "hy_le_m10"], "dispersion": ["macro2", "qra"], "direccion": [], "componentes": {"fondo_off": 1.0, "fondo_on": 2.0, "disp": 2.0, "dir_off": 0.0, "dir_on": 0.0}, "nota": "rellenado el 2026-11-07 desde semanas/2026-11-02/datos3.json (P-020)", "motor": [32, 40, 28]},
+    {"fecha": "2026-11-05", "prob": {"on": 27, "neu": 42, "off": 31}, "base": [25, 50, 25], "modo": "normal", "confianza": "alta", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "fedwatch_dovish_credito_estable", "hy_le_m10"], "dispersion": [], "direccion": ["settle_neto_absorcion20"], "componentes": {"fondo_off": 1.0, "fondo_on": 2.0, "disp": 0.0, "dir_off": 2.0, "dir_on": 0.0}, "nota": "rellenado el 2026-11-07 desde semanas/2026-11-02/datos3.json (P-020)"},
+    {"fecha": "2026-11-06", "prob": {"on": 29, "neu": 40, "off": 31}, "base": [25, 50, 25], "modo": "normal", "confianza": "alta", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "fedwatch_dovish_credito_estable", "hy_le_m10"], "dispersion": ["macro1"], "direccion": [], "componentes": {"fondo_off": 1.0, "fondo_on": 2.0, "disp": 2.0, "dir_off": 0.0, "dir_on": 0.0}, "nota": "rellenado el 2026-11-07 desde semanas/2026-11-02/datos3.json (P-020)", "motor": [32, 40, 28]}
+   ],
+   "direccion_rev": {
+    "dias": [
+     {"fecha": "2026-10-26", "prob": {"on": 20, "neu": 45, "off": 35}, "dijimos": "off", "margen_pts": 15, "resultado": "on", "veredicto": "al_reves"},
+     {"fecha": "2026-10-27", "prob": {"on": 20, "neu": 45, "off": 35}, "dijimos": "off", "margen_pts": 15, "resultado": "on", "veredicto": "al_reves"},
+     {"fecha": "2026-10-28", "prob": {"on": 20, "neu": 40, "off": 40}, "dijimos": "off", "margen_pts": 20, "resultado": "neu", "veredicto": "neutral"},
+     {"fecha": "2026-10-29", "prob": {"on": 25, "neu": 30, "off": 45}, "dijimos": "off", "margen_pts": 20, "resultado": "neu", "veredicto": "neutral"},
+     {"fecha": "2026-10-30", "prob": {"on": 20, "neu": 45, "off": 35}, "dijimos": "off", "margen_pts": 15, "resultado": "off", "veredicto": "acierto"}
+    ],
+    "recuento": {"acierto": 1, "al_reves": 2, "neutral": 2, "nc": 0, "sin_direccion": 0},
+    "dias_con_movimiento": 3,
+    "tasa_acierto": 0.333,
+    "nota": "Dirección = el lado (on u off) con más probabilidad emitida. Los días neutrales y no clasificables no cuentan como acierto ni fallo.",
+    "nota_origen": "semana de prueba (emisión v6.1, OBJ 2026-10-26); rellenado el 2026-11-07 desde semanas/2026-11-02/evaluacion.json"
+   }
+  },
+  {
+   "obj": ["2026-11-09", "2026-11-13"],
+   "rev": ["2026-11-02", "2026-11-06"],
+   "corte": "2026-11-07",
+   "prompt": "P3 v6.3",
+   "base_usada": [25, 50, 25],
+   "modo": "tensión",
+   "regimen": "estrés incipiente",
+   "prob_emitidas": [
+    {"fecha": "2026-11-09", "on": 24, "neu": 44, "off": 32},
+    {"fecha": "2026-11-10", "on": 19, "neu": 26, "off": 55},
+    {"fecha": "2026-11-11", "on": 25, "neu": 50, "off": 25},
+    {"fecha": "2026-11-12", "on": 18, "neu": 30, "off": 52},
+    {"fecha": "2026-11-13", "on": 24, "neu": 43, "off": 33}
+   ],
+   "evaluacion_rev": {"recuento": {"on": 1, "neu": 2, "off": 1, "nc": 1}, "brier_emitido": 0.6324, "brier_base": 0.625, "brier_304030": 0.64, "dias_puntuados": 4},
+   "recuento": {"on": 1, "neu": 2, "off": 1},
+   "resultados_rev": [
+    {"fecha": "2026-11-02", "resultado": "neu"},
+    {"fecha": "2026-11-03", "resultado": "neu"},
+    {"fecha": "2026-11-04", "resultado": "on"},
+    {"fecha": "2026-11-05", "resultado": "off"},
+    {"fecha": "2026-11-06", "resultado": "nc"}
+   ],
+   "pistas_rev": {
+    "nasdaq100": {"recuento": {"on": 2, "neu": 1, "off": 2, "nc": 0}, "brier_emitido": 0.714, "brier_base": 0.775, "dias_puntuados": 5, "dias": [
+     {"fecha": "2026-11-02", "valor": -1.39, "resultado": "off"},
+     {"fecha": "2026-11-03", "valor": 0.68, "resultado": "neu"},
+     {"fecha": "2026-11-04", "valor": 0.91, "resultado": "on"},
+     {"fecha": "2026-11-05", "valor": -6.36, "resultado": "off"},
+     {"fecha": "2026-11-06", "valor": 1.35, "resultado": "on"}]},
+    "russell2000": {"recuento": {"on": 2, "neu": 2, "off": 1, "nc": 0}, "brier_emitido": 0.658, "brier_base": 0.675, "dias_puntuados": 5, "dias": [
+     {"fecha": "2026-11-02", "valor": -0.21, "resultado": "neu"},
+     {"fecha": "2026-11-03", "valor": 0.23, "resultado": "neu"},
+     {"fecha": "2026-11-04", "valor": 1.58, "resultado": "on"},
+     {"fecha": "2026-11-05", "valor": -4.45, "resultado": "off"},
+     {"fecha": "2026-11-06", "valor": 0.89, "resultado": "on"}]},
+    "audjpy": {"recuento": {"on": 1, "neu": 3, "off": 1, "nc": 0}, "brier_emitido": 0.606, "brier_base": 0.575, "dias_puntuados": 5, "dias": [
+     {"fecha": "2026-11-02", "valor": 0.18, "resultado": "neu"},
+     {"fecha": "2026-11-03", "valor": -0.1, "resultado": "neu"},
+     {"fecha": "2026-11-04", "valor": 0.42, "resultado": "on"},
+     {"fecha": "2026-11-05", "valor": -0.07, "resultado": "neu"},
+     {"fecha": "2026-11-06", "valor": -1.94, "resultado": "off"}]}
+   },
+   "direccion_rev": {
+    "dias": [
+     {"fecha": "2026-11-02", "prob": {"on": 34, "neu": 40, "off": 26}, "dijimos": "on", "margen_pts": 8, "resultado": "neu", "veredicto": "neutral", "tramo": "lateral"},
+     {"fecha": "2026-11-03", "prob": {"on": 28, "neu": 40, "off": 32}, "dijimos": "off", "margen_pts": 4, "resultado": "neu", "veredicto": "neutral", "tramo": "lateral"},
+     {"fecha": "2026-11-04", "prob": {"on": 31, "neu": 40, "off": 29}, "dijimos": "on", "margen_pts": 2, "resultado": "on", "veredicto": "acierto", "manual": {"motor": {"on": 32, "neu": 40, "off": 28}, "dijo_motor": "on", "brier_motor": 0.7008, "brier_publicado": 0.7202}, "causa": "politico_macro", "con_causa": false},
+     {"fecha": "2026-11-05", "prob": {"on": 27, "neu": 42, "off": 31}, "dijimos": "off", "margen_pts": 4, "resultado": "off", "veredicto": "acierto", "causa": "sector", "con_causa": false},
+     {"fecha": "2026-11-06", "prob": {"on": 29, "neu": 40, "off": 31}, "dijimos": "off", "margen_pts": 2, "resultado": "nc", "veredicto": "nc", "manual": {"motor": {"on": 32, "neu": 40, "off": 28}, "dijo_motor": "on"}}
+    ],
+    "recuento": {"acierto": 2, "al_reves": 0, "neutral": 2, "nc": 1, "sin_direccion": 0},
+    "dias_con_movimiento": 2,
+    "resumen": {"fuertes": {"acertados": 2, "total": 2}, "laterales": {"acertados": 0, "total": 0, "planos": 2}, "aciertos_sin_causa": 2},
+    "tasa_acierto": 1.0,
+    "nota": "Dirección = el lado (on u off) con más probabilidad emitida. Los días laterales (neutrales) y no clasificables no cuentan como acierto ni fallo; el lateral se etiqueta alcista o bajista si el S&P 500 se movió ≥ 0,25 % y se indica si se inclinó a favor o en contra de lo que dijimos."
+   },
+   "factores_dias": [
+    {"fecha": "2026-11-09", "prob": {"on": 24, "neu": 44, "off": 32}, "base": [25, 50, 25], "modo": "tensión", "confianza": "media", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "hy_ge_15", "fedwatch_hawkish"], "dispersion": ["sub_2y_3y"], "direccion": [], "componentes": {"fondo_off": 2.0, "fondo_on": 0.0, "disp": 0.5, "dir_off": 0.0, "dir_on": 0.0}},
+    {"fecha": "2026-11-10", "prob": {"on": 19, "neu": 26, "off": 55}, "base": [25, 50, 25], "modo": "tensión", "confianza": "media", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "hy_ge_15", "fedwatch_hawkish"], "dispersion": ["sub_10y_30y", "macro1"], "direccion": ["settle_neto_absorcion20"], "componentes": {"fondo_off": 5.0, "fondo_on": 0.0, "disp": 4.0, "dir_off": 2.0, "dir_on": 0.0}},
+    {"fecha": "2026-11-11", "prob": {"on": 25, "neu": 50, "off": 25}, "base": [25, 50, 25], "modo": "tensión", "confianza": "media", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "hy_ge_15", "fedwatch_hawkish"], "dispersion": [], "direccion": [], "componentes": {"fondo_off": 0.0, "fondo_on": 0.0, "disp": 0.0, "dir_off": 0.0, "dir_on": 0.0}},
+    {"fecha": "2026-11-12", "prob": {"on": 18, "neu": 30, "off": 52}, "base": [25, 50, 25], "modo": "tensión", "confianza": "media", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "hy_ge_15", "fedwatch_hawkish"], "dispersion": ["sub_10y_30y"], "direccion": ["settle_neto_absorcion20"], "componentes": {"fondo_off": 5.0, "fondo_on": 0.0, "disp": 2.0, "dir_off": 2.0, "dir_on": 0.0}},
+    {"fecha": "2026-11-13", "prob": {"on": 24, "neu": 43, "off": 33}, "base": [25, 50, 25], "modo": "tensión", "confianza": "media", "fondo": ["sofr_ge_iorb", "gc_ge_iorb", "hy_ge_15", "fedwatch_hawkish"], "dispersion": ["macro2"], "direccion": [], "componentes": {"fondo_off": 2.0, "fondo_on": 0.0, "disp": 1.0, "dir_off": 0.0, "dir_on": 0.0}}
+   ],
+   "retrasos_fuentes": {
+    "NY Fed API rates/all/search.json (SOFR, EFFR, TGCR, BGCR, OBFR)": 1,
+    "FRED IORB.txt": 26,
+    "Fed nota de implementación 28-oct-2026 + página FRED IORB (alternativa IORB)": 0,
+    "NY Fed api/rp lastTwoWeeks.json (ON RRP/SRF)": 9,
+    "NY Fed api/rp lastTwoWeeks.csv (alternativa misma fuente) + FRED RRPONTSYD/RPONTTLD (contraste)": 0,
+    "FRED WRESBAL.txt": 2,
+    "CME cme-xccy-basis-historical-data.csv (XEURBI)": 10,
+    "Fed FOMC calendar / NY Fed operational details / SIFMA": 0,
+    "fiscaldata auctions_query": 11,
+    "fiscaldata auctions_query (vencimientos, Ruta 3b)": 0,
+    "DTS operating_cash_balance (TGA)": 1,
+    "fiscaldata buybacks_operations": 1,
+    "Tentative Buyback Schedule Q4 2026": 2,
+    "Treasury QRA 04-nov-2026 (sb0678)": 2,
+    "Newsquawk (anuncios bills)": 3,
+    "SafeRate / Brinker Advisor (bills OBJ)": 0,
+    "TFTC (resultados bills y cupones)": 1,
+    "YieldDocket": 3,
+    "InvestingLive (WI 10Y/30Y)": 20,
+    "Investing MOVE": 0,
+    "OFR fails (4 series)": 7,
+    "FRED OAS IG/HY/CCC (TXT)": 1,
+    "FRED OAS Single-B (página; TXT hasta 04-nov)": 1,
+    "Investing Fed Rate Monitor": 8,
+    "Trading Economics calendario / indicadores": 0,
+    "CME XEURBI CSV (reabierto en Parte 3)": 0,
+    "FRED H.8 depósitos DPSACBW027SBOG": 7,
+    "BLS/Census/BEA/ISM/Fed/SIFMA calendarios": 0,
+    "FRED WALCL/WTREGEN/ECBASSETSW/JPNASSETS + Frankfurter": 2,
+    "FRED WLRRAOL": 7,
+    "Investing S&P 500 / Russell 2000": 0,
+    "FRED NASDAQ100 (página)": 1,
+    "Frankfurter AUD/JPY": 0
+   }
+  },
+  {
+   "obj": ["2026-11-16", "2026-11-20"],
+   "rev": ["2026-11-09", "2026-11-13"],
+   "corte": "2026-11-14",
+   "prompt": "P3 v6.3",
+   "base_usada": [25, 50, 25],
+   "modo": "normal",
+   "regimen": "estrés incipiente",
+   "prob_emitidas": [
+    {"fecha": "2026-11-16", "on": 22, "neu": 41, "off": 37},
+    {"fecha": "2026-11-17", "on": 22, "neu": 41, "off": 37},
+    {"fecha": "2026-11-18", "on": 27, "neu": 37, "off": 36},
+    {"fecha": "2026-11-19", "on": 26, "neu": 45, "off": 29},
+    {"fecha": "2026-11-20", "on": 24, "neu": 49, "off": 27}
+   ],
+   "evaluacion_rev": {"recuento": {"on": 1, "neu": 2, "off": 0, "nc": 2}, "brier_emitido": 0.8509, "brier_base": 0.5417, "brier_304030": 0.6067, "dias_puntuados": 3},
+   "recuento": {"on": 1, "neu": 2, "off": 0},
+   "resultados_rev": [
+    {"fecha": "2026-11-09", "resultado": "on"},
+    {"fecha": "2026-11-10", "resultado": "neu"},
+    {"fecha": "2026-11-11", "resultado": "nc"},
+    {"fecha": "2026-11-12", "resultado": "neu"},
+    {"fecha": "2026-11-13", "resultado": "nc"}
+   ],
+   "pistas_rev": {
+    "nasdaq100": {"recuento": {"on": 2, "neu": 2, "off": 1, "nc": 0}, "brier_emitido": 0.8238, "brier_base": 0.675, "dias_puntuados": 5, "dias": [
+     {"fecha": "2026-11-09", "valor": 3.4, "resultado": "on"},
+     {"fecha": "2026-11-10", "valor": -0.6, "resultado": "neu"},
+     {"fecha": "2026-11-11", "valor": 2.28, "resultado": "on"},
+     {"fecha": "2026-11-12", "valor": -0.3, "resultado": "neu"},
+     {"fecha": "2026-11-13", "valor": -1.22, "resultado": "off"}]},
+    "russell2000": {"recuento": {"on": 2, "neu": 2, "off": 1, "nc": 0}, "brier_emitido": 0.6958, "brier_base": 0.675, "dias_puntuados": 5, "dias": [
+     {"fecha": "2026-11-09", "valor": 3.15, "resultado": "on"},
+     {"fecha": "2026-11-10", "valor": -0.68, "resultado": "neu"},
+     {"fecha": "2026-11-11", "valor": 0.88, "resultado": "on"},
+     {"fecha": "2026-11-12", "valor": -1.66, "resultado": "off"},
+     {"fecha": "2026-11-13", "valor": -0.31, "resultado": "neu"}]},
+    "audjpy": {"recuento": {"on": 2, "neu": 0, "off": 3, "nc": 0}, "brier_emitido": 0.6198, "brier_base": 0.875, "dias_puntuados": 5, "dias": [
+     {"fecha": "2026-11-09", "valor": 0.52, "resultado": "on"},
+     {"fecha": "2026-11-10", "valor": -0.35, "resultado": "off"},
+     {"fecha": "2026-11-11", "valor": 0.37, "resultado": "on"},
+     {"fecha": "2026-11-12", "valor": -0.5, "resultado": "off"},
+     {"fecha": "2026-11-13", "valor": -0.65, "resultado": "off"}]}
+   },
+   "direccion_rev": {
+    "dias": [
+     {"fecha": "2026-11-09", "prob": {"on": 24, "neu": 44, "off": 32}, "dijimos": "off", "margen_pts": 8, "resultado": "on", "veredicto": "al_reves", "causa": "desconocida"},
+     {"fecha": "2026-11-10", "prob": {"on": 19, "neu": 26, "off": 55}, "dijimos": "off", "margen_pts": 36, "resultado": "neu", "veredicto": "neutral", "tramo": "lateral bajista", "inclinacion": "a favor"},
+     {"fecha": "2026-11-11", "prob": {"on": 25, "neu": 50, "off": 25}, "dijimos": "eq", "margen_pts": 0, "resultado": "nc", "veredicto": "nc"},
+     {"fecha": "2026-11-12", "prob": {"on": 18, "neu": 30, "off": 52}, "dijimos": "off", "margen_pts": 34, "resultado": "neu", "veredicto": "neutral", "tramo": "lateral bajista", "inclinacion": "a favor"},
+     {"fecha": "2026-11-13", "prob": {"on": 24, "neu": 43, "off": 33}, "dijimos": "off", "margen_pts": 9, "resultado": "nc", "veredicto": "nc"}
+    ],
+    "recuento": {"acierto": 0, "al_reves": 1, "neutral": 2, "nc": 2, "sin_direccion": 0},
+    "dias_con_movimiento": 1,
+    "resumen": {"fuertes": {"acertados": 0, "total": 1}, "laterales": {"acertados": 2, "total": 2, "planos": 0}, "aciertos_sin_causa": 0},
+    "tasa_acierto": 0.0,
+    "nota": "Dirección = el lado (on u off) con más probabilidad emitida. Los días laterales (neutrales) y no clasificables no cuentan como acierto ni fallo; el lateral se etiqueta alcista o bajista si el S&P 500 se movió ≥ 0,25 % y se indica si se inclinó a favor o en contra de lo que dijimos."
+   },
+   "factores_dias": [
+    {"fecha": "2026-11-16", "prob": {"on": 22, "neu": 41, "off": 37}, "base": [25, 50, 25], "modo": "normal", "confianza": "alta", "fondo": ["sofr_ge_iorb", "fedwatch_hawkish", "hy_le_m10"], "dispersion": ["settle_cupones_nnc10"], "direccion": ["settle_neto_absorcion20"], "componentes": {"fondo_off": 2.0, "fondo_on": 0.0, "disp": 0.5, "dir_off": 2.0, "dir_on": 0.0}, "fondo_sin_puntos": ["hy_le_m10"]},
+    {"fecha": "2026-11-17", "prob": {"on": 22, "neu": 41, "off": 37}, "base": [25, 50, 25], "modo": "normal", "confianza": "alta", "fondo": ["sofr_ge_iorb", "fedwatch_hawkish", "hy_le_m10"], "dispersion": ["macro2"], "direccion": ["settle_neto_absorcion20"], "componentes": {"fondo_off": 2.0, "fondo_on": 0.0, "disp": 1.0, "dir_off": 2.0, "dir_on": 0.0}, "fondo_sin_puntos": ["hy_le_m10"]},
+    {"fecha": "2026-11-18", "prob": {"on": 27, "neu": 37, "off": 36}, "base": [25, 50, 25], "modo": "normal", "confianza": "alta", "fondo": ["sofr_ge_iorb", "fedwatch_hawkish", "hy_le_m10"], "dispersion": ["sub_20y", "macro2", "megacaps"], "direccion": ["actas_repricing_hawkish"], "componentes": {"fondo_off": 1.0, "fondo_on": 0.0, "disp": 3.5, "dir_off": 1.0, "dir_on": 0.0}, "fondo_sin_puntos": ["hy_le_m10"]},
+    {"fecha": "2026-11-19", "prob": {"on": 26, "neu": 45, "off": 29}, "base": [25, 50, 25], "modo": "normal", "confianza": "baja", "fondo": ["sofr_ge_iorb", "fedwatch_hawkish", "hy_le_m10"], "dispersion": ["tips_10y_mas", "oferta_acciones"], "direccion": [], "componentes": {"fondo_off": 1.0, "fondo_on": 0.0, "disp": 2.0, "dir_off": 0.0, "dir_on": 0.0}, "fondo_sin_puntos": ["hy_le_m10"]},
+    {"fecha": "2026-11-20", "prob": {"on": 24, "neu": 49, "off": 27}, "base": [25, 50, 25], "modo": "normal", "confianza": "alta", "fondo": ["sofr_ge_iorb", "fedwatch_hawkish", "hy_le_m10"], "dispersion": [], "direccion": [], "componentes": {"fondo_off": 1.0, "fondo_on": 0.0, "disp": 0.0, "dir_off": 0.0, "dir_on": 0.0}, "fondo_sin_puntos": ["hy_le_m10"]}
+   ],
+   "retrasos_fuentes": {
+    "NY Fed rates API (search.json 2026-11-02..14): SOFR/EFFR/TGCR/BGCR/OBFR": 1,
+    "FRED IORB.txt": 0,
+    "NY Fed rp lastTwoWeeks.json (ON RRP y SRF)": 0,
+    "CME cme-xccy-basis-historical-data.csv (XEURBI)": 0,
+    "FRED WRESBAL.txt": 2,
+    "fiscaldata auctions_query": 15,
+    "fiscaldata upcoming_auctions": 19,
+    "fiscaldata auctions_query maturity (Ruta 3b)": 0,
+    "fiscaldata DTS operating_cash_balance": 1,
+    "fiscaldata buybacks_operations": 1,
+    "Tentative Buyback Schedule Q4 2026": 7,
+    "QRA 04-nov-2026 (sb0678) y Financing Estimates (sb0675)": 7,
+    "Newsquawk (anuncios bills/cupones)": 2,
+    "SafeRate treasury auctions": 1,
+    "Finwire/InvestingLive (3Y, 10Y)": 2,
+    "Helious / SeekingAlpha-TradingView (30Y)": 1,
+    "Newsquawk 20Y 21-oct / TIPSWatch 17-sep": 16,
+    "SIFMA holiday schedule": 0,
+    "Investing ice-bofaml-move-historical-data?end_date=2026-11-14 (MOVE)": 0,
+    "OFR FR 2004 fails (4 series)": 6,
+    "FRED BAML OAS IG/HY/B/CCC (TXT)": 1,
+    "Investing Fed Rate Monitor": 0,
+    "Tradingeconomics (páginas de indicador; calendario general no cargó)": 0,
+    "BLS / Census / BEA / Fed calendario nov-2026 / SIFMA": 0,
+    "Fed H.8 (release 13-nov)": 6,
+    "FRED WALCL/WTREGEN/WLRRAOL (GLI proxy)": 2,
+    "FRED ECBASSETSW": 4,
+    "Frankfurter EUR/USD, EUR/JPY": 0,
+    "Investing S&P 500, Russell 2000, RSP, DXY, AUD/JPY, USD/JPY, oro, cobre (?end_date)": 0,
+    "FRED NASDAQ100 y VIXCLS (página)": 1
+   },
+   "nota_reemision": "Reemitida el 2026-11-15 (v6.7): miércoles 18-nov de 31/38/31 a 30/36/34 por P-035; resto sin cambios. Jueves 19-nov (v6.8, P-036): IPO de Anthropic como dispersión +1, SECONDARY → confianza baja; probabilidad sin cambios (28/44/28). Reemitida otra vez el 2026-11-15 (v6.9, P-037): hy_le_m10 sin puntos por estrechamiento malo (OAS −12, rentabilidad HY +16 pb); cambian los cinco días."
+  }
+ ],
+ "funding_dias": [
+  {"fecha": "2026-10-19", "sofr": 3.87, "iorb": 3.9, "tgcr": 3.85, "bgcr": 3.85, "sofr_p99": 3.95, "sofr_vol_bn": 2888.0, "srf_bn": 0.011, "onrrp_bn": 0.33, "tga_cierre_bn": 965.045, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false},
+  {"fecha": "2026-10-20", "sofr": 3.88, "iorb": 3.9, "tgcr": 3.86, "bgcr": 3.86, "sofr_p99": 3.96, "sofr_vol_bn": 2925.0, "srf_bn": 0.0, "onrrp_bn": 0.227, "tga_cierre_bn": 973.653, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false},
+  {"fecha": "2026-10-21", "sofr": 3.88, "iorb": 3.9, "tgcr": 3.86, "bgcr": 3.86, "sofr_p99": 3.96, "sofr_vol_bn": 2942.0, "srf_bn": 0.0, "onrrp_bn": 0.237, "tga_cierre_bn": 945.153, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false},
+  {"fecha": "2026-10-22", "sofr": 3.9, "iorb": 3.9, "tgcr": 3.88, "bgcr": 3.88, "sofr_p99": 3.98, "sofr_vol_bn": 2945.0, "srf_bn": 0.001, "onrrp_bn": 0.351, "tga_cierre_bn": 961.759, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false},
+  {"fecha": "2026-10-23", "sofr": 3.92, "iorb": 3.9, "tgcr": 3.9, "bgcr": 3.9, "sofr_p99": 4.0, "sofr_vol_bn": 3065.0, "srf_bn": 0.0, "onrrp_bn": 0.2, "tga_cierre_bn": 982.489, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false},
+  {"fecha": "2026-10-26", "sofr": 3.93, "iorb": 3.9, "tgcr": 3.91, "bgcr": 3.91, "sofr_p99": 4.01, "sofr_vol_bn": 3086.0, "ledger_ok": true, "srf_bn": 0.005, "onrrp_bn": 0.2, "tga_cierre_bn": 1020.7, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": 0.0, "nota_correccion": "2026-11-15 (P-010): retirados bills_nnc_bn/bills_gross_bn = 25,0 heredados de la prueba del 29-oct; semanas/2026-11-02/datos2.json no tiene settlements el 26-oct (neto 0,0)."},
+  {"fecha": "2026-10-27", "sofr": 3.95, "iorb": 3.9, "tgcr": 3.94, "bgcr": 3.94, "sofr_p99": 4.04, "sofr_vol_bn": 3147.0, "ledger_ok": true, "srf_bn": 0.004, "onrrp_bn": 0.226, "tga_cierre_bn": 1052.53, "bills_nnc_bn": 40.998, "bills_gross_bn": 290.0, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": 40.998},
+  {"fecha": "2026-10-28", "sofr": 3.94, "iorb": 3.9, "tgcr": 3.92, "bgcr": 3.92, "sofr_p99": 4.02, "sofr_vol_bn": 3074.0, "ledger_ok": true, "srf_bn": 0.006, "onrrp_bn": 0.176, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "buyback_bn": 6.0, "nnc_neto_bn": -6.0, "tga_cierre_bn": 1015.632},
+  {"fecha": "2026-10-29", "ledger_ok": true, "srf_bn": 0.031, "onrrp_bn": 0.353, "bills_nnc_bn": 31.997, "bills_gross_bn": 326.0, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "sofr": 3.94, "iorb": 3.9, "tgcr": 3.92, "bgcr": 3.92, "sofr_p99": 4.02, "sofr_vol_bn": 3145.0, "nnc_neto_bn": 31.997, "tga_cierre_bn": 1040.236},
+  {"fecha": "2026-10-30", "ledger_ok": true, "srf_bn": 0.0, "onrrp_bn": 4.375, "cupones_nnc_bn": 26.0, "cupones_gross_bn": 26.0, "gross_10y_mas_bn": 0, "tenores": ["TIPS:5Y TIPS"], "fin_mes": true, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": 26.0, "sofr": 3.95, "iorb": 3.9, "tgcr": 3.93, "bgcr": 3.93, "sofr_p99": 4.03, "sofr_vol_bn": 3175.0, "tga_cierre_bn": 951.593},
+  {"fecha": "2026-11-02", "sofr": 3.95, "iorb": 3.9, "tgcr": 3.92, "bgcr": 3.92, "sofr_p99": 4.03, "sofr_vol_bn": 3268.0, "ledger_ok": true, "srf_bn": 0.002, "onrrp_bn": 5.087, "tga_cierre_bn": 930.757, "cupones_nnc_bn": -35.0, "cupones_gross_bn": 213.0, "gross_10y_mas_bn": 0, "tenores": ["2Y", "5Y", "7Y", "FRN:2Y FRN"], "fin_mes": false, "inicio_mes": true, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": -35.0},
+  {"fecha": "2026-11-03", "sofr": 3.97, "iorb": 3.9, "tgcr": 3.95, "bgcr": 3.95, "sofr_p99": 4.05, "sofr_vol_bn": 3260.0, "ledger_ok": true, "srf_bn": 0.005, "onrrp_bn": 0.427, "tga_cierre_bn": 938.208, "bills_nnc_bn": 42.998, "bills_gross_bn": 300.0, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": 42.998},
+  {"fecha": "2026-11-04", "sofr": 3.94, "iorb": 3.9, "tgcr": 3.93, "bgcr": 3.93, "sofr_p99": 4.02, "sofr_vol_bn": 3207.0, "ledger_ok": true, "srf_bn": 0.0, "onrrp_bn": 0.225, "tga_cierre_bn": 936.248, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": 0},
+  {"fecha": "2026-11-05", "sofr": 3.92, "iorb": 3.9, "tgcr": 3.9, "bgcr": 3.9, "sofr_p99": 4.0, "sofr_vol_bn": 3256.0, "ledger_ok": true, "srf_bn": 0.0, "onrrp_bn": 0.125, "tga_cierre_bn": 922.752, "bills_nnc_bn": 32.999, "bills_gross_bn": 277.0, "buyback_bn": 6.0, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": 26.999},
+  {"fecha": "2026-11-06", "ledger_ok": true, "srf_bn": 0.0, "onrrp_bn": 0.15, "buyback_bn": 4.0, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": -4.0, "sofr": 3.89, "iorb": 3.9, "tgcr": 3.86, "bgcr": 3.87, "sofr_p99": 3.97, "sofr_vol_bn": 3174.0, "tga_cierre_bn": 910.313},
+  {"fecha": "2026-11-09", "sofr": 3.88, "iorb": 3.9, "tgcr": 3.86, "bgcr": 3.86, "sofr_p99": 3.96, "sofr_vol_bn": 3100.0, "ledger_ok": true, "srf_bn": 0.005, "onrrp_bn": 0.252, "tga_cierre_bn": 922.633, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": 0},
+  {"fecha": "2026-11-10", "sofr": 3.89, "iorb": 3.9, "tgcr": 3.87, "bgcr": 3.87, "sofr_p99": 3.97, "sofr_vol_bn": 3159.0, "ledger_ok": true, "srf_bn": 0.005, "onrrp_bn": 0.152, "tga_cierre_bn": 912.134, "bills_nnc_bn": 32.997, "bills_gross_bn": 300.0, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": 32.997},
+  {"fecha": "2026-11-12", "sofr": 3.9, "iorb": 3.9, "tgcr": 3.87, "bgcr": 3.87, "sofr_p99": 3.98, "sofr_vol_bn": 3138.0, "ledger_ok": true, "srf_bn": 0.001, "onrrp_bn": 0.25, "tga_cierre_bn": 933.127, "bills_nnc_bn": 22.998, "bills_gross_bn": 277.0, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": 22.998},
+  {"fecha": "2026-11-13", "ledger_ok": true, "srf_bn": 0.0, "onrrp_bn": 0.325, "buyback_bn": 0.556, "fin_mes": false, "inicio_mes": false, "fin_trimestre": false, "mediados_mes": false, "tax_date": false, "semana_rev": true, "nnc_neto_bn": -0.556}
+ ],
+ "artifact_simulador": "https://claude.ai/artifact/VjS62b2z8CpfSEN6xFo1HH",
+ "versiones_vigentes": {
+  "contrato": "C4",
+  "parte1": "P1 v2",
+  "parte2": "P2 v5.1",
+  "parte3": "P3 v6.3",
+  "metodo": "v6.9",
+  "investigadores": "I2",
+  "orquestador": "O6",
+  "final": "Final v1.1",
+  "aprendizaje": "A1 (P-020, 2026-11-07)"
+ },
+ "nota_metodo": "v6.4 desde 2026-11-07: P-021 (la presión de funding solo inclina los días con catalizador de caja) y P-022 (festivo de bonos = base). La semana OBJ 2026-11-09 se reemitió con v6.4. v6.5 desde 2026-11-15: P-030 (condiciones de subasta en el motor; MOVE 100/110 según el nivel de cinco sesiones antes). v6.6 desde 2026-11-15: P-008 (eventos solo SECONDARY → confianza baja) y P-017 (escenario del neto en el borde); contrato C4. v6.7 desde 2026-11-15: P-035 (actas con repricing del 2Y)."
+}

@@ -1,7 +1,7 @@
 {
  "corte": "2026-11-13",
  "desde": "2026-08-21",
- "generado_utc": "2026-11-18T08:36:40+00:00",
+ "generado_utc": "2026-11-18T08:39:51+00:00",
  "fuentes_ok": 31,
  "fuentes_total": 33,
  "fuentes": {
@@ -180,6 +180,7 @@
    "parte": "P3-A",
    "filas": 76,
    "ultima": "2026-11-04",
+   "ofr_series_ok": 4,
    "nota": "semanal (miércoles), se publica el jueves de la semana siguiente"
   },
   "fomc_calendario": {
@@ -248,18 +249,18 @@
  },
  "archivos": {
   "anunciadas_td.csv": "1ce93460ddc8468ce67240a5285f5e80830f1d2a8147303398793025323fd343",
-  "bea_calendario.txt": "7c1a64891e5ea8de007c790ce289152be81bf78c26957984a1f43526856fb9af",
+  "bea_calendario.txt": "fd663a4c3f73a438ea881adbc31e287f0a2d2d66c94433bbc512eca5f4024b29",
   "buybacks.csv": "78c79be138b8174ff928979018aea911acf2de7d3ddd0b0d8abc050aa6926317",
   "calendario_tentativo.txt": "6a2fa98ab844368a0afb005849dd1d3c7a7c34b0f49b2441a2540275641ec700",
   "consenso_semana_actual.csv": "3c33124238a0803748822a2152f7283dbfced88415ec9cbe18db79536d4848a3",
   "dts_saldo_bruto.csv": "af40ab3c088558f6b630f8045819de7627a639eff7fdbebcecb513595b543273",
-  "fed_comunicados.txt": "bca53c337001eb5af5146e75bae6372316ce28d02bb35c2a8202d63187ed401a",
-  "fomc_calendario.txt": "649ff839c28f1f3ae3e3b63da569122c0f02ac6b5557b3dea6edb36b9d982cd3",
+  "fed_comunicados.txt": "281a4f4f81316a13e0e89d88d16f5739c5fe4d3150ea90d110eb8127468b0285",
+  "fomc_calendario.txt": "8cf1ff51a6572d52a17014eb2f209abeb5eb933633510125d249d05994ebb31e",
   "nyfed_rp_bruto.json": "3cd840f526d4abde5054c452b4de80138894fb971c1cc679dd11210173660404",
   "proximas_td.csv": "211cbd6ff9487a3ca29f24e2f06d5e1aaaf44da619a406ca5618a8cce6dee6af",
-  "qra_pagina.txt": "b8c423756936daed33bd0802a30cd250eda3c4a5082bb1e6db343d8b8bf09e49",
-  "series.csv": "db4ec3dff29a0c86a3ef24ac4e8dd7b334db2380d748841ae5499e476ab9f306",
-  "sifma_festivos.txt": "fd8b1a9e298ed8b82f8d374c110e3fc712bd08bd484edbd873231a2f64923c3b",
+  "qra_pagina.txt": "4a956e299726ddec9fa2b8d4fafdbd61a3afd6743077d43589756e8426a6a5bd",
+  "series.csv": "18d8c117f032844f64d5448f30f5a2100a9fae517cfb30cfd5fa43df4b7ffb83",
+  "sifma_festivos.txt": "f72cd56be352c71d68070caa81b9a1bd0d0b0bbab63831a4256e5699795706e8",
   "subastas.csv": "b8351564fe1c8d9f20145f2a75472e5a7aab3cf7cc7a006d62728d5dafb9b863",
   "subastas_proximas.csv": "65748b2b95f4bc791a997a94164a10eb4b01f27d9e1d7e7bf12433784f1393ba",
   "subastas_td.csv": "a40cc71ab6b3a1978461b8625a99a323919311210a964fdba911990ab365fc8a"

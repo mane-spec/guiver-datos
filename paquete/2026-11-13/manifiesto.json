@@ -1,0 +1,165 @@
+{
+ "corte": "2026-11-13",
+ "desde": "2026-08-21",
+ "generado_utc": "2026-11-18T07:49:17+00:00",
+ "fuentes_ok": 19,
+ "fuentes_total": 21,
+ "fuentes": {
+  "IORB": {
+   "ok": true,
+   "parte": "P1-A",
+   "filas": 85,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IORB&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "WRESBAL": {
+   "ok": true,
+   "parte": "P1-B",
+   "filas": 12,
+   "ultima": "2026-11-11",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WRESBAL&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "BAMLC0A0CM": {
+   "ok": true,
+   "parte": "P3-B",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAMLC0A0CM&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "BAMLH0A0HYM2": {
+   "ok": true,
+   "parte": "P3-B",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAMLH0A0HYM2&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "BAMLH0A2HYB": {
+   "ok": true,
+   "parte": "P3-B",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAMLH0A2HYB&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "BAMLH0A3HYC": {
+   "ok": true,
+   "parte": "P3-B",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAMLH0A3HYC&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "BAMLH0A0HYM2EY": {
+   "ok": true,
+   "parte": "P3-B",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAMLH0A0HYM2EY&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "BAMLH0A2HYBEY": {
+   "ok": true,
+   "parte": "P3-B",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAMLH0A2HYBEY&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "BAMLH0A3HYCEY": {
+   "ok": true,
+   "parte": "P3-B",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BAMLH0A3HYCEY&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "DGS2": {
+   "ok": true,
+   "parte": "P3-B/P3-C",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS2&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "DGS5": {
+   "ok": true,
+   "parte": "P3-B",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS5&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "SP500": {
+   "ok": true,
+   "parte": "P3-F",
+   "filas": 61,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "NASDAQ100": {
+   "ok": true,
+   "parte": "P3-F",
+   "filas": 60,
+   "ultima": "2026-11-13",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQ100&cosd=2026-08-21&coed=2026-11-13"
+  },
+  "nyfed_tipos": {
+   "ok": true,
+   "parte": "P1-A",
+   "filas": 348,
+   "ultima": {
+    "EFFR": "2026-11-13",
+    "OBFR": "2026-11-13",
+    "TGCR": "2026-11-13",
+    "BGCR": "2026-11-13",
+    "SOFR": "2026-11-13",
+    "SOFRAI": "2026-11-13"
+   },
+   "url": "https://markets.newyorkfed.org/api/rates/all/search.json?startDate=2026-08-21&endDate=2026-11-13"
+  },
+  "nyfed_rp": {
+   "ok": false,
+   "parte": "P1-B",
+   "error": "HTTPError: HTTP Error 400: Bad Request",
+   "url": "https://markets.newyorkfed.org/api/rp/all/all/results/search.json?startDate=2026-08-21&endDate=2026-11-13"
+  },
+  "tga": {
+   "ok": true,
+   "parte": "P2-A",
+   "filas": 58,
+   "ultima": "2026-11-13",
+   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance?filter=record_date:gte:2026-08-21,record_date:lte:2026-11-13&sort=-record_date&page[size]=1000&page[number]=1"
+  },
+  "subastas": {
+   "ok": true,
+   "parte": "P2-C/P2-D",
+   "filas": 631,
+   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?filter=auction_date:gte:2025-05-12,auction_date:lte:2026-11-13&sort=-auction_date&page[size]=1000&page[number]=1"
+  },
+  "subastas_proximas": {
+   "ok": true,
+   "parte": "P2-B/P2-E",
+   "filas": 0,
+   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/upcoming_auctions?filter=auction_date:gte:2026-11-13&sort=auction_date&page[size]=1000&page[number]=1"
+  },
+  "buybacks": {
+   "ok": true,
+   "parte": "P2-A/P2-B",
+   "filas": 18,
+   "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/buybacks_operations?filter=operation_date:gte:2026-08-21&sort=-operation_date&page[size]=1000&page[number]=1"
+  },
+  "audjpy": {
+   "ok": true,
+   "parte": "P3-F",
+   "filas": 61,
+   "url": "https://api.frankfurter.app/2026-08-21..2026-11-13?from=AUD&to=JPY"
+  },
+  "xeurbi": {
+   "ok": false,
+   "parte": "P1-C",
+   "error": "TimeoutError: The read operation timed out",
+   "url": "https://www.cmegroup.com/reports/cme-xccy-basis-historical-data.csv"
+  }
+ },
+ "archivos": {
+  "buybacks.csv": "78c79be138b8174ff928979018aea911acf2de7d3ddd0b0d8abc050aa6926317",
+  "dts_saldo_bruto.csv": "af40ab3c088558f6b630f8045819de7627a639eff7fdbebcecb513595b543273",
+  "series.csv": "9d36b4501f8896951a5e76c6db08687c9da6729c15ee36203986fddc95d39078",
+  "subastas.csv": "b8351564fe1c8d9f20145f2a75472e5a7aab3cf7cc7a006d62728d5dafb9b863",
+  "subastas_proximas.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ "aviso": "Lo que no esté aquí con ok=true se busca con WebFetch como siempre."
+}

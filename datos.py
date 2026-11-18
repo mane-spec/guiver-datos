@@ -180,9 +180,22 @@ def f_nyfed(corte, desde, filas, man, carpeta):
     except Exception as e:  # noqa: BLE001
         man["nyfed_tipos"] = {"ok": False, "parte": "P1-A", "error": str(e), "url": url}
 
-    url = f"{NYFED}/rp/all/all/results/search.json?startDate={desde}&endDate={corte}"
+    candidatos = [
+        f"{NYFED}/rp/all/all/results/search.json?startDate={desde}&endDate={corte}",
+        f"{NYFED}/rp/results/search.json?startDate={desde}&endDate={corte}",
+        f"{NYFED}/rp/all/all/results/last/150.json",
+        f"{NYFED}/rp/all/all/results/lastTwoWeeks.json",
+    ]
     try:
-        js = json.loads(get(url))
+        js, url, errores = None, None, []
+        for u in candidatos:
+            try:
+                js, url = json.loads(get(u, intentos=1)), u
+                break
+            except Exception as e:  # noqa: BLE001
+                errores.append(f"{u.split('/api')[1]} → {e}")
+        if js is None:
+            raise RuntimeError(" | ".join(errores))
         with open(os.path.join(carpeta, "nyfed_rp_bruto.json"), "w") as fh:
             json.dump(js, fh)
         dias = parse_nyfed_rp(js)
@@ -193,7 +206,8 @@ def f_nyfed(corte, desde, filas, man, carpeta):
             filas.append(fila(f"{nombre}_solicitado", d["fecha"], d["submitted"] / 1e9, "bn USD",
                               "NY Fed API", corte))
         man["nyfed_rp"] = {"ok": True, "parte": "P1-B", "filas": len(dias),
-                           "ultima": max((d["fecha"] for d in dias), default=None), "url": url}
+                           "ultima": max((d["fecha"] for d in dias), default=None), "url": url,
+                           "intentos_fallidos": errores}
     except Exception as e:  # noqa: BLE001
         man["nyfed_rp"] = {"ok": False, "parte": "P1-B", "error": str(e), "url": url}
 
@@ -202,7 +216,9 @@ def fiscal_todo(ruta, filtro, orden="-record_date"):
     """Pagina hasta el final; devuelve todas las filas."""
     filas, pagina = [], 1
     while True:
-        q = {"filter": filtro, "sort": orden, "page[size]": "1000", "page[number]": str(pagina)}
+        q = {"sort": orden, "page[size]": "1000", "page[number]": str(pagina)}
+        if filtro:
+            q["filter"] = filtro
         url = f"{FISCAL}{ruta}?" + urllib.parse.urlencode(q, safe=":,[]-")
         js = json.loads(get(url))
         datos = parse_fiscal(js)
@@ -251,16 +267,41 @@ def f_fiscal(corte, desde, filas, man, carpeta):
         ("subastas", "/v1/accounting/od/auctions_query",
          f"auction_date:gte:{hace18},auction_date:lte:{corte}", "-auction_date", "P2-C/P2-D"),
         ("subastas_proximas", "/v1/accounting/od/upcoming_auctions",
-         f"auction_date:gte:{corte}", "auction_date", "P2-B/P2-E"),
+         None, "auction_date", "P2-B/P2-E"),
         ("buybacks", "/v1/accounting/od/buybacks_operations",
          f"operation_date:gte:{desde}", "-operation_date", "P2-A/P2-B"),
     ):
         try:
             datos, url = fiscal_todo(ruta, filtro, orden)
             guardar_csv(os.path.join(carpeta, f"{clave}.csv"), datos)
-            man[clave] = {"ok": True, "parte": parte, "filas": len(datos), "url": url}
+            campo = "operation_date" if clave == "buybacks" else "auction_date"
+            ultima = max((d.get(campo) or "" for d in datos), default=None)
+            man[clave] = {"ok": True, "parte": parte, "filas": len(datos), "ultima": ultima, "url": url,
+                          "fuente": "fiscaldata (secundaria para subastas: puede ir semanas atrasada)"}
         except Exception as e:  # noqa: BLE001
             man[clave] = {"ok": False, "parte": parte, "error": str(e)}
+
+
+def f_treasurydirect(corte, man, carpeta):
+    """Fuente PRINCIPAL de subastas (resultados al día y anunciadas)."""
+    base = "https://www.treasurydirect.gov/TA_WS/securities"
+    hace18 = corte - dt.timedelta(days=550)
+    for clave, url, parte in (
+        ("subastas_td", f"{base}/search?startDate={hace18:%m/%d/%Y}&endDate={corte:%m/%d/%Y}"
+                        f"&dateFieldName=auctionDate&format=json", "P2-C/P2-D"),
+        ("anunciadas_td", f"{base}/announced?format=json&days=30", "P2-B/P2-E"),
+        ("proximas_td", f"{base}/upcoming?format=json", "P2-B/P2-E"),
+    ):
+        try:
+            datos = json.loads(get(url, intentos=2))
+            if isinstance(datos, dict):
+                datos = datos.get("securityList") or datos.get("data") or []
+            datos = [{k: v for k, v in d.items() if not isinstance(v, (dict, list))} for d in datos]
+            guardar_csv(os.path.join(carpeta, f"{clave}.csv"), datos)
+            ultima = max(((d.get("auctionDate") or "")[:10] for d in datos), default=None)
+            man[clave] = {"ok": True, "parte": parte, "filas": len(datos), "ultima": ultima, "url": url}
+        except Exception as e:  # noqa: BLE001
+            man[clave] = {"ok": False, "parte": parte, "error": str(e), "url": url}
 
 
 def f_audjpy(corte, desde, filas, man):
@@ -278,7 +319,7 @@ def f_audjpy(corte, desde, filas, man):
 def f_xeurbi(corte, man, carpeta):
     url = "https://www.cmegroup.com/reports/cme-xccy-basis-historical-data.csv"
     try:
-        texto = get(url, intentos=2)
+        texto = get(url, intentos=1)
         if "<html" in texto[:500].lower():
             raise RuntimeError("CME devolvió HTML (bloqueo anti-bot)")
         with open(os.path.join(carpeta, "xeurbi_bruto.csv"), "w") as fh:
@@ -297,6 +338,7 @@ def construir(corte, base="paquete"):
     f_fred(corte, desde, filas, man)
     f_nyfed(corte, desde, filas, man, carpeta)
     f_fiscal(corte, desde, filas, man, carpeta)
+    f_treasurydirect(corte, man, carpeta)
     f_audjpy(corte, desde, filas, man)
     f_xeurbi(corte, man, carpeta)
 

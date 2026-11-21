@@ -1,0 +1,229 @@
+account_type,close_today_bal,open_fiscal_year_bal,open_month_bal,open_today_bal,record_calendar_day,record_calendar_month,record_calendar_quarter,record_calendar_year,record_date,record_fiscal_quarter,record_fiscal_year,src_line_nbr,sub_table_name,table_nbr,table_nm
+Treasury General Account (TGA) Opening Balance,null,984046,951593,892310,19,11,4,2026,2026-11-19,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,5968950,2521625,303648,19,11,4,2026,2026-11-19,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,6061772,2581996,304735,19,11,4,2026,2026-11-19,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,891223,891223,891223,19,11,4,2026,2026-11-19,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,921222,18,11,4,2026,2026-11-18,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,5665302,2217978,22093,18,11,4,2026,2026-11-18,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,5757037,2277261,51006,18,11,4,2026,2026-11-18,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,892310,892310,892310,18,11,4,2026,2026-11-18,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,895774,17,11,4,2026,2026-11-17,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,5643209,2195885,332600,17,11,4,2026,2026-11-17,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,5706032,2226255,307152,17,11,4,2026,2026-11-17,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,921222,921222,921222,17,11,4,2026,2026-11-17,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,924618,16,11,4,2026,2026-11-16,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,5310609,1863285,199975,16,11,4,2026,2026-11-16,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,5398880,1919103,228819,16,11,4,2026,2026-11-16,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,895774,895774,895774,16,11,4,2026,2026-11-16,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,933127,13,11,4,2026,2026-11-13,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,5110633,1663309,19264,13,11,4,2026,2026-11-13,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,5170061,1690284,27773,13,11,4,2026,2026-11-13,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,924618,924618,924618,13,11,4,2026,2026-11-13,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,912134,12,11,4,2026,2026-11-12,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,5091369,1644045,316534,12,11,4,2026,2026-11-12,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,5142288,1662511,295541,12,11,4,2026,2026-11-12,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,933127,933127,933127,12,11,4,2026,2026-11-12,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,922633,10,11,4,2026,2026-11-10,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,4774886,1327562,335075,10,11,4,2026,2026-11-10,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,4846798,1367022,345574,10,11,4,2026,2026-11-10,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,912134,912134,912134,10,11,4,2026,2026-11-10,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,910313,09,11,4,2026,2026-11-09,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,4439811,992487,33536,09,11,4,2026,2026-11-09,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,4501224,1021447,21216,09,11,4,2026,2026-11-09,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,922633,922633,922633,09,11,4,2026,2026-11-09,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,922752,06,11,4,2026,2026-11-06,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,4406275,958951,15129,06,11,4,2026,2026-11-06,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,4480008,1000231,27568,06,11,4,2026,2026-11-06,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,910313,910313,910313,06,11,4,2026,2026-11-06,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,936248,05,11,4,2026,2026-11-05,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,4391146,943822,300916,05,11,4,2026,2026-11-05,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,4452440,972663,314412,05,11,4,2026,2026-11-05,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,922752,922752,922752,05,11,4,2026,2026-11-05,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,938208,04,11,4,2026,2026-11-04,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,4090230,642906,20271,04,11,4,2026,2026-11-04,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,4138028,658251,22231,04,11,4,2026,2026-11-04,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,936248,936248,936248,04,11,4,2026,2026-11-04,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,930757,03,11,4,2026,2026-11-03,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,4069959,622635,327468,03,11,4,2026,2026-11-03,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,4115796,636020,320017,03,11,4,2026,2026-11-03,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,938208,938208,938208,03,11,4,2026,2026-11-03,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,951593,951593,02,11,4,2026,2026-11-02,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,3742491,295167,295167,02,11,4,2026,2026-11-02,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,3795780,316003,316003,02,11,4,2026,2026-11-02,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,930757,930757,930757,02,11,4,2026,2026-11-02,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,1040236,30,10,4,2026,2026-10-30,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,3447324,3447324,44671,30,10,4,2026,2026-10-30,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,3479777,3479777,133313,30,10,4,2026,2026-10-30,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,951593,951593,951593,30,10,4,2026,2026-10-30,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,1015632,29,10,4,2026,2026-10-29,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,3402653,3402653,363139,29,10,4,2026,2026-10-29,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,3346463,3346463,338536,29,10,4,2026,2026-10-29,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,1040236,1040236,1040236,29,10,4,2026,2026-10-29,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,1052530,28,10,4,2026,2026-10-28,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,3039514,3039514,18463,28,10,4,2026,2026-10-28,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,3007928,3007928,55361,28,10,4,2026,2026-10-28,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,1015632,1015632,1015632,28,10,4,2026,2026-10-28,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,1020700,27,10,4,2026,2026-10-27,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,3021051,3021051,321642,27,10,4,2026,2026-10-27,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,2952566,2952566,289813,27,10,4,2026,2026-10-27,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,1052530,1052530,1052530,27,10,4,2026,2026-10-27,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,982489,26,10,4,2026,2026-10-26,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,2699408,2699408,57615,26,10,4,2026,2026-10-26,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,2662754,2662754,19404,26,10,4,2026,2026-10-26,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,1020700,1020700,1020700,26,10,4,2026,2026-10-26,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,961759,23,10,4,2026,2026-10-23,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,2641793,2641793,47164,23,10,4,2026,2026-10-23,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,2643350,2643350,26434,23,10,4,2026,2026-10-23,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,982489,982489,982489,23,10,4,2026,2026-10-23,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,945153,22,10,4,2026,2026-10-22,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,2594630,2594630,301418,22,10,4,2026,2026-10-22,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,2616916,2616916,284812,22,10,4,2026,2026-10-22,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,961759,961759,961759,22,10,4,2026,2026-10-22,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,973653,21,10,4,2026,2026-10-21,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,2293211,2293211,21811,21,10,4,2026,2026-10-21,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,2332104,2332104,50312,21,10,4,2026,2026-10-21,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,945153,945153,945153,21,10,4,2026,2026-10-21,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,965045,20,10,4,2026,2026-10-20,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,2271400,2271400,321995,20,10,4,2026,2026-10-20,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,2281792,2281792,313387,20,10,4,2026,2026-10-20,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,973653,973653,973653,20,10,4,2026,2026-10-20,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,948492,19,10,4,2026,2026-10-19,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,1949405,1949405,32776,19,10,4,2026,2026-10-19,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,1968406,1968406,16223,19,10,4,2026,2026-10-19,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,965045,965045,965045,19,10,4,2026,2026-10-19,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,934690,16,10,4,2026,2026-10-16,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,1916629,1916629,36310,16,10,4,2026,2026-10-16,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,1952183,1952183,22509,16,10,4,2026,2026-10-16,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,948492,948492,948492,16,10,4,2026,2026-10-16,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,885823,15,10,4,2026,2026-10-15,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,1880319,1880319,449175,15,10,4,2026,2026-10-15,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,1929675,1929675,400307,15,10,4,2026,2026-10-15,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,934690,934690,934690,15,10,4,2026,2026-10-15,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,920214,14,10,4,2026,2026-10-14,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,1431144,1431144,17536,14,10,4,2026,2026-10-14,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,1529367,1529367,51928,14,10,4,2026,2026-10-14,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,885823,885823,885823,14,10,4,2026,2026-10-14,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,872526,13,10,4,2026,2026-10-13,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,1413609,1413609,353928,13,10,4,2026,2026-10-13,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,1477440,1477440,306239,13,10,4,2026,2026-10-13,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,920214,920214,920214,13,10,4,2026,2026-10-13,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,887469,09,10,4,2026,2026-10-09,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,1059681,1059681,15824,09,10,4,2026,2026-10-09,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,1171201,1171201,30767,09,10,4,2026,2026-10-09,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,872526,872526,872526,09,10,4,2026,2026-10-09,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,885783,08,10,4,2026,2026-10-08,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,1043857,1043857,301352,08,10,4,2026,2026-10-08,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,1140433,1140433,299666,08,10,4,2026,2026-10-08,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,887469,887469,887469,08,10,4,2026,2026-10-08,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,885414,07,10,4,2026,2026-10-07,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,742504,742504,19405,07,10,4,2026,2026-10-07,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,840767,840767,19036,07,10,4,2026,2026-10-07,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,885783,885783,885783,07,10,4,2026,2026-10-07,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,883335,06,10,4,2026,2026-10-06,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,723099,723099,299916,06,10,4,2026,2026-10-06,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,821731,821731,297837,06,10,4,2026,2026-10-06,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,885414,885414,885414,06,10,4,2026,2026-10-06,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,871181,05,10,4,2026,2026-10-05,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,423184,423184,29117,05,10,4,2026,2026-10-05,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,523894,523894,16964,05,10,4,2026,2026-10-05,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,883335,883335,883335,05,10,4,2026,2026-10-05,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,893699,02,10,4,2026,2026-10-02,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,394066,394066,20416,02,10,4,2026,2026-10-02,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,506931,506931,42933,02,10,4,2026,2026-10-02,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,871181,871181,871181,02,10,4,2026,2026-10-02,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,984046,984046,984046,01,10,4,2026,2026-10-01,1,2027,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,373651,373651,373651,01,10,4,2026,2026-10-01,1,2027,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,463997,463997,463997,01,10,4,2026,2026-10-01,1,2027,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,893699,893699,893699,01,10,4,2026,2026-10-01,1,2027,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,936600,30,09,3,2026,2026-09-30,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,39914786,3548368,261824,30,09,3,2026,2026-09-30,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,39821565,3587877,214379,30,09,3,2026,2026-09-30,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,984046,984046,984046,30,09,3,2026,2026-09-30,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,959572,29,09,3,2026,2026-09-29,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,39652962,3286544,283527,29,09,3,2026,2026-09-29,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,39607187,3373498,306499,29,09,3,2026,2026-09-29,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,936600,936600,936600,29,09,3,2026,2026-09-29,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,945290,28,09,3,2026,2026-09-28,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,39369434,3003017,34933,28,09,3,2026,2026-09-28,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,39300687,3066998,20651,28,09,3,2026,2026-09-28,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,959572,959572,959572,28,09,3,2026,2026-09-28,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,924627,25,09,3,2026,2026-09-25,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,39334501,2968083,49518,25,09,3,2026,2026-09-25,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,39280036,3046347,28854,25,09,3,2026,2026-09-25,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,945290,945290,945290,25,09,3,2026,2026-09-25,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,947317,24,09,3,2026,2026-09-24,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,39284983,2918565,278110,24,09,3,2026,2026-09-24,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,39251181,3017493,300800,24,09,3,2026,2026-09-24,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,924627,924627,924627,24,09,3,2026,2026-09-24,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,957409,23,09,3,2026,2026-09-23,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,39006873,2640456,43980,23,09,3,2026,2026-09-23,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,38950381,2716693,54071,23,09,3,2026,2026-09-23,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,947317,947317,947317,23,09,3,2026,2026-09-23,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,1004391,22,09,3,2026,2026-09-22,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,38962894,2596476,283175,22,09,3,2026,2026-09-22,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,38896310,2662621,330157,22,09,3,2026,2026-09-22,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,957409,957409,957409,22,09,3,2026,2026-09-22,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,985932,21,09,3,2026,2026-09-21,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,38679719,2313301,35366,21,09,3,2026,2026-09-21,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,38566153,2332464,16907,21,09,3,2026,2026-09-21,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,1004391,1004391,1004391,21,09,3,2026,2026-09-21,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,972675,18,09,3,2026,2026-09-18,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,38644353,2277935,32794,18,09,3,2026,2026-09-18,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,38549246,2315557,19537,18,09,3,2026,2026-09-18,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,985932,985932,985932,18,09,3,2026,2026-09-18,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,991708,17,09,3,2026,2026-09-17,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,38611559,2245141,283312,17,09,3,2026,2026-09-17,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,38529709,2296021,302346,17,09,3,2026,2026-09-17,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,972675,972675,972675,17,09,3,2026,2026-09-17,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,991557,16,09,3,2026,2026-09-16,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,38328247,1961829,50321,16,09,3,2026,2026-09-16,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,38227364,1993675,50170,16,09,3,2026,2026-09-16,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,991708,991708,991708,16,09,3,2026,2026-09-16,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,871224,15,09,3,2026,2026-09-15,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,38277926,1911508,496853,15,09,3,2026,2026-09-15,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,38177194,1943505,376519,15,09,3,2026,2026-09-15,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,991557,991557,991557,15,09,3,2026,2026-09-15,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,822200,14,09,3,2026,2026-09-14,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,37781073,1414656,75767,14,09,3,2026,2026-09-14,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,37800674,1566986,26743,14,09,3,2026,2026-09-14,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,871224,871224,871224,14,09,3,2026,2026-09-14,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,818110,11,09,3,2026,2026-09-11,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,37705306,1338888,34042,11,09,3,2026,2026-09-11,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,37773931,1540243,29952,11,09,3,2026,2026-09-11,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,822200,822200,822200,11,09,3,2026,2026-09-11,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,843705,10,09,3,2026,2026-09-10,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,37671264,1304847,291986,10,09,3,2026,2026-09-10,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,37743979,1510291,317581,10,09,3,2026,2026-09-10,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,818110,818110,818110,10,09,3,2026,2026-09-10,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,880019,09,09,3,2026,2026-09-09,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,37379279,1012861,15943,09,09,3,2026,2026-09-09,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,37426399,1192710,52257,09,09,3,2026,2026-09-09,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,843705,843705,843705,09,09,3,2026,2026-09-09,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,888923,08,09,3,2026,2026-09-08,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,37363335,996918,300422,08,09,3,2026,2026-09-08,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,37374142,1140453,309326,08,09,3,2026,2026-09-08,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,880019,880019,880019,08,09,3,2026,2026-09-08,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,903928,04,09,3,2026,2026-09-04,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,37062914,696496,17562,04,09,3,2026,2026-09-04,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,37064815,831127,32567,04,09,3,2026,2026-09-04,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,888923,888923,888923,04,09,3,2026,2026-09-04,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,944364,03,09,3,2026,2026-09-03,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,37045352,678934,336240,03,09,3,2026,2026-09-03,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,37032249,798560,376676,03,09,3,2026,2026-09-03,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,903928,903928,903928,03,09,3,2026,2026-09-03,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,942793,02,09,3,2026,2026-09-02,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,36709112,342695,22980,02,09,3,2026,2026-09-02,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,36655573,421884,21409,02,09,3,2026,2026-09-02,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,944364,944364,944364,02,09,3,2026,2026-09-02,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,1023554,1023554,01,09,3,2026,2026-09-01,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,36686132,319714,319714,01,09,3,2026,2026-09-01,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,36634164,400475,400475,01,09,3,2026,2026-09-01,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,942793,942793,942793,01,09,3,2026,2026-09-01,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,876566,971343,31,08,3,2026,2026-08-31,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,36366418,3262397,270397,31,08,3,2026,2026-08-31,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,36233689,3115409,218186,31,08,3,2026,2026-08-31,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,1023554,1023554,1023554,31,08,3,2026,2026-08-31,4,2026,4,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Opening Balance,null,890825,876566,950804,28,08,3,2026,2026-08-28,4,2026,1,Cash Balance Details,I,Operating Cash Balance
+Total TGA Deposits (Table II),null,36096020,2992000,44528,28,08,3,2026,2026-08-28,4,2026,2,Cash Balance Details,I,Operating Cash Balance
+Total TGA Withdrawals (Table II) (-),null,36015502,2897223,23989,28,08,3,2026,2026-08-28,4,2026,3,Cash Balance Details,I,Operating Cash Balance
+Treasury General Account (TGA) Closing Balance,null,971343,971343,971343,28,08,3,2026,2026-08-28,4,2026,4,Cash Balance Details,I,Operating Cash Balance

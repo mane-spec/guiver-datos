@@ -1,0 +1,582 @@
+<title>Guiver · Liquidez global</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+/* Layout: previsión semanal, como una app del tiempo. Nivel 1: la semana en una frase y una tira de 5 días.
+   Nivel 2: un toque en un día → qué puede pasar, por qué, qué lo amplifica, qué lo cambiaría y a qué hora.
+   Contexto (qué ha cambiado) y aciertos. Nivel 3, plegado al final: datos técnicos e informe completo. Móvil primero. */
+:root{
+  --paper:#F5F6F8; --sheet:#FFFFFF; --ink:#14203A; --ink-2:#3D475A; --mute:#6A7385; --rule:#E0E4EA; --rule-2:#CBD1DB;
+  --accent:#2C47B8; --accent-soft:#EEF1FA;
+  --risk:#A9403A; --risk-soft:#F8ECEA; --watch:#8A5A00; --watch-soft:#FBF3E2; --calm:#5D6678; --calm-soft:#EEF0F3; --up:#2D7556; --up-soft:#E8F3EE;
+  --b-on:#2D7556; --b-neu:#C3C9D3; --b-off:#A9403A;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --gut-l:max(16px,env(safe-area-inset-left,0px)); --gut-r:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:64px}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sheet)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;text-wrap:balance;color:var(--ink)}
+p{margin:0}
+pre{white-space:pre-wrap;overflow-wrap:anywhere}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.mute{color:var(--mute)}
+.score{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 4px}.score div{border:1px solid var(--rule);border-radius:10px;padding:10px 12px;background:var(--sheet)}.score b{display:block;font-size:22px;color:var(--ink)}.score span{font-size:13px;color:var(--mute)}
+.wrap{max-width:760px;margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sheet);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:10px;padding-block:12px}
+.brand{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--accent);font-weight:500;white-space:nowrap}
+.top-t{font-size:14px;color:var(--ink-2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+main{padding-block:22px 56px;display:flex;flex-direction:column;gap:26px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+h2{font-size:21px;line-height:1.25;margin-bottom:10px}
+
+/* nivel 1 */
+.hero h1{font-size:clamp(27px,7.4vw,38px);line-height:1.12}
+.hero .sub{margin-top:10px;font-size:17px;line-height:1.5;color:var(--ink-2);max-width:60ch}
+.hero .meta{margin-top:10px;font-size:13px;color:var(--mute)}
+
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:18px}
+.dbtn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 2px 9px;border-radius:8px;border:1px solid var(--rule);background:var(--sheet);cursor:pointer;min-width:0;transition:border-color .15s,box-shadow .15s}
+.dbtn .dw{font-size:13px;font-weight:600;text-transform:capitalize}
+.dbtn .dd{font-size:11.5px;color:var(--mute);margin-top:-3px}
+.dbtn .lv{font-size:10.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 6px;border-radius:10px;white-space:nowrap}
+.dbtn .pc{font-family:var(--mono);font-size:16px;font-weight:500;line-height:1.1}
+.dbtn .pl{font-size:10.5px;color:var(--mute);line-height:1.1}
+.dbtn[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.lv.riesgo{background:var(--risk-soft);color:var(--risk)} .lv.vigilar{background:var(--watch-soft);color:var(--watch)}
+.lv.tranquilo,.lv.festivo{background:var(--calm-soft);color:var(--calm)} .lv.apoyo{background:var(--up-soft);color:var(--up)}
+.pc.riesgo{color:var(--risk)} .pc.vigilar{color:var(--watch)}
+.strip-note{font-size:12.5px;color:var(--mute);margin-top:8px}
+.dbtn .pa{display:flex;flex-direction:column;align-items:center;gap:1px;margin-top:2px;font-size:10.5px;line-height:1.2;color:var(--watch);text-align:center}
+.dbtn .pa b{font-family:var(--mono);font-weight:600}
+
+/* nivel 2: el día */
+.day{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:18px 16px 20px}
+.day-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px}
+.day-h h2{margin:0}
+.day-h .lv{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:10px}
+.pbar{display:flex;height:10px;border-radius:3px;overflow:hidden;margin-top:14px;background:var(--rule)}
+.pbar span{display:block;height:100%}
+.pkey{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px;font-size:12.5px;color:var(--mute)}
+.pkey b{display:block;font-family:var(--mono);font-size:19px;font-weight:500;color:var(--ink)}
+.pkey .k-off b{color:var(--risk)} .pkey .k-on b{color:var(--up)}
+.pkey div:nth-child(2){text-align:center} .pkey div:nth-child(3){text-align:right}
+.blk{margin-top:20px}
+.blk h3{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.blk p,.blk li{font-size:16px;line-height:1.55;color:var(--ink)}
+.blk ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.blk .lead{font-family:var(--serif);font-size:18px;line-height:1.45}
+.agenda{list-style:none;padding:0!important;gap:0!important}
+.agenda li{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px solid var(--rule)}
+.agenda li:first-child{border-top:0}
+.agenda .h{font-family:var(--mono);font-size:14px;color:var(--ink-2)}
+.chg{display:flex;flex-direction:column;gap:6px;padding:0!important;list-style:none}
+.chg li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:10px 12px;background:var(--paper);border-radius:6px;font-size:15px!important}
+.chg b{font-family:var(--mono);font-weight:500;white-space:nowrap}
+.chg b.up{color:var(--risk)} .chg b.dn{color:var(--up)}
+.act .chg b.up{color:var(--watch)}
+.act .an{display:block;font-weight:600} .act .am{display:block;font-size:13.5px;color:var(--ink-2);margin-top:2px}
+
+/* contexto */
+.ctx{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.ctx-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:13px 16px;border-top:1px solid var(--rule)}
+.ctx-row:first-child{border-top:0}
+.ctx-row .n{font-weight:600;font-size:15.5px}
+.ctx-row .st{font-size:14.5px;font-weight:500;text-align:right;white-space:nowrap}
+.ctx-row .ex{grid-column:1/-1;font-size:14px;color:var(--ink-2);line-height:1.5}
+.ctx-row .cmp{grid-column:1/-1;font-size:12.5px;color:var(--mute)}
+.st.bad{color:var(--risk)} .st.warn{color:var(--watch)} .st.good{color:var(--up)} .st.neu{color:var(--calm)}
+
+/* aciertos */
+.hits{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.hit{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;padding:9px 4px;text-align:center;min-width:0}
+.hit .dw{font-size:12.5px;font-weight:600;text-transform:capitalize}
+.hit .v{font-size:12px;font-weight:600;margin-top:4px}
+.hit .s{font-size:11px;color:var(--mute);line-height:1.3;margin-top:2px}
+.hit.ok{background:var(--up-soft);border-color:#9CC7B2} .hit.ok .v{color:var(--up)}
+.hit.okw{background:#EEF6F1;border-color:#B5D5C4} .hit.okw .v{color:#4E8F71}
+.hit.ko{background:var(--risk-soft);border-color:#DDB0AB} .hit.ko .v{color:var(--risk)}
+.hit.kow{background:#FAF0EE;border-color:#E3C2BE} .hit.kow .v{color:#B8665E}
+.hit.prov{border-style:dashed} .hit .pv{font-size:10.5px;font-style:italic;color:var(--mute);margin-top:3px;overflow-wrap:anywhere}
+.hkey{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--mute);margin-top:10px}
+.hkey i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px;border:1px solid}
+.v.ok{color:var(--up)} .v.ko{color:var(--risk)} .v.na{color:var(--mute)}
+.note{font-size:13.5px;color:var(--mute);line-height:1.5;margin-top:10px}
+
+/* nivel 3 */
+.expert details{background:var(--sheet);border:1px solid var(--rule);border-radius:8px}
+.expert details+details{margin-top:8px}
+.expert summary{cursor:pointer;padding:14px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.expert summary::-webkit-details-marker{display:none}
+.expert summary span{font-weight:400;color:var(--mute);font-size:14px}
+.expert details[open] summary{border-bottom:1px solid var(--rule)}
+.xb{padding:6px 16px 18px}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px;border:1px solid var(--rule);border-radius:6px}
+table.t{border-collapse:collapse;width:100%;font-size:13.5px}
+table.t th,table.t td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+table.t th{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500;background:var(--paper);white-space:nowrap}
+table.t tr:last-child td{border-bottom:0}
+table.t td.num{white-space:nowrap}
+.chart{margin-top:12px}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:var(--mono);font-size:11px;fill:var(--mute)}
+.ckey{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-2);margin-top:12px}
+.ckey i{display:inline-block;width:12px;height:3px;margin-right:6px;vertical-align:3px}
+.md{font-size:15px;line-height:1.62;color:var(--ink-2)}
+.md h1{font-size:22px;margin:0 0 4px} .md h1+p{font-family:var(--mono);font-size:12.5px;color:var(--mute)}
+.md h2{font-size:18px;margin:24px 0 6px} .md h3{font-size:15.5px}
+.md p,.md ul,.md ol{margin:8px 0} .md ul,.md ol{padding-left:20px} .md strong{color:var(--ink)}
+.md table{border-collapse:collapse;width:100%;font-size:13px}
+.md th,.md td{padding:7px 9px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top;min-width:80px}
+.md th{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:500;background:var(--paper)}
+.md code{font-family:var(--mono);font-size:12.5px;background:var(--paper);padding:1px 4px;border-radius:3px}
+.md pre{font-family:var(--mono);font-size:12px;background:var(--paper);padding:12px;border-radius:4px;overflow-x:auto}
+footer{border-top:1px solid var(--rule);padding-block:20px 36px;font-size:12.5px;color:var(--mute)}
+@media (min-width:640px){.dbtn{padding:12px 4px 11px}.dbtn .pc{font-size:18px}.day{padding:22px 24px 24px}}
+@media (hover:hover){.dbtn:hover{border-color:var(--rule-2)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top"><div class="wrap"><span class="brand">GUIVER</span><span class="top-t" id="topT">Liquidez global</span></div></header>
+<main class="wrap" id="app"><p>Cargando la previsión de la semana…</p></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script>
+const DATOS = /*__DATOS__*/null;
+
+// MOTOR-INICIO — réplica exacta de motor.py v6.7 (catálogo inyectado desde motor.py)
+const Motor = (cat) => {
+  const PASO = cat.paso || 1;                                   // P-014: probabilidades exactas
+  const CONF = cat.confirma_tension || ["move_110_135","move_gt_135","hy_ge_15","ccc_ge_40","fails_subiendo_sobre_media","xeurbi_le_m5_ampliando3","srf_material","tension_bancaria"];
+  const red = (x, p) => Math.floor(x / p + 0.5) * p;
+  const regla = (vals, tope) => { if (!vals.length) return 0; const v = [...vals].sort((a,b)=>b-a); return Math.min(v[0] + 0.5 * v.slice(1).reduce((s,x)=>s+x,0), tope); };
+  function fondo(ids, porF, porM) {
+    const tension = porF || porM, topeG = tension ? 4 : 1, topeOff = tension ? 6 : 2, topeOn = 2;
+    const grupos = {}, traza = [];
+    for (const id of ids) {
+      const f = cat.fondo[id]; if (!f) continue;
+      let pts = f.pts; if (f.grupo === "funding" && porF) pts *= 2;
+      const k = f.grupo + "/" + f.lado; (grupos[k] = grupos[k] || []).push(pts);
+      traza.push({id, grupo:f.grupo, lado:f.lado, pts});
+    }
+    const lado = {off:0, on:0}, porGrupo = {};
+    for (const [k, v] of Object.entries(grupos)) { const g = regla(v, topeG); porGrupo[k] = g; lado[k.split("/")[1]] += g; }
+    return {off: Math.min(lado.off, topeOff), on: Math.min(lado.on, topeOn), porGrupo, traza, antes: lado, topes:{grupo:topeG, off:topeOff, on:topeOn}};
+  }
+  const cumple = (cond, presion, sens) => cond == null ? true : cond === "funding" ? presion : (presion || sens);
+  // P-030: MOVE ≥ 100 si cinco sesiones antes estaba por debajo de 100; ≥ 110 si ya estaba en 100 o más
+  const condMove = series => { const s = ((series || {}).move || []).filter(x => x.valor != null); if (s.length < 6) return {ok:false};
+    const u = s[s.length-1], r = s[s.length-6], umbral = r.valor < 100 ? 100 : 110; return {ok: u.valor >= umbral, valor: u.valor, ref: r.valor, umbral}; };
+  const condSubasta = (cond, e, ctx) => { const pf = !!e.previas_flojas, mv = !!(ctx && ctx.move && ctx.move.ok), hk = !!(ctx && ctx.hawkish);
+    return cond === "subasta_2de3" ? (pf + mv + hk) >= 2 : (mv && hk); };
+  function dia(d, presion, sens, ctx) {
+    const sub = []; let otros = 0, mega = 0, oferta = 0;
+    for (const e of d.dispersion) { const c = cat.dispersion[e.id]; if (!c) continue;
+      if (e.id === "megacaps") mega = 1; else if (e.id === "oferta_acciones") oferta = 1; else if (c.subasta) sub.push(c.pts); else otros += c.pts; }
+    const disp = (sub.length ? regla(sub, 99) : 0) + otros + mega + oferta;
+    let off = 0, on = 0; const traza = [];
+    for (const e of d.direccion) { const c = cat.direccion[e.id]; if (!c) continue;
+      if (c.condicion === "actas_hawkish" || c.condicion === "actas_dovish") {   // P-035
+        const d2 = e.d2y_pb, okA = d2 != null && (c.condicion === "actas_hawkish" ? d2 >= 10 : d2 <= -10);
+        if (!okA) { traza.push({id:e.id, pts:0, nota:"Δ2Y sin llegar a ±10 pb (P-035)"}); continue; }
+        if (c.lado === "off") off += c.pts; else on += c.pts; traza.push({id:e.id, lado:c.lado, pts:c.pts}); continue; }
+      if (c.condicion === "subasta_2de3" || c.condicion === "tips_move_hawkish") {
+        if (!condSubasta(c.condicion, e, ctx)) { traza.push({id:e.id, pts:0, nota:"condiciones de subasta no cumplidas (P-030)"}); continue; }
+        if (c.lado === "off") off += c.pts; else on += c.pts; traza.push({id:e.id, lado:c.lado, pts:c.pts}); continue; }
+      if (!cumple(c.condicion, presion, !!sens)) { traza.push({id:e.id, pts:0, nota: c.condicion === "funding" ? "sin presión de funding" : "sin presión de funding ni sensibilidad a settlements"}); continue; }
+      if (c.lado === "off") off += c.pts; else on += c.pts; traza.push({id:e.id, lado:c.lado, pts:c.pts}); }
+    return {disp, off, on, traza};
+  }
+  function prob(pOff, pOn, tension, conf, base, paso = PASO) {
+    const [bon, bneu, boff] = base.map(b => b / 100);
+    const sOff = Math.log(boff / bneu) + 0.2 * pOff, sOn = Math.log(bon / bneu) + 0.2 * pOn;
+    const den = 1 + Math.exp(sOn) + Math.exp(sOff);
+    const modelo = [Math.exp(sOn)/den, 1/den, Math.exp(sOff)/den];
+    const w = cat.pesos[conf][tension ? 1 : 0];
+    const mez = modelo.map((m,i) => w*m + (1-w)*[bon,bneu,boff][i]);
+    let techo = false;
+    if (!tension) for (const i of [0,2]) if (mez[i] > 0.60) { mez[1] += mez[i] - 0.60; mez[i] = 0.60; techo = true; }
+    let on = red(mez[0]*100, paso), off = red(mez[2]*100, paso), neu = 100 - on - off, suelo = false;
+    if (!tension) while (neu < 20) { if (off >= on) off -= paso; else on -= paso; neu = 100 - on - off; suelo = true; }
+    let empate = false;                                        // P-014: sin empates si el cálculo inclina
+    if (on === off) { if (mez[0] > mez[2] + 1e-9) { on += paso; off -= paso; } else if (mez[2] > mez[0] + 1e-9) { off += paso; on -= paso; } else empate = true; }
+    return {on, neu, off, sOff, sOn, modelo: modelo.map(x=>x*100), w, mez: mez.map(x=>x*100), techo, suelo, empate, paso};
+  }
+  const FUND_CAT = ["sofr_ge_iorb","gc_ge_iorb"], CAT_CAJA = ["settle_neto_absorcion20","fin_mes","fin_trimestre","tax_date"];
+  function fondoDia(ids, d) {                                   // P-021: funding solo con catalizador de caja · P-022: festivo de bonos = base
+    if (d.bonos_abierto === false) return [];
+    if ((d.direccion || []).some(e => CAT_CAJA.includes(e.id))) return ids;
+    return ids.filter(id => !FUND_CAT.includes(id));
+  }
+  function calcular(esc) {
+    const presion = !!esc.porF;                                 // regla de presión de funding del usuario (puntúa)
+    const porF = presion && (!!esc.forzar || esc.fondo.some(id => CONF.includes(id)));   // P-012: modo tensión con 2.ª capa
+    const tension = porF || !!esc.porM;
+    if (esc.hyRentSube) esc = {...esc, fondo: esc.fondo.filter(id => id !== "hy_le_m10")};   // P-037
+    const fo = fondo(esc.fondo, porF, esc.porM);
+    const ctx = {move: condMove(esc.series), hawkish: esc.fondo.includes("fedwatch_hawkish")};
+    const dias = esc.dias.map(d => {
+      const x = dia(d, presion, esc.sens, ctx);
+      const conf = d.evento_verificado === false ? "baja" : esc.conf;
+      const fd = fondo(fondoDia(esc.fondo, d), porF, esc.porM);                   // P-021 / P-022
+      const pOff = x.disp + x.off + fd.off, pOn = x.disp + x.on + fd.on;
+      return {fecha:d.fecha, dia:d.dia, ...x, fondoDia: fd, pOff, pOn, conf, tension, p: prob(pOff, pOn, tension, conf, esc.base)};
+    });
+    return {fondo: fo, dias, tension, presion, tensionPorFunding: porF, sinSegundaCapa: presion && !porF && !esc.porM};
+  }
+  return {calcular, prob, fondo, dia};
+};
+// MOTOR-FIN
+
+
+(function(){
+"use strict";
+const app = document.getElementById("app");
+const $ = (s, r=document) => r.querySelector(s), $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ok = x => typeof x === "number" && isFinite(x);
+const num = (x, d=1) => ok(x) ? Number(x).toLocaleString("es-ES",{minimumFractionDigits:d,maximumFractionDigits:d}) : "—";
+const sg = (x, d=1) => ok(x) ? (x > 0 ? "+" : x < 0 ? "−" : "") + num(Math.abs(x), d) : "—";
+const mill = bn => ok(bn) ? (Math.round(Math.abs(bn)) * 1000).toLocaleString("es-ES") + " M$" : "—";
+const DOW = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"], MES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const pd = s => { if (!s || typeof s !== "string") return null; const [y,m,d] = s.slice(0,10).split("-").map(Number); return (y&&m&&d) ? {y,m,d,w:new Date(Date.UTC(y,m-1,d)).getUTCDay()} : null; };
+const fdl = s => { const p = pd(s); return p ? `${DOW[p.w]} ${p.d} de ${MES[p.m-1]}` : "—"; };
+const fc = s => { const p = pd(s); return p ? `${p.d} ${MES[p.m-1].slice(0,3)}` : "—"; };
+const dw = s => { const p = pd(s); return p ? DOW[p.w].slice(0,3) : "—"; };
+const cap = t => t ? t[0].toUpperCase() + t.slice(1) : t;
+const md = t => window.marked ? marked.parse(t || "") : `<pre>${esc(t)}</pre>`;
+const wrapTables = el => { $$("table", el).forEach(t => { const w = document.createElement("div"); w.className = "tw"; t.replaceWith(w); w.appendChild(t); }); return el; };
+
+if (!DATOS) { app.innerHTML = `<h1>Sin datos de la semana</h1><p class="note">build.py rellena esta página cada sábado.</p>`; return; }
+const D = DATOS, cat = D.catalogo || {fondo:{},dispersion:{},direccion:{},pesos:{}};
+const d1 = D.d1 || {}, d2 = D.d2 || {}, d3 = D.d3 || {}, res = d3.resultado || {dias:[], base:[25,50,25]};
+const inf = D.informes || {}, FINAL = inf.final || "";
+const obj = d3.obj || [];
+const seccion = (txt, t) => { const re = new RegExp("^## " + t + "[^\\n]*\\n([\\s\\S]*?)(?=^## |(?![\\s\\S]))", "m"); const m = (txt || "").match(re); return m ? m[1].trim() : ""; };
+
+/* hora ET → Madrid */
+function aMadrid(fecha, hhmm){ const p = pd(fecha), m = String(hhmm || "").match(/(\d{1,2}):(\d{2})/); if (!p || !m) return null;
+  const min = (+m[1])*60 + (+m[2]);
+  try { let u = Date.UTC(p.y,p.m-1,p.d, Math.floor(min/60)+5, min%60);
+    const f = new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",hour:"2-digit",minute:"2-digit",hourCycle:"h23"});
+    for (let k = 0; k < 2; k++) { const [h,mm] = f.format(new Date(u)).split(":").map(Number); u += (min - (h*60+mm))*60000; }
+    return new Intl.DateTimeFormat("es-ES",{timeZone:"Europe/Madrid",hour:"2-digit",minute:"2-digit"}).format(new Date(u)); } catch(e) { return null; } }
+
+/* ---------------------------------------------------------------- traducción a lenguaje llano */
+const DATO = ev => { const e = String(ev || "");
+  if (/CPI/i.test(e)) return "la inflación de EE. UU. (IPC)"; if (/PPI/i.test(e)) return "la inflación de precios industriales de EE. UU. (PPI)";
+  if (/PCE/i.test(e)) return "la inflación que más mira la Fed (PCE)"; if (/Employment|Nonfarm|N[oó]minas|empleo/i.test(e)) return "el informe de empleo de EE. UU.";
+  if (/actas|minutes/i.test(e)) return "las actas de la Fed";   // P-034: las actas antes que la decisión
+  if (/decisi|statement|rate decision|FOMC/i.test(e)) return "la decisión de tipos de la Fed"; if (/JOLTS/i.test(e)) return "las ofertas de empleo de EE. UU.";
+  if (/ISM/i.test(e)) return "el índice de actividad empresarial (ISM)"; if (/ventas minoristas|retail/i.test(e)) return "las ventas minoristas de EE. UU.";
+  if (/PIB|GDP/i.test(e)) return "el PIB de EE. UU."; if (/actas|minutes/i.test(e)) return "las actas de la Fed";
+  return e.replace(/\s*\(.*?\)\s*/g, " ").trim(); };
+const plazo = t => { const m = String(t || "").match(/^(\d+)Y/); return m ? `${m[1]} años` : String(t || ""); };
+const AMPLIFICA = {
+  sofr_ge_iorb:"Falta algo de efectivo en todo el sistema: financiarse a un día cuesta más de lo que la Fed paga a los bancos por su dinero.",
+  gc_ge_iorb:"La falta de efectivo es general, no de unos pocos.",
+  srf_material:"Los bancos están pidiendo dinero a la Fed en su ventanilla de emergencia.",
+  fails_subiendo_sobre_media:"Hay más fallos de entrega de bonos de lo normal: el sistema de garantías funciona peor.",
+  xeurbi_le_m5_ampliando3:"Conseguir dólares fuera de EE. UU. se está encareciendo.",
+  move_110_135:"La volatilidad de los bonos está alta.", move_80_110_subiendo10:"La volatilidad de los bonos sube con fuerza.", move_gt_135:"La volatilidad de los bonos está en zona de estrés.",
+  fedwatch_hawkish:"El mercado espera más subidas de tipos que hace una semana.", fedwatch_dovish_credito_ampliando:"El mercado espera menos subidas, pero el crédito empeora.",
+  hy_ge_15:"El crédito a las empresas más arriesgadas lleva una semana empeorando.", hy_5_15:"El crédito a las empresas más arriesgadas empeora algo.",
+  ccc_ge_40:"El crédito a las empresas más débiles se está tensionando.", tension_bancaria:"Hay tensión en algún banco.",
+  gli_contraccion_acelerada:"La liquidez de los bancos centrales se contrae cada vez más rápido.",
+  // a favor
+  sofr_le_iorb_m5_gc_estable:"Sobra efectivo en el sistema.", move_lt_80:"La volatilidad de los bonos está baja.",
+  fedwatch_dovish_credito_estable:"El mercado espera menos subidas de tipos y el crédito está estable.", hy_le_m10:"Financiarse cuesta menos a las empresas: el crédito mejora con claridad.",
+  gli_expansion_acelerada:"La liquidez de los bancos centrales se expande cada vez más rápido."
+};
+
+/* ---------------------------------------------------------------- días */
+const MACRO = d3.macro_obj || [], REG = res.reglas_actualizacion || d3.reglas_actualizacion || [];
+const flujo = f => (d3.flujo_neto_obj || []).find(x => x.fecha === f)?.neto_bn;
+const rrpL = (d1.onrrp || []).filter(x => ok(x.aceptado_bn)).slice(-1)[0];
+const colchonVacio = rrpL && rrpL.aceptado_bn < 5;
+const dias = (res.dias || []).map((r, i) => {
+  const d = (d3.dias || []).find(x => x.fecha === r.fecha) || {};
+  const p = r.prob, abierto = d.bonos_abierto !== false;
+  // riesgo concentrado en ciertos activos (actas, debut de una oferta grande): si alguno llega a 33 %, el día no es «tranquilo»
+  const act = (d.riesgo_activos || []).filter(a => ok(a.off)).sort((a, b) => b.off - a.off), actMax = act.length ? act[0].off : null;
+  let nivel = !abierto ? "festivo" : p.off >= 45 ? "riesgo" : (p.off - p.on) >= 8 ? "vigilar" : (p.on - p.off) >= 8 ? "apoyo" : "tranquilo";
+  const alto = act.filter(a => a.off >= 33), porActivo = abierto && (nivel === "tranquilo" || nivel === "apoyo") && alto.length > 0;
+  const soloActivos = porActivo && alto.every(a => !a.mercado);   // «mercado»: el S&P 500, que es la cifra del día
+  if (porActivo) nivel = "vigilar";
+  return {r, d, p, i, nivel, abierto, act, actMax, soloActivos, porActivo};
+});
+const NIVEL = {riesgo:"riesgo", vigilar:"vigilar", tranquilo:"tranquilo", apoyo:"a favor", festivo:"festivo"};
+const top = dias.reduce((a,b) => !a || b.p.off > a.p.off ? b : a, null);
+
+function quePasa(x){
+  if (x.nivel === "festivo") return "Festivo en el mercado de bonos de EE. UU. La bolsa abre, pero no hay subastas ni pagos del Tesoro. Lo normal es un día sin dirección.";
+  if (x.nivel === "riesgo") return x === top ? "El día con más riesgo de caídas de la semana: hay un motivo concreto para que el mercado se ponga nervioso." : "Otro día con riesgo de caídas, por un motivo concreto.";
+  if (x.porActivo && x.d.texto_activos) return x.d.texto_activos;
+  if (x.soloActivos) { const n = x.act.filter(a => a.off >= 33).map(a => a.activo.replace(/ \(.*\)/, "")); return `El mercado en conjunto no tiene una dirección clara, pero el riesgo de caídas sube solo en ${n.length > 1 ? n.slice(0, -1).join(", ") + " y " + n.slice(-1) : n[0]}.`; }
+  if (x.nivel === "vigilar") return "Algo de presión hacia caídas, pero sin un motivo claro ese día.";
+  if (x.nivel === "apoyo") return "Día con viento a favor: hay motivos para subidas.";
+  return "Día tranquilo. Sin un motivo concreto, lo normal es un día sin grandes movimientos.";
+}
+function porQue(x){
+  const f = x.r.fecha, out = [];
+  const dir = (x.r.traza_direccion || []).filter(t => t.pts > 0).map(t => t.id);
+  const fl = flujo(f);
+  if (dir.includes("settle_neto_absorcion20")) out.push(`El Tesoro retira <b>${mill(fl)}</b> de efectivo del sistema al cobrar la deuda que vendió días antes.`);
+  if (dir.includes("settle_neto_inyeccion20")) out.push(`El Tesoro devuelve <b>${mill(fl)}</b> de efectivo al sistema al pagar deuda que vence.`);
+  if (dir.includes("fin_mes")) out.push("Es fin de mes: los bancos ajustan balances y el efectivo escasea.");
+  if (dir.includes("fin_trimestre")) out.push("Es fin de trimestre: los bancos ajustan balances y el efectivo escasea.");
+  if (dir.includes("tax_date")) out.push("Es día de pago de impuestos: el efectivo sale de los bancos hacia el Tesoro.");
+  if (dir.includes("buyback_liquidez")) out.push("El Tesoro recompra deuda: devuelve efectivo al sistema.");
+  if (dir.includes("subasta_cupon_condiciones_2de3")) out.push("Llega una subasta de deuda larga con señales de poca demanda.");
+  const dA = e => ((x.d.direccion || []).find(z => z.id === e) || {}).d2y_pb;
+  if (dir.includes("actas_repricing_hawkish")) out.push(`Antes de las actas de la Fed, el mercado ha pasado a esperar más subidas de tipos (el bono a 2 años ha subido <b>${num(dA("actas_repricing_hawkish"),0)} pb</b> desde la reunión). En el pasado, esos días de actas el S&P 500 cayó con fuerza un 32 % de las veces (21 % un día cualquiera); el Nasdaq 100, en cambio, no fue peor de lo normal.`);
+  if (dir.includes("actas_repricing_dovish")) out.push(`Antes de las actas de la Fed, el mercado ha pasado a esperar menos subidas (el bono a 2 años ha bajado <b>${num(Math.abs(dA("actas_repricing_dovish")),0)} pb</b> desde la reunión). En el pasado, esos días de actas han tendido a ser alcistas.`);
+  (x.d.dispersion || []).forEach(e => {
+    if (e.id === "macro1" || e.id === "macro2") { const m = MACRO.find(z => z.fecha === f && z.nivel === e.id) || {}; out.push(`Se publica ${esc(DATO(m.evento || e.evento))}${e.id === "macro1" ? ", uno de los datos que más mueven el mercado" : ""}. Puede mover el día en cualquier dirección.`); }
+    else if (/^sub_|^tips/.test(e.id)) { const s = (d2.subastas || []).find(z => z.fecha === f && z.semana === "OBJ" && z.tipo !== "bill"); out.push(`Hay subasta de deuda a ${esc(plazo(s?.tenor) || "plazo largo")}: prueba cuánto apetito hay por los bonos. Añade movimiento, no dirección.`); }
+    else if (e.id === "megacaps") out.push("Publica resultados una gran tecnológica.");
+    else if (e.id === "oferta_acciones") out.push("Debuta en bolsa una oferta de acciones enorme. Añade movimiento al mercado en conjunto, pero no todo por igual: en el pasado, ese día cayeron más las pequeñas compañías (Russell 2000, −1,2 % de media) y los semiconductores (−1,2 %) que el Nasdaq 100 (−0,7 %), y lo recuperaron en unos tres días. El oro no hizo de refugio.");
+    else if (e.id === "qra") out.push("El Tesoro anuncia cuánta deuda emitirá el próximo trimestre.");
+  });
+  if (!out.length) out.push(x.abierto ? "Ese día no hay pagos ni cobros grandes del Tesoro, ni datos clave, ni subastas largas." : "No hay subastas ni pagos del Tesoro por el festivo.");
+  return out;
+}
+function amplifica(x){
+  const tr = x.r.fondo_traza || [];
+  const ids = tr.map(z => z.id);
+  const out = tr.filter(z => z.lado === "off" && !(z.id === "gc_ge_iorb" && ids.includes("sofr_ge_iorb"))).map(z => AMPLIFICA[z.id]).filter(Boolean);
+  const contra = tr.filter(z => z.lado === "on" && z.pts > 0).map(z => AMPLIFICA[z.id]).filter(Boolean);
+  if (tr.some(z => z.id === "hy_le_m10" && !(z.pts > 0))) out.push("El diferencial del crédito baja, pero solo porque los bonos del Tesoro suben más: a las empresas les cuesta más financiarse, sobre todo a las pequeñas.");   // P-037
+  const caja = (x.r.traza_direccion || []).some(t => t.pts > 0 && t.id === "settle_neto_absorcion20");
+  if (caja && colchonVacio) out.unshift("El colchón de efectivo de la Fed está prácticamente vacío: lo que retira el Tesoro sale directamente de los bancos.");
+  if (caja && (d3.sensibilidad_settlement || {}).activa) out.push("Las últimas veces que el Tesoro retiró tanto efectivo, el coste de financiarse subió.");
+  if (out.length && x.r.modo === "tensión") out.push("Hay tensión confirmada por más de un frente, así que estos factores pesan más de lo normal.");
+  return {out, contra};
+}
+function cambiaria(x){
+  const f = x.r.fecha, out = [];
+  REG.forEach(r => {
+    if (r.tipo === "macro" && r.dia === f && r.hawkish && r.dovish) {
+      const n = DATO(r.evento);
+      out.push({t:`Si ${n} sale más alta de lo esperado <span class="mute">(${esc(r.hawkish_si)})</span>`, v:r.hawkish.off});
+      out.push({t:`Si sale más baja de lo esperado <span class="mute">(${esc(r.dovish_si)})</span>`, v:r.dovish.off});
+    } else if (r.tipo !== "macro" && r.dia_settlement === f && r.floja && r.solida) {
+      out.push({t:`Si la subasta ${esc(r.subasta)} tiene poca demanda`, v:r.floja.off}); out.push({t:`Si tiene mucha demanda`, v:r.solida.off});
+    }
+  });
+  const EB = (res.escenarios_borde || {})[f];   // P-017: neto en el borde de 20 bn con cifra estimada
+  if (EB && EB.sin_factor) out.push({t:`Si el Tesoro ${EB.id === "settle_neto_absorcion20" ? "retira" : "devuelve"} finalmente menos de 20 bn netos <span class="mute">(cifra estimada: ${esc(String(EB.neto_bn).replace(".", ","))} bn)</span>`, v:EB.sin_factor.off});
+  const S = d3.sensibilidad_escenarios || {};
+  if (S.sin_hy_ge_15_modo_normal?.[f]) out.push({t:"Si el crédito a empresas deja de empeorar", v:S.sin_hy_ge_15_modo_normal[f][2]});
+  if (S.move_110_o_fedwatch_hawkish?.[f]) out.push({t:"Si la volatilidad de los bonos se dispara o el mercado espera más subidas de tipos", v:S.move_110_o_fedwatch_hawkish[f][2]});
+  if (S.move_110?.[f]) out.push({t:"Si la volatilidad de los bonos se dispara", v:S.move_110[f][2]});
+  if (S.sin_fedwatch_hawkish?.[f]) out.push({t:"Si el mercado deja de esperar más subidas de tipos", v:S.sin_fedwatch_hawkish[f][2]});
+  return out.filter(z => ok(z.v) && z.v !== x.p.off);
+}
+function agenda(x){
+  const f = x.r.fecha, L = [];
+  MACRO.filter(m => m.fecha === f).forEach(m => L.push({h:aMadrid(f, m.hora_et), t:cap(DATO(m.evento))}));
+  (d2.subastas || []).filter(s => s.fecha === f && s.semana === "OBJ" && s.tipo !== "bill").forEach(s => L.push({h:aMadrid(f, s.hora_et), t:`Subasta de deuda a ${plazo(s.tenor)}${ok(s.importe_bn) ? ` (${mill(s.importe_bn)})` : ""}`}));
+  const fl = flujo(f); if (ok(fl) && Math.abs(fl) >= 5) L.push({h:null, t:`El Tesoro ${fl > 0 ? "retira" : "devuelve"} ${mill(fl)} de efectivo`});
+  if (!x.abierto) L.unshift({h:null, t:"Mercado de bonos cerrado; la bolsa abre"});
+  L.sort((a,b) => (a.h || "00") < (b.h || "00") ? -1 : 1);
+  return L;
+}
+
+/* ---------------------------------------------------------------- contexto: qué ha cambiado */
+const T = (d1.tipos || []).filter(t => ok(t.sofr) && ok(t.iorb));
+const spr = t => Math.round((t.sofr - t.iorb)*1000)/10;
+const media = a => a.length ? a.reduce((s,x) => s + x, 0) / a.length : null;
+function ctxEfectivo(){
+  const rv = T.filter(t => t.semana === "REV").map(spr), cp = T.filter(t => t.semana === "COMP").map(spr);
+  const m = media(rv), m0 = media(cp); if (!ok(m)) return null;
+  const st = m > 5 ? ["escaso","bad"] : m >= 0 ? ["justo","warn"] : m > -3 ? ["normal","neu"] : ["holgado","good"];
+  const cmp = ok(m0) ? (Math.abs(m - m0) < 1 ? "igual que la semana anterior" : m > m0 ? "algo más justo que la semana anterior" : "algo más holgado que la semana anterior") : "";
+  return {n:"Efectivo en el sistema", st, ex: st[0] === "justo" || st[0] === "escaso" ? "Financiarse a un día cuesta algo más de lo normal. Por sí solo no provoca caídas; pesa los días en que el Tesoro retira efectivo." : "Hay efectivo suficiente para financiar posiciones.", cmp};
+}
+function ctxSerie(nombre, serie, campo, umbralMal, umbralBien, textos){
+  const s = (serie || []).filter(x => ok(x[campo])); if (s.length < 6) return null;
+  const v = s[s.length-1][campo], c5 = v - s[s.length-6][campo], c10 = s.length >= 11 ? s[s.length-6][campo] - s[s.length-11][campo] : null;
+  const est = c => c >= umbralMal ? "mal" : c <= umbralBien ? "bien" : "est";
+  const e = est(c5), e0 = ok(c10) ? est(c10) : null;
+  const st = {mal:[textos.mal,"bad"], bien:[textos.bien,"good"], est:[textos.est,"neu"]}[e];
+  const cmp = e0 == null ? "" : e0 === e ? "igual que la semana anterior" : `la semana anterior: ${({mal:textos.mal, bien:textos.bien, est:textos.est})[e0]}`;
+  return {n:nombre, st, ex:textos.ex(v, c5), cmp};
+}
+function ctxMove(){
+  const s = ((d3.series || {}).move || []).filter(x => ok(x.valor)); if (s.length < 6) return null;
+  const v = s[s.length-1].valor, c = (v / s[s.length-6].valor - 1) * 100;
+  const st = v > 135 ? ["muy alta","bad"] : v >= 110 ? ["alta","bad"] : v >= 80 ? ["moderada","neu"] : ["baja","good"];
+  return {n:"Volatilidad de los bonos", st, ex:`${c <= -3 ? "Bajando" : c >= 3 ? "Subiendo" : "Estable"}: cuando los bonos se mueven poco, sirven mejor como garantía para pedir prestado y el sistema respira.`, cmp:`${sg(c,1)} % en cinco sesiones`};
+}
+function ctxTipos(){
+  const fw = d3.fedwatch || []; if (!fw.length) return null;
+  const sesgo = String(d3.fedwatch_sesgo || "");
+  const fresca = fw.find(f => (f.post_fomc === true || f.post_fomc === "n/a") && !/STALE/.test(f.estado || ""));   // P-032
+  if (!fresca) return {n:"Expectativas de tipos", st:["sin lectura reciente","neu"], ex:"La fuente no ofrece una lectura posterior a la última reunión de la Fed; no se usa para la previsión.", cmp:""};
+  const k = Object.keys(fresca.actual || {}).find(x => /subida/.test(x)), k0 = Object.keys(fresca.semana_anterior || {}).find(x => /subida/.test(x));
+  const v = k ? fresca.actual[k] : null, v0 = k0 ? fresca.semana_anterior[k0] : null;
+  const cmp = ok(v) && ok(v0) ? `Subida en diciembre: ${String(v).replace(".", ",")} % (antes ${String(v0).replace(".", ",")} %)` : "";
+  if (sesgo === "hawkish") return {n:"Expectativas de tipos", st:["más subidas","bad"], ex:"El mercado da más probable que la Fed suba los tipos en diciembre que hace una semana. Encarece el dinero y resta apoyo a la bolsa, sobre todo si el IPC sale alto.", cmp};
+  if (sesgo.startsWith("dovish")) return {n:"Expectativas de tipos", st:["menos subidas","good"], ex:"El mercado espera menos subidas de tipos que hace una semana.", cmp};
+  return {n:"Expectativas de tipos", st:["sin cambios","neu"], ex:"Las expectativas de tipos apenas han cambiado frente a la semana anterior.", cmp};
+}
+function ctxRegimen(){
+  const H = ((D.historial || {}).semanas || []).filter(s => s.obj?.[0] !== obj[0]); const ant = H[H.length-1]?.regimen;
+  return ant ? (ant === (d3.regimen || {}).estado ? "Mismo diagnóstico que la semana pasada." : `La semana pasada: ${ant}.`) : "";
+}
+
+/* ---------------------------------------------------------------- página */
+const RTXT = {"normalización":"Liquidez normal","estrés incipiente":"Tensión leve, sin crisis","estrés sistémico":"Tensión seria en la liquidez","crisis de liquidez":"Crisis de liquidez"};
+const reg = (d3.regimen || {}).estado;
+const riesgos = dias.filter(x => x.nivel === "riesgo"), vig = dias.filter(x => x.nivel === "vigilar");
+const lista = a => a.map(x => DOW[pd(x.r.fecha).w]).join(a.length > 2 ? ", " : " y ").replace(/, ([^,]*)$/, " y $1");
+const resumen = riesgos.length ? `El riesgo de caídas se concentra el ${lista(riesgos)}, los días en que el Tesoro retira efectivo del sistema. El resto de la semana, sin motivo claro, debería ser tranquilo.`
+  : vig.length ? (() => { const g = vig.filter(x => !x.soloActivos), sa = vig.filter(x => x.soloActivos);
+      return `No hay días de riesgo claro${g.length ? `; vigilar el ${lista(g)}` : ""}${sa.length ? `${g.length ? ", y" : ";"} el ${lista(sa)}, solo en algunos activos (${[...new Set(sa.flatMap(x => x.act.filter(a => a.off >= 33).map(a => a.corto)))].join(", ")})` : ""}.`; })()
+  : "Semana sin días de riesgo claro: sin motivos concretos, lo normal son días sin grandes movimientos.";
+$("#topT").textContent = obj[0] ? `Semana del ${fc(obj[0])} al ${fc(obj[1])}` : "Liquidez global";
+
+const CD = d3.credito_descomp;
+const ctxCredito = (c) => { if (!c || !CD || !(CD.hy_oas_pb < 0 && CD.hy_rent_pb > 0)) return c;   // P-037: estrechamiento malo
+  return {...c, st:["más caro","bad"], ex:`El diferencial ha bajado ${num(Math.abs(CD.hy_oas_pb),0)} pb, pero solo porque los bonos del Tesoro han subido más (${num(CD.ust5_pb,0)} pb). Lo que pagan las empresas más arriesgadas por financiarse ha subido ${num(CD.hy_rent_pb,0)} pb, hasta el ${num(CD.hy_rent,2)} %${ok(CD.ccc_rent_pb_est) ? `, y en las más débiles (CCC) unos ${num(CD.ccc_rent_pb_est,0)} pb` : ""}. Pesa sobre todo en las pequeñas compañías (Russell 2000).`}; };
+const ctx = [ctxEfectivo(),
+  ctxCredito(ctxSerie("Crédito a empresas", (d3.series || {}).hy, "pb", 15, -10, {mal:"empeorando", bien:"mejorando", est:"estable", ex:(v,c) => `El sobrecoste que pagan las empresas más arriesgadas por financiarse ha ${c >= 0 ? "subido" : "bajado"} ${num(Math.abs(c),0)} puntos básicos en cinco sesiones. Si sigue subiendo, amplifica cualquier caída.`})),
+  ctxMove(), ctxTipos()].filter(Boolean);
+
+const ev = D.evaluacion || {}, dr = ev.direccion;
+const VER = {acierto:["acertado","ok"], al_reves:["fallado","ko"], neutral:["día lateral","na"], nc:["pendiente","na"], sin_direccion:["sin dirección","na"]};
+const R = {on:"subidas", off:"caídas", neu:"lateral", nc:"pendiente", eq:"—"};
+
+let H = `
+<section class="hero">
+  <div class="eyebrow">Previsión de liquidez · ${obj[0] ? `${esc(fc(obj[0]))} – ${esc(fc(obj[1]))}` : ""}</div>
+  <h1>${esc(RTXT[reg] || cap(reg || "Sin diagnóstico"))}</h1>
+  <p class="sub">${esc(resumen)}</p>
+  <div class="strip" role="group" aria-label="Días de la semana">${dias.map(x => `
+    <button class="dbtn" type="button" data-i="${x.i}" aria-pressed="false" aria-label="${esc(fdl(x.r.fecha))}: ${esc(NIVEL[x.nivel])}, ${x.p.off} % de probabilidad de caídas">
+      <span class="dw">${esc(dw(x.r.fecha))}</span><span class="dd">${pd(x.r.fecha)?.d}</span>
+      <span class="lv ${x.nivel}">${esc(NIVEL[x.nivel])}</span>
+      <span class="pc ${x.soloActivos ? "" : x.nivel}">${x.p.off}%</span><span class="pl">caídas</span>
+      ${x.act.length ? `<span class="pa">${x.act.filter(a => a.off >= 33 && !a.mercado).map(a => `<span><b>${a.off}%</b> ${esc(a.corto)}</span>`).join("")}</span>` : ""}
+    </button>`).join("")}</div>
+  <p class="strip-note">Probabilidad de un día de caídas del mercado en conjunto (S&amp;P 500). En amarillo, la probabilidad <b>solo en esos activos</b>, los días en que un evento les afecta más. Toca un día para ver por qué.</p>
+</section>
+<section id="dia" aria-live="polite"></section>
+<section>
+  <div class="eyebrow">Contexto</div>
+  <h2>Cómo está el sistema y qué ha cambiado</h2>
+  <div class="ctx">${ctx.map(c => `<div class="ctx-row"><span class="n">${esc(c.n)}</span><span class="st ${c.st[1]}">${esc(c.st[0])}</span><span class="ex">${esc(c.ex)}</span>${c.cmp ? `<span class="cmp">${esc(cap(c.cmp))}</span>` : ""}</div>`).join("")}</div>
+  ${ctxRegimen() ? `<p class="note">${esc(ctxRegimen())} Confianza de la previsión: ${esc(d3.confianza || "—")}.</p>` : ""}
+</section>`;
+if (dr?.dias?.length) H += `
+<section>
+  <div class="eyebrow">Control de calidad</div>
+  <h2>¿Acertamos la semana pasada?</h2>
+  <div class="hits">${dr.dias.map(x => {
+    // P-038: si falta el crédito, lectura provisional con bolsa, divisas, volatilidad y refugio
+    const pv = x.veredicto === "nc" && x.provisional ? x.provisional : null, y = pv || x;
+    const v = VER[y.veredicto] || [y.veredicto,"na"], lat = y.veredicto === "neutral";
+    const cls = y.veredicto === "acierto" ? "ok" : y.veredicto === "al_reves" ? "ko" : lat && y.inclinacion === "a favor" ? "okw" : lat && y.inclinacion === "en contra" ? "kow" : "na";
+    const et = lat ? (y.tramo || "lateral") : y.veredicto === "sin_direccion" ? `fue ${R[y.resultado] || y.resultado}` : v[0];
+    const fue = lat ? (y.inclinacion ? (y.inclinacion === "a favor" ? "acertado a medias" : "fallado a medias") : x.dijimos === "eq" ? "no dimos dirección" : "sin inclinación")
+      : y.veredicto === "nc" ? "falta un dato" : y.veredicto === "sin_direccion" ? "no dimos dirección" : `fue ${R[y.resultado] || y.resultado}`;
+    return `<div class="hit ${cls}${pv ? " prov" : ""}"><div class="dw">${esc(dw(x.fecha))} ${pd(x.fecha)?.d}</div><div class="v">${esc(cap(et))}</div><div class="s">dijimos ${esc(R[x.dijimos])}<br>${esc(fue)}</div>${pv ? `<div class="pv">provisional</div>` : ""}</div>`; }).join("")}</div>
+  <div class="hkey"><span><i style="background:var(--up-soft);border-color:#9CC7B2"></i>acertado</span><span><i style="background:#EEF6F1;border-color:#B5D5C4"></i>lateral hacia donde dijimos</span><span><i style="background:#FAF0EE;border-color:#E3C2BE"></i>lateral al revés</span><span><i style="background:var(--risk-soft);border-color:#DDB0AB"></i>fallado</span><span><i style="border-style:dashed;border-color:var(--mute)"></i>provisional</span></div>
+  ${(() => { const rs = dr.resumen || {}, fu = rs.fuertes || {acertados: dr.recuento?.acierto || 0, total: dr.dias_con_movimiento || 0}, la = rs.laterales || {acertados: 0, total: 0, planos: 0};
+    return `<div class="score"><div><b>${fu.acertados}/${fu.total}</b><span>días fuertes acertados</span></div><div><b>${la.total ? `${la.acertados}/${la.total}` : "—"}</b><span>${la.total ? "días laterales acertados" : `días laterales: ${la.planos || 0} sin inclinación`}</span></div></div>`; })()}
+  <p class="note">Cada día se mide con cinco grupos de activos: bolsa (Russell 2000, S&amp;P 500, Nasdaq 100), crédito a empresas, volatilidad de los bonos, dólar y yen, y activos refugio. Día fuerte: al menos tres grupos se mueven con claridad en la misma dirección. Día lateral: no llega a eso; si la media se inclina hacia un lado es lateral alcista o bajista, y cuenta como acertado si se inclinó hacia lo que dijimos. Si falta el dato de crédito, el día sale como provisional (borde discontinuo), leído con el resto de grupos (bolsa, dólar y yen, volatilidad y refugio), y no cuenta en el marcador hasta que llegue el crédito.</p>
+</section>`;
+
+/* nivel 3: técnico */
+const tl = T[T.length-1], srfL = (d1.srf || []).filter(x => ok(x.aceptado_bn)).slice(-1)[0], resv = (d1.reservas || []).filter(x => ok(x.bn)), tga = (d2.tga || []).filter(x => ok(x.cierre_bn)).slice(-1)[0];
+const tb = seccion(FINAL, "Trading bias");
+const ANEX = [["parte1","Parte 1 · Funding"],["parte2","Parte 2 · Treasury"],["parte3","Parte 3 · Confirmación"],["auditoria","Auditoría"]].filter(([k]) => inf[k]);
+H += `
+<section class="expert">
+  <div class="eyebrow">Para expertos</div>
+  <details><summary>Datos técnicos de la semana <span>funding, Tesoro, capas</span></summary><div class="xb">
+    <div class="tw"><table class="t"><tbody>
+      <tr><td>SOFR − IORB</td><td class="num">${tl ? sg(spr(tl),0) + " pb · " + esc(fc(tl.fecha)) : "—"}</td></tr>
+      <tr><td>TGCR − IORB</td><td class="num">${tl && ok(tl.tgcr) ? sg(Math.round((tl.tgcr - tl.iorb)*1000)/10,0) + " pb" : "—"}</td></tr>
+      <tr><td>SRF</td><td class="num">${srfL ? num(srfL.aceptado_bn,3) + " bn · " + esc(fc(srfL.fecha)) : "—"}</td></tr>
+      <tr><td>ON RRP</td><td class="num">${rrpL ? num(rrpL.aceptado_bn,3) + " bn · " + esc(fc(rrpL.fecha)) : "—"}</td></tr>
+      <tr><td>Reservas</td><td class="num">${resv.length ? num(resv[resv.length-1].bn,1) + " bn · " + esc(fc(resv[resv.length-1].fecha)) : "—"}</td></tr>
+      <tr><td>TGA</td><td class="num">${tga ? num(tga.cierre_bn,1) + " bn · " + esc(fc(tga.fecha)) : "—"}</td></tr>
+      <tr><td>Modo de probabilidades</td><td class="num">${esc(res.modo || "—")} · base ${esc((res.base || []).join("/"))} · método ${esc(res.metodo || "—")}</td></tr>
+    </tbody></table></div>
+    <div class="ckey"><span><i style="background:var(--accent)"></i>SOFR − IORB</span><span><i style="background:var(--up)"></i>TGCR − IORB</span><span class="mute">pb por día</span></div><div class="chart" id="chF"></div>
+    <div class="ckey"><span><i style="background:var(--risk)"></i>Tesoro retira ≥ 20 bn</span><span><i style="background:var(--up)"></i>devuelve ≥ 20 bn</span><span class="mute">flujo neto por día, bn</span></div><div class="chart" id="chN"></div>
+    <div class="tw"><table class="t"><thead><tr><th>Capa</th><th>Señal</th><th>Dato</th></tr></thead><tbody>${(d3.capas || []).map(c => `<tr><td>${esc(c.capa)}</td><td>${esc((c.senal || "—").toLowerCase())}</td><td>${esc(c.valor || "—")} <span class="mute">${c.fecha ? esc(fc(c.fecha)) : ""}</span></td></tr>`).join("")}</tbody></table></div>
+    <div class="tw"><table class="t"><thead><tr><th>Día</th><th>Puntos off / on</th><th>Fondo que cuenta</th><th>Prob.</th></tr></thead><tbody>${dias.map(x => `<tr><td>${esc(dw(x.r.fecha))} ${pd(x.r.fecha)?.d}</td><td class="num">${num(x.r.pts_off,1)} / ${num(x.r.pts_on,1)}</td><td>${esc((x.r.fondo_traza || []).map(z => z.id).join(", ") || "ninguno")}</td><td class="num">${x.p.on} / ${x.p.neu} / ${x.p.off}</td></tr>`).join("")}</tbody></table></div>
+  </div></details>
+  ${tb ? `<details><summary>Sesgos de trading <span>por activo</span></summary><div class="xb md" id="mdTb">${md(tb)}</div></details>` : ""}
+  ${FINAL ? `<details><summary>Informe completo <span>documento de la semana</span></summary><div class="xb md" id="mdFinal"></div></details>` : ""}
+  ${ANEX.map(([k,t]) => `<details><summary>${esc(t)} <span>anexo</span></summary><div class="xb md" data-k="${k}"></div></details>`).join("")}
+</section>
+<footer>Guiver Research · Probabilidades calculadas solo para la semana objetivo con el método ${esc(res.metodo || "v6")} y la información disponible al corte del ${esc(fc(d3.corte))}. No es una recomendación de inversión.</footer>`;
+app.innerHTML = H;
+wrapTables($("#mdTb") || document.createElement("div"));
+$$(".expert details").forEach(d => d.addEventListener("toggle", () => { const b = $(".md[data-k], #mdFinal", d); if (d.open && b && !b.dataset.done) { b.innerHTML = md(b.id === "mdFinal" ? FINAL : inf[b.dataset.k]); wrapTables(b); b.dataset.done = 1; } if (d.open) { chartFunding(); chartNeto(); } }));
+
+/* el día seleccionado */
+function pintarDia(i){
+  const x = dias[i]; if (!x) return;
+  $$(".dbtn").forEach(b => b.setAttribute("aria-pressed", +b.dataset.i === i));
+  const A = amplifica(x), C = cambiaria(x), G = agenda(x);
+  $("#dia").innerHTML = `<article class="day">
+    <div class="day-h"><h2>${esc(cap(fdl(x.r.fecha)))}</h2><span class="lv ${x.nivel}">${esc(NIVEL[x.nivel])}</span></div>
+    <div class="pbar" aria-hidden="true"><span style="width:${x.p.off}%;background:var(--b-off)"></span><span style="width:${x.p.neu}%;background:var(--b-neu)"></span><span style="width:${x.p.on}%;background:var(--b-on)"></span></div>
+    <div class="pkey"><div class="k-off"><b>${x.p.off}%</b>caídas</div><div><b>${x.p.neu}%</b>normal</div><div class="k-on"><b>${x.p.on}%</b>subidas</div></div>
+    ${x.act.length ? `<div class="blk act"><h3>${x.soloActivos ? "Solo en estos activos" : "Por activo"}</h3><ul class="chg">${x.act.map(a => `<li><span><strong class="an">${esc(a.activo)}</strong><span class="am">${esc(a.motivo)}</span></span><b class="${a.off >= 33 ? "up" : ""}">${a.off} % caídas</b></li>`).join("")}</ul>${x.act.find(a => a.sin_efecto) ? `<p class="note">${esc(x.act.find(a => a.sin_efecto).sin_efecto)}</p>` : ""}<p class="note">${x.soloActivos ? `Solo afecta a estos activos; para el resto del mercado vale la cifra de arriba (${x.p.off} %).` : "El resto del mercado sigue la cifra de arriba."} Cálculo de cada activo: mitad la probabilidad del día, mitad lo que pasó en el histórico de este evento.</p></div>` : ""}
+    <div class="blk"><h3>Qué puede pasar</h3><p class="lead">${esc(quePasa(x))}</p></div>
+    <div class="blk"><h3>Por qué</h3><ul>${porQue(x).map(t => `<li>${t}</li>`).join("")}</ul></div>
+    <div class="blk"><h3>Qué lo amplifica</h3>${A.out.length ? `<ul>${A.out.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` : `<p>Nada lo amplifica ese día.</p>`}${A.contra.length ? `<p class="note">A favor: ${esc(A.contra.join(" "))}</p>` : ""}</div>
+    ${C.length ? `<div class="blk"><h3>Qué lo cambiaría</h3><ul class="chg">${C.map(z => `<li><span>${z.t}</span><b class="${z.v > x.p.off ? "up" : "dn"}">${z.v} % caídas</b></li>`).join("")}</ul></div>` : ""}
+    <div class="blk"><h3>A qué hora (Madrid)</h3>${G.length ? `<ul class="agenda">${G.map(z => `<li><span class="h">${esc(z.h || "día")}</span><span>${esc(z.t)}</span></li>`).join("")}</ul>` : `<p>Sin eventos destacados.</p>`}</div>
+  </article>`;
+}
+$$(".dbtn").forEach(b => b.addEventListener("click", () => { pintarDia(+b.dataset.i); const el = $("#dia"); if (el.getBoundingClientRect().top > innerHeight * .6) el.scrollIntoView({block:"start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }));
+pintarDia(top ? top.i : 0);
+
+/* gráficos del nivel técnico */
+function chartFunding(){
+  const el = $("#chF"); if (!el || el.dataset.done) return; const t = (d1.tipos || []).filter(x => x.fecha);
+  const sp = t.map(x => ok(x.sofr) && ok(x.iorb) ? spr(x) : null), gc = t.map(x => ok(x.tgcr) && ok(x.iorb) ? Math.round((x.tgcr - x.iorb)*1000)/10 : null); const v = [...sp, ...gc].filter(ok);
+  if (!v.length) return; el.dataset.done = 1;
+  const lo = Math.min(-2, ...v) - 1, hi = Math.max(6, ...v) + 1, W = 400, Hh = 180, l = 30, r = 8, tp = 8, b = 150, n = t.length, bw = (W - l - r)/n;
+  const x = i => l + bw*i + bw/2, y = val => tp + (hi - val)/(hi - lo)*(b - tp);
+  let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="SOFR y TGCR menos IORB">`;
+  for (let k = Math.ceil(lo/2)*2; k <= hi; k += 2) s += `<line x1="${l}" x2="${W-r}" y1="${y(k)}" y2="${y(k)}" stroke="${k === 0 ? "var(--rule-2)" : "var(--rule)"}"/><text x="${l-5}" y="${y(k)+4}" text-anchor="end">${k > 0 ? "+" + k : k}</text>`;
+  const ln = (a, c) => { let d = "", u = false; a.forEach((val,i) => { if (!ok(val)) { u = false; return; } d += (u ? "L" : "M") + x(i).toFixed(1) + " " + y(val).toFixed(1); u = true; }); return `<path d="${d}" fill="none" stroke="${c}" stroke-width="2"/>`; };
+  s += ln(gc, "var(--up)") + ln(sp, "var(--accent)");
+  t.forEach((z,i) => { if (i % 2 === 0 || i === n-1) s += `<text x="${x(i)}" y="${Hh-6}" text-anchor="middle">${esc(fc(z.fecha))}</text>`; });
+  el.innerHTML = s + "</svg>";
+}
+function chartNeto(){
+  const el = $("#chN"); if (!el || el.dataset.done) return;
+  const rows = [...(d2.neto_dia || []), ...(d2.neto_dia_sin_ledger || [])].filter(x => x.fecha).sort((a,b) => a.fecha < b.fecha ? -1 : 1);
+  if (!rows.length) return; el.dataset.done = 1;
+  const W = 400, Hh = 200, l = 30, r = 8, tp = 14, b = 166, n = rows.length, bw = (W - l - r)/n;
+  const mx = Math.max(20, ...rows.map(x => Math.abs(x.neto_bn || 0))) * 1.15, y = v => (tp + b)/2 - v/mx*(b - tp)/2, x = i => l + bw*i + bw/2;
+  let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Flujo neto diario del Tesoro">`;
+  [-20, 0, 20].forEach(k => s += `<line x1="${l}" x2="${W-r}" y1="${y(k)}" y2="${y(k)}" stroke="${k ? "var(--rule)" : "var(--rule-2)"}"/><text x="${l-5}" y="${y(k)+4}" text-anchor="end">${k > 0 ? "+" + k : k}</text>`);
+  rows.forEach((z,i) => { const v = z.neto_bn; s += `<text x="${x(i)}" y="${Hh-6}" text-anchor="middle">${esc(String(pd(z.fecha)?.d))}</text>`;
+    if (!ok(v)) return; const t0 = Math.min(y(v), y(0)), h = Math.max(1.5, Math.abs(y(v) - y(0)));
+    s += `<rect x="${x(i) - bw*.3}" y="${t0}" width="${bw*.6}" height="${h}" fill="${v >= 20 ? "var(--risk)" : v <= -20 ? "var(--up)" : "var(--b-neu)"}"/>`; });
+  el.innerHTML = s + "</svg>";
+}
+})();
+</script>

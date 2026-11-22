@@ -1,0 +1,350 @@
+{
+ "nota": "Caso de prueba P-040 paso 5: entradas del motor de semanas/2026-11-16/datos3.json del proyecto (recalculado con el método v6.9 el 15-nov) y lo publicado. Solo los campos que lee motor.calcular; los textos 'evento' van acortados (el motor no los lee).",
+ "obj": [
+  "2026-11-16",
+  "2026-11-20"
+ ],
+ "corte": "2026-11-14",
+ "metodo": "v6.9",
+ "base": [
+  25,
+  50,
+  25
+ ],
+ "confianza": "alta",
+ "modo_tension": {
+  "por_funding": false,
+  "por_move": false
+ },
+ "sensibilidad_settlement": {
+  "activa": true
+ },
+ "gli": {
+  "puntua": {
+   "fuente": "ninguna",
+   "estado": "sin señal",
+   "semana": null
+  }
+ },
+ "fondo": [
+  {
+   "id": "sofr_ge_iorb",
+   "fecha": "2026-11-12"
+  },
+  {
+   "id": "fedwatch_hawkish",
+   "fecha": "2026-11-13"
+  },
+  {
+   "id": "hy_le_m10",
+   "fecha": "2026-11-12",
+   "rent_delta_pb": 16
+  }
+ ],
+ "series": {
+  "move": [
+   {
+    "fecha": "2026-10-07",
+    "valor": 102.56
+   },
+   {
+    "fecha": "2026-10-08",
+    "valor": 100.7
+   },
+   {
+    "fecha": "2026-10-09",
+    "valor": 98.47
+   },
+   {
+    "fecha": "2026-10-13",
+    "valor": 101.09
+   },
+   {
+    "fecha": "2026-10-14",
+    "valor": 99.06
+   },
+   {
+    "fecha": "2026-10-15",
+    "valor": 102.49
+   },
+   {
+    "fecha": "2026-10-16",
+    "valor": 101.1
+   },
+   {
+    "fecha": "2026-10-19",
+    "valor": 101.3
+   },
+   {
+    "fecha": "2026-10-20",
+    "valor": 101.7
+   },
+   {
+    "fecha": "2026-10-21",
+    "valor": 95.94
+   },
+   {
+    "fecha": "2026-10-22",
+    "valor": 106.84
+   },
+   {
+    "fecha": "2026-10-23",
+    "valor": 103.31
+   },
+   {
+    "fecha": "2026-10-26",
+    "valor": 102.19
+   },
+   {
+    "fecha": "2026-10-27",
+    "valor": 97.87
+   },
+   {
+    "fecha": "2026-10-28",
+    "valor": 94.55
+   },
+   {
+    "fecha": "2026-10-29",
+    "valor": 93.54
+   },
+   {
+    "fecha": "2026-10-30",
+    "valor": 100.2
+   },
+   {
+    "fecha": "2026-11-02",
+    "valor": 100.36
+   },
+   {
+    "fecha": "2026-11-03",
+    "valor": 99.97
+   },
+   {
+    "fecha": "2026-11-04",
+    "valor": 93.88
+   },
+   {
+    "fecha": "2026-11-05",
+    "valor": 97.92
+   },
+   {
+    "fecha": "2026-11-06",
+    "valor": 92.77
+   },
+   {
+    "fecha": "2026-11-09",
+    "valor": 85.98
+   },
+   {
+    "fecha": "2026-11-10",
+    "valor": 92.43
+   },
+   {
+    "fecha": "2026-11-12",
+    "valor": 98.43
+   },
+   {
+    "fecha": "2026-11-13",
+    "valor": 98.79
+   }
+  ]
+ },
+ "dias": [
+  {
+   "fecha": "2026-11-16",
+   "dia": "lunes",
+   "bonos_abierto": true,
+   "evento_verificado": true,
+   "dispersion": [
+    {
+     "id": "settle_cupones_nnc10",
+     "evento": "settlement refunding 3Y/10Y/30Y"
+    }
+   ],
+   "direccion": [
+    {
+     "id": "settle_neto_absorcion20",
+     "evento": "flujo neto +28,0 bn",
+     "neto_bn": 28.0,
+     "estado": "ESTIMATED"
+    }
+   ]
+  },
+  {
+   "fecha": "2026-11-17",
+   "dia": "martes",
+   "bonos_abierto": true,
+   "evento_verificado": true,
+   "dispersion": [
+    {
+     "id": "macro2",
+     "evento": "ventas minoristas octubre",
+     "estado": "CONFIRMED (calendario oficial)"
+    }
+   ],
+   "direccion": [
+    {
+     "id": "settle_neto_absorcion20",
+     "evento": "flujo neto +33,0 bn",
+     "neto_bn": 32.999,
+     "estado": "ESTIMATED"
+    }
+   ]
+  },
+  {
+   "fecha": "2026-11-18",
+   "dia": "miércoles",
+   "bonos_abierto": true,
+   "evento_verificado": true,
+   "dispersion": [
+    {
+     "id": "sub_20y",
+     "evento": "subasta 20Y"
+    },
+    {
+     "id": "macro2",
+     "evento": "actas FOMC",
+     "estado": "CONFIRMED (calendario oficial)"
+    },
+    {
+     "id": "megacaps",
+     "evento": "Nvidia",
+     "estado": "CONFIRMED (IR de Nvidia, 28-oct)"
+    }
+   ],
+   "direccion": [
+    {
+     "id": "subasta_cupon_condiciones_2de3",
+     "evento": "subasta 20Y",
+     "previas_flojas": false
+    },
+    {
+     "id": "actas_repricing_hawkish",
+     "evento": "actas",
+     "d2y_pb": 19.0,
+     "estado": "CONFIRMED (FRED DGS2)"
+    },
+    {
+     "id": "actas_repricing_dovish",
+     "evento": "actas",
+     "d2y_pb": 19.0,
+     "estado": "CONFIRMED (FRED DGS2)"
+    }
+   ]
+  },
+  {
+   "fecha": "2026-11-19",
+   "dia": "jueves",
+   "bonos_abierto": true,
+   "evento_verificado": true,
+   "dispersion": [
+    {
+     "id": "tips_10y_mas",
+     "evento": "10Y TIPS R"
+    },
+    {
+     "id": "oferta_acciones",
+     "evento": "IPO de Anthropic",
+     "estado": "SECONDARY (Renaissance Capital, IPOScoop, prensa; sin calendario oficial del Nasdaq verificado)"
+    }
+   ],
+   "direccion": [
+    {
+     "id": "tips_condiciones",
+     "evento": "10Y TIPS R",
+     "previas_flojas": true
+    }
+   ]
+  },
+  {
+   "fecha": "2026-11-20",
+   "dia": "viernes",
+   "bonos_abierto": true,
+   "evento_verificado": true,
+   "dispersion": [],
+   "direccion": []
+  }
+ ],
+ "reglas_actualizacion": [
+  {
+   "tipo": "macro",
+   "evento": "Ventas minoristas octubre (m/m)",
+   "dia": "2026-11-17",
+   "consenso": "+0,2 % m/m (grupo de control +0,4 %)",
+   "anterior": "0,8 %",
+   "hawkish_si": "m/m ≥ +0,5 %",
+   "dovish_si": "m/m ≤ −0,1 %"
+  }
+ ],
+ "esperado": {
+  "prob": {
+   "2026-11-16": [
+    22,
+    41,
+    37
+   ],
+   "2026-11-17": [
+    22,
+    41,
+    37
+   ],
+   "2026-11-18": [
+    27,
+    37,
+    36
+   ],
+   "2026-11-19": [
+    26,
+    45,
+    29
+   ],
+   "2026-11-20": [
+    24,
+    49,
+    27
+   ]
+  },
+  "si_modo_tension": {
+   "2026-11-16": [
+    18,
+    34,
+    48
+   ],
+   "2026-11-17": [
+    18,
+    32,
+    50
+   ],
+   "2026-11-18": [
+    28,
+    33,
+    39
+   ],
+   "2026-11-19": [
+    27,
+    42,
+    31
+   ],
+   "2026-11-20": [
+    24,
+    48,
+    28
+   ]
+  },
+  "regla_ventas": {
+   "hawkish": [
+    21,
+    39,
+    40
+   ],
+   "dovish": [
+    24,
+    40,
+    36
+   ]
+  },
+  "confianza": {
+   "2026-11-19": "baja"
+  }
+ }
+}

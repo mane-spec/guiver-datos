@@ -1,0 +1,18 @@
+{
+ "nota": "Huellas SHA-256 de sistema/manifiesto.json del proyecto (O7/C5/I3, 18-nov-2026). El test comprueba que cada copia del repo es idéntica a la del proyecto. Archivos pendientes de copiar (P-040 paso 1): plantilla.html, build.py, paridad.py y los cuatro prompts.",
+ "sha256": {
+  "sistema/contrato.md": "cc8d7d401b5561294f52027e90d7dad73c444e3e94d7f86db80ee08f5a019bb4",
+  "sistema/investigadores.md": "bf6379f91a01553ef2d10dd539a2f6f4dd7525f337b70ca5b60a741c2959fc0e",
+  "sistema/motor/motor.py": "597a03929ef0ff16950bc9bfe3e9d78f7518525d861913783fb400d8c26388a0"
+ },
+ "pendientes": [
+  "sistema/prompts/parte1-v2.md",
+  "sistema/prompts/parte2-v5.1.md",
+  "sistema/prompts/parte3-v6.3.md",
+  "sistema/prompts/final-v1.md",
+  "sistema/simulador/plantilla.html",
+  "sistema/simulador/build.py",
+  "sistema/tests/paridad.py",
+  "sistema/orquestador.md"
+ ]
+}

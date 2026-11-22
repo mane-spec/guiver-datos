@@ -3,6 +3,8 @@ on:
   push:
     paths: ["sistema/**", ".github/workflows/sistema.yml"]
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   comprobar:
     runs-on: ubuntu-latest
@@ -10,4 +12,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
       - run: python3 sistema/comprobar.py
+      # P-040 paso 3: la marca «vigente» solo avanza en main y solo si todo lo anterior ha pasado
+      - name: Mover la marca vigente
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git tag -f vigente "$GITHUB_SHA"
+          git push -f origin refs/tags/vigente

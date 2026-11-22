@@ -1,18 +1,16 @@
 {
- "nota": "Huellas SHA-256 de sistema/manifiesto.json del proyecto (O7/C5/I3, 18-nov-2026). El test comprueba que cada copia del repo es idéntica a la del proyecto. Archivos pendientes de copiar (P-040 paso 1): plantilla.html, build.py, paridad.py y los cuatro prompts.",
+ "nota": "Huellas SHA-256 de sistema/manifiesto.json del proyecto (O7/C5/I3, 18-nov-2026): motor, contrato, investigadores, cuatro prompts, plantilla y build coinciden con el proyecto. paridad.py y orquestador.md no están en el manifiesto del proyecto: paridad.py se copió del proyecto y pasa la paridad; orquestador.md es idéntico a copias-sistema/orquestador-O7-cabecera-18nov.md (O7). P-040 paso 1 completo el 22-nov.",
  "sha256": {
   "sistema/contrato.md": "cc8d7d401b5561294f52027e90d7dad73c444e3e94d7f86db80ee08f5a019bb4",
   "sistema/investigadores.md": "bf6379f91a01553ef2d10dd539a2f6f4dd7525f337b70ca5b60a741c2959fc0e",
-  "sistema/motor/motor.py": "597a03929ef0ff16950bc9bfe3e9d78f7518525d861913783fb400d8c26388a0"
- },
- "pendientes": [
-  "sistema/prompts/parte1-v2.md",
-  "sistema/prompts/parte2-v5.1.md",
-  "sistema/prompts/parte3-v6.3.md",
-  "sistema/prompts/final-v1.md",
-  "sistema/simulador/plantilla.html",
-  "sistema/simulador/build.py",
-  "sistema/tests/paridad.py",
-  "sistema/orquestador.md"
- ]
+  "sistema/motor/motor.py": "597a03929ef0ff16950bc9bfe3e9d78f7518525d861913783fb400d8c26388a0",
+  "sistema/prompts/parte1-v2.md": "506c3e26e5f6a5945e873738502e8f41c7fa53b9edee289ab714b25f59d68a21",
+  "sistema/prompts/parte2-v5.1.md": "38c10c6b4ffb480a1c4005cea55e06a34c7345dc98f0d3af151222d7acaccef5",
+  "sistema/prompts/parte3-v6.3.md": "c2d6d22251e69c6252deb9d6ee1523779feb90ed6c81ac0c58f3615e578b2c3c",
+  "sistema/prompts/final-v1.md": "84b1139ed48cf619f6bee652e6731f5e2fb9dcdcdb4ee5dc28b717f036c198cc",
+  "sistema/simulador/plantilla.html": "3505024321e199aa8b820a8ea338a88134cc9afce3ed1b8e3c7e9004447c9826",
+  "sistema/simulador/build.py": "ac6923594671d4e21eda2198a5d68cb976e728ff9b01d6576d072b8d19aa263d",
+  "sistema/tests/paridad.py": "e62f46b54af95c1ffa695ff0cb21b3dd7adb0cc10a0d0a16df8977f88bed2b29",
+  "sistema/orquestador.md": "0158ceecce56016bd825d981fe7464be724ee6d822a0d64883ae5a222c44e456"
+ }
 }

@@ -1,0 +1,583 @@
+<title>Guiver · Liquidez global</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#F6F7F9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+/* Layout: nota de research en papel. Resumen → la semana (lista de días; un toque abre la explicación completa del día, sin más botones)
+   → mecanismo (funding, Treasury, confirmación, tipos) → sesgos → cómo acertamos → informe completo. Móvil primero, una columna. */
+:root{
+  --paper:#F6F7F9; --sheet:#FFFFFF; --ink:#13203A; --ink-2:#3C4659; --mute:#667085; --rule:#DDE1E8; --rule-2:#C9CFD9;
+  --accent:#2C47B8; --accent-soft:#EDF0FA;
+  --off:#A9403A; --off-soft:#F7ECEB; --on:#2D7556; --on-soft:#E9F3EE; --neu:#B5BCC8; --warn:#8A5A00; --warn-soft:#FBF3E2;
+  --serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --gut-l:max(16px,env(safe-area-inset-left,0px)); --gut-r:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sheet)}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;text-wrap:balance;color:var(--ink)}
+p{margin:0}
+a{color:var(--accent)}
+pre{white-space:pre-wrap;overflow-wrap:anywhere}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.mute{color:var(--mute)}
+.wrap{max-width:860px;margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+
+/* cabecera */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sheet);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;min-height:56px}
+.brand{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--accent);font-weight:500;white-space:nowrap}
+.top-t{font-size:14px;color:var(--ink-2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top nav{margin-left:auto;display:flex;gap:14px}
+.top nav a{font-size:13.5px;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+@media (max-width:640px){.top nav{display:none}}
+
+main{padding-block:28px 64px}
+section{padding-block:28px;border-top:1px solid var(--rule)}
+section:first-child{border-top:0;padding-top:4px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+h2{font-size:clamp(22px,4.6vw,27px);line-height:1.2;margin-bottom:6px}
+.lede{color:var(--ink-2);max-width:65ch}
+h3{font-size:17px;line-height:1.3;margin:22px 0 8px}
+
+/* resumen */
+.regime{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:8px 0 14px}
+.regime h1{font-size:clamp(30px,8vw,44px);line-height:1.05}
+.badge{display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:12px;font-size:12.5px;font-weight:500;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.badge.warn{background:var(--warn-soft);color:var(--warn)}
+.badge.off{background:var(--off-soft);color:var(--off)}
+.badge.on{background:var(--on-soft);color:var(--on)}
+.thesis{font-family:var(--serif);font-size:clamp(17px,4.2vw,19px);line-height:1.55;color:var(--ink);border-left:3px solid var(--accent);padding-left:14px;max-width:62ch}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:20px}
+@media (min-width:700px){.facts{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.fact{background:var(--sheet);padding:12px 14px;min-width:0}
+.fact b{display:block;font-family:var(--mono);font-size:20px;font-weight:500;line-height:1.25}
+.fact span{display:block;font-size:12.5px;color:var(--mute);line-height:1.35}
+.md-inline ul{margin:6px 0 0;padding-left:20px}
+.md-inline li{margin:6px 0;color:var(--ink-2);max-width:65ch}
+
+/* la semana */
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--mute);margin:10px 0 14px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.days{display:flex;flex-direction:column;background:var(--sheet);border:1px solid var(--rule);border-radius:6px}
+.day+.day{border-top:1px solid var(--rule)}
+.dayrow{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;text-align:left;background:none;border:0;padding:14px 16px;cursor:pointer}
+.dayrow:hover{background:var(--paper)}
+.dname{font-weight:600;font-size:15.5px}
+.dname small{font-weight:400;color:var(--mute);font-size:13.5px;margin-left:6px}
+.dlean{font-size:13.5px;font-weight:500;white-space:nowrap;text-align:right}
+.dlean.off{color:var(--off)} .dlean.on{color:var(--on)} .dlean.eq{color:var(--mute)}
+.bar{grid-column:1/-1;display:flex;height:8px;border-radius:2px;overflow:hidden;background:var(--rule)}
+.bar span{display:block;height:100%}
+.bar .b-on{background:var(--on)} .bar .b-neu{background:var(--neu)} .bar .b-off{background:var(--off)}
+.dsub{grid-column:1/-1;display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--mute)}
+.dsub .num{color:var(--ink-2);white-space:nowrap}
+.dsub .ev{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chev{font-family:var(--mono);color:var(--mute);transition:transform .2s ease;display:inline-block;margin-left:6px}
+.day.open .chev{transform:rotate(90deg)}
+.detail{padding:4px 16px 20px;border-top:1px dashed var(--rule)}
+.day.open .dayrow{background:var(--accent-soft)}
+.probs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 6px}
+.probs div{border:1px solid var(--rule);border-radius:4px;padding:8px 10px}
+.probs b{display:block;font-family:var(--mono);font-size:26px;font-weight:500;line-height:1.15}
+.probs span{font-size:12.5px;color:var(--mute)}
+.probs .p-on b{color:var(--on)} .probs .p-off b{color:var(--off)}
+.verdict{font-family:var(--serif);font-size:18px;line-height:1.45;margin:14px 0 4px}
+.dsec{margin-top:18px}
+.dsec>h4{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:500;margin:0 0 8px}
+.flist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.flist li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;font-size:14.5px;line-height:1.5}
+.flist .pt{font-family:var(--mono);font-size:12.5px;padding:1px 6px;border-radius:3px;height:fit-content;white-space:nowrap}
+.pt.off{background:var(--off-soft);color:var(--off)} .pt.on{background:var(--on-soft);color:var(--on)} .pt.two{background:var(--paper);color:var(--ink-2);border:1px solid var(--rule)}
+.flist .d{display:block;color:var(--mute);font-size:13px;margin-top:2px}
+.agenda{width:100%;border-collapse:collapse;font-size:14px}
+.agenda td{padding:7px 0;border-top:1px solid var(--rule);vertical-align:top}
+.agenda td:first-child{font-family:var(--mono);font-size:13px;white-space:nowrap;padding-right:12px;color:var(--ink-2);width:1%}
+.agenda tr:first-child td{border-top:0}
+.change{display:flex;flex-direction:column;gap:8px}
+.change div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;font-size:14px;padding:9px 12px;background:var(--paper);border-radius:4px}
+.change b{font-family:var(--mono);font-weight:500;white-space:nowrap}
+.change .d{grid-column:1/-1;color:var(--mute);font-size:12.5px}
+.calc{font-size:13px;color:var(--mute);line-height:1.55}
+.calc .num{color:var(--ink-2)}
+.note{font-size:13px;color:var(--mute);line-height:1.5;margin-top:10px;max-width:70ch}
+.warnbox{background:var(--warn-soft);color:var(--warn);font-size:13.5px;padding:9px 12px;border-radius:4px;margin-top:12px}
+
+/* tablas y gráficos */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:12px;border:1px solid var(--rule);border-radius:4px;background:var(--sheet)}
+table.t{border-collapse:collapse;width:100%;font-size:14px}
+table.t th,table.t td{padding:9px 12px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+table.t th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:500;background:var(--paper);white-space:nowrap}
+table.t td.r,table.t th.r{text-align:right}
+table.t td.num{font-size:13.5px;white-space:nowrap}
+table.t tr:last-child td{border-bottom:0}
+.sig{font-size:12.5px;font-weight:500;white-space:nowrap}
+.sig.off{color:var(--off)} .sig.on{color:var(--on)} .sig.mix{color:var(--warn)} .sig.na{color:var(--mute)}
+.chart{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:12px 12px 6px;margin-top:12px}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:var(--mono);font-size:11px;fill:var(--mute)}
+.ckey{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+.ckey i{display:inline-block;width:12px;height:3px;margin-right:6px;vertical-align:3px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media (min-width:760px){.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0;font-size:14.5px;background:var(--sheet);border:1px solid var(--rule);border-radius:4px;margin-top:12px}
+.kv>*{padding:9px 12px;border-top:1px solid var(--rule)}
+.kv>:nth-child(1),.kv>:nth-child(2){border-top:0}
+.kv .v{font-family:var(--mono);font-size:13.5px;text-align:right;white-space:nowrap}
+.kv .s{grid-column:1/-1;font-size:12.5px;color:var(--mute);border-top:0;padding-top:0}
+
+/* informe */
+.md{max-width:70ch;font-size:15.5px;line-height:1.65;color:var(--ink-2)}
+.md h1{font-size:24px;margin:0 0 4px}
+.md h1+p{font-family:var(--mono);font-size:12.5px;color:var(--mute)}
+.md h2{font-size:20px;margin:28px 0 8px}
+.md h3{font-size:16px}
+.md p,.md ul,.md ol{margin:8px 0}
+.md ul,.md ol{padding-left:20px}
+.md li{margin:4px 0}
+.md strong{color:var(--ink)}
+.md .tw{max-width:none}
+.md table{border-collapse:collapse;width:100%;font-size:13.5px}
+.md th,.md td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top;min-width:80px}
+.md th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-weight:500;background:var(--paper)}
+.md code{font-family:var(--mono);font-size:13px;background:var(--paper);padding:1px 4px;border-radius:3px}
+.md pre{font-family:var(--mono);font-size:12px;background:var(--paper);padding:12px;border-radius:4px;overflow-x:auto;white-space:pre-wrap}
+.annex{margin-top:28px;display:flex;flex-direction:column;gap:8px}
+.annex details{background:var(--sheet);border:1px solid var(--rule);border-radius:4px}
+.annex summary{cursor:pointer;padding:12px 14px;font-weight:500;list-style:none;display:flex;justify-content:space-between}
+.annex summary::-webkit-details-marker{display:none}
+.annex details[open] summary{border-bottom:1px solid var(--rule)}
+.annex .md{padding:4px 14px 16px;max-width:none}
+footer{border-top:1px solid var(--rule);padding-block:24px 40px;font-size:13px;color:var(--mute)}
+footer b{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--accent);font-weight:500}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.chev{transition:none}}
+@media print{.top,body::before{display:none}section{break-inside:avoid-page}}
+</style>
+
+<header class="top"><div class="wrap">
+  <span class="brand">GUIVER RESEARCH</span>
+  <span class="top-t" id="topT">Liquidez global</span>
+  <nav aria-label="Secciones"><a href="#semana">Semana</a><a href="#mecanismo">Mecanismo</a><a href="#aciertos">Aciertos</a><a href="#informe">Informe</a></nav>
+</div></header>
+<main class="wrap" id="app"><section><p class="lede">Cargando el informe de la semana…</p></section></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script>
+const DATOS = /*__DATOS__*/null;
+
+// MOTOR-INICIO — réplica exacta de motor.py v6.4 (catálogo inyectado desde motor.py)
+const Motor = (cat) => {
+  const PASO = cat.paso || 1;                                   // P-014: probabilidades exactas
+  const CONF = cat.confirma_tension || ["move_110_135","move_gt_135","hy_ge_15","ccc_ge_40","fails_subiendo_sobre_media","xeurbi_le_m5_ampliando3","srf_material","tension_bancaria"];
+  const red = (x, p) => Math.floor(x / p + 0.5) * p;
+  const regla = (vals, tope) => { if (!vals.length) return 0; const v = [...vals].sort((a,b)=>b-a); return Math.min(v[0] + 0.5 * v.slice(1).reduce((s,x)=>s+x,0), tope); };
+  function fondo(ids, porF, porM) {
+    const tension = porF || porM, topeG = tension ? 4 : 1, topeOff = tension ? 6 : 2, topeOn = 2;
+    const grupos = {}, traza = [];
+    for (const id of ids) {
+      const f = cat.fondo[id]; if (!f) continue;
+      let pts = f.pts; if (f.grupo === "funding" && porF) pts *= 2;
+      const k = f.grupo + "/" + f.lado; (grupos[k] = grupos[k] || []).push(pts);
+      traza.push({id, grupo:f.grupo, lado:f.lado, pts});
+    }
+    const lado = {off:0, on:0}, porGrupo = {};
+    for (const [k, v] of Object.entries(grupos)) { const g = regla(v, topeG); porGrupo[k] = g; lado[k.split("/")[1]] += g; }
+    return {off: Math.min(lado.off, topeOff), on: Math.min(lado.on, topeOn), porGrupo, traza, antes: lado, topes:{grupo:topeG, off:topeOff, on:topeOn}};
+  }
+  const cumple = (cond, presion, sens) => cond == null ? true : cond === "funding" ? presion : (presion || sens);
+  function dia(d, presion, sens) {
+    const sub = []; let otros = 0, mega = 0;
+    for (const e of d.dispersion) { const c = cat.dispersion[e.id]; if (!c) continue;
+      if (e.id === "megacaps") mega = 1; else if (c.subasta) sub.push(c.pts); else otros += c.pts; }
+    const disp = (sub.length ? regla(sub, 99) : 0) + otros + mega;
+    let off = 0, on = 0; const traza = [];
+    for (const e of d.direccion) { const c = cat.direccion[e.id]; if (!c) continue;
+      if (!cumple(c.condicion, presion, !!sens)) { traza.push({id:e.id, pts:0, nota: c.condicion === "funding" ? "sin presión de funding" : "sin presión de funding ni sensibilidad a settlements"}); continue; }
+      if (c.lado === "off") off += c.pts; else on += c.pts; traza.push({id:e.id, lado:c.lado, pts:c.pts}); }
+    return {disp, off, on, traza};
+  }
+  function prob(pOff, pOn, tension, conf, base, paso = PASO) {
+    const [bon, bneu, boff] = base.map(b => b / 100);
+    const sOff = Math.log(boff / bneu) + 0.2 * pOff, sOn = Math.log(bon / bneu) + 0.2 * pOn;
+    const den = 1 + Math.exp(sOn) + Math.exp(sOff);
+    const modelo = [Math.exp(sOn)/den, 1/den, Math.exp(sOff)/den];
+    const w = cat.pesos[conf][tension ? 1 : 0];
+    const mez = modelo.map((m,i) => w*m + (1-w)*[bon,bneu,boff][i]);
+    let techo = false;
+    if (!tension) for (const i of [0,2]) if (mez[i] > 0.60) { mez[1] += mez[i] - 0.60; mez[i] = 0.60; techo = true; }
+    let on = red(mez[0]*100, paso), off = red(mez[2]*100, paso), neu = 100 - on - off, suelo = false;
+    if (!tension) while (neu < 20) { if (off >= on) off -= paso; else on -= paso; neu = 100 - on - off; suelo = true; }
+    let empate = false;                                        // P-014: sin empates si el cálculo inclina
+    if (on === off) { if (mez[0] > mez[2] + 1e-9) { on += paso; off -= paso; } else if (mez[2] > mez[0] + 1e-9) { off += paso; on -= paso; } else empate = true; }
+    return {on, neu, off, sOff, sOn, modelo: modelo.map(x=>x*100), w, mez: mez.map(x=>x*100), techo, suelo, empate, paso};
+  }
+  const FUND_CAT = ["sofr_ge_iorb","gc_ge_iorb"], CAT_CAJA = ["settle_neto_absorcion20","fin_mes","fin_trimestre","tax_date"];
+  function fondoDia(ids, d) {                                   // P-021: funding solo con catalizador de caja · P-022: festivo de bonos = base
+    if (d.bonos_abierto === false) return [];
+    if ((d.direccion || []).some(e => CAT_CAJA.includes(e.id))) return ids;
+    return ids.filter(id => !FUND_CAT.includes(id));
+  }
+  function calcular(esc) {
+    const presion = !!esc.porF;                                 // regla de presión de funding del usuario (puntúa)
+    const porF = presion && (!!esc.forzar || esc.fondo.some(id => CONF.includes(id)));   // P-012: modo tensión con 2.ª capa
+    const tension = porF || !!esc.porM;
+    const fo = fondo(esc.fondo, porF, esc.porM);
+    const dias = esc.dias.map(d => {
+      const x = dia(d, presion, esc.sens);
+      const conf = d.evento_verificado === false ? "baja" : esc.conf;
+      const fd = fondo(fondoDia(esc.fondo, d), porF, esc.porM);                   // P-021 / P-022
+      const pOff = x.disp + x.off + fd.off, pOn = x.disp + x.on + fd.on;
+      return {fecha:d.fecha, dia:d.dia, ...x, fondoDia: fd, pOff, pOn, conf, tension, p: prob(pOff, pOn, tension, conf, esc.base)};
+    });
+    return {fondo: fo, dias, tension, presion, tensionPorFunding: porF, sinSegundaCapa: presion && !porF && !esc.porM};
+  }
+  return {calcular, prob, fondo, dia};
+};
+// MOTOR-FIN
+
+(function(){
+"use strict";
+const app = document.getElementById("app");
+const $ = (s, r=document) => r.querySelector(s), $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ok = x => typeof x === "number" && isFinite(x);
+const num = (x, d=1) => ok(x) ? Number(x).toLocaleString("es-ES",{minimumFractionDigits:d,maximumFractionDigits:d}) : "—";
+const sg = (x, d=1) => ok(x) ? (x > 0 ? "+" : x < 0 ? "−" : "") + num(Math.abs(x), d) : "—";
+const DOW = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"], MES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const pd = s => { if (!s || typeof s !== "string") return null; const [y,m,d] = s.slice(0,10).split("-").map(Number); return (y&&m&&d) ? {y,m,d,w:new Date(Date.UTC(y,m-1,d)).getUTCDay()} : null; };
+const fc = s => { const p = pd(s); return p ? `${p.d} ${MES[p.m-1]}` : "—"; };
+const fdia = s => { const p = pd(s); return p ? DOW[p.w] : "—"; };
+const cap = t => t ? t[0].toUpperCase() + t.slice(1) : t;
+const md = t => window.marked ? marked.parse(t || "") : `<pre>${esc(t)}</pre>`;
+const wrapTables = el => { $$("table", el).forEach(t => { const w = document.createElement("div"); w.className = "tw"; t.replaceWith(w); w.appendChild(t); }); return el; };
+
+if (!DATOS) { app.innerHTML = `<section><div class="eyebrow">Plantilla</div><h2>Sin datos de la semana</h2><p class="lede">build.py rellena esta página cada sábado con los datos, el motor y los informes.</p></section>`; return; }
+
+const D = DATOS, cat = D.catalogo || {fondo:{},dispersion:{},direccion:{},pesos:{}};
+const d1 = D.d1 || {}, d2 = D.d2 || {}, d3 = D.d3 || {}, res = d3.resultado || {dias:[], base:[25,50,25]};
+const inf = D.informes || {}, FINAL = inf.final || "";
+const obj = d3.obj || [], rev = d3.rev || [];
+const seccion = (txt, t) => { const re = new RegExp("^## " + t + "[^\\n]*\\n([\\s\\S]*?)(?=^## |(?![\\s\\S]))", "m"); const m = (txt || "").match(re); return m ? m[1].trim() : ""; };
+
+/* motor en el navegador: comprueba que las cifras publicadas se reproducen */
+let M = null, calc = null;
+try { M = Motor(cat); calc = M.calcular({porF: !!d3.modo_tension?.por_funding, porM: !!d3.modo_tension?.por_move, sens: !!d3.sensibilidad_settlement?.activa,
+  conf: d3.confianza || "alta", fondo: (d3.fondo || []).map(f => f.id), base: res.base || [25,50,25],
+  dias: (d3.dias || []).map(d => ({fecha:d.fecha, dia:d.dia, bonos_abierto:d.bonos_abierto, evento_verificado:d.evento_verificado, dispersion:d.dispersion || [], direccion:d.direccion || []}))}); } catch(e) {}
+
+/* lenguaje llano para cada factor del motor */
+const LLANO = {
+  sofr_ge_iorb:"El repo a un día (SOFR) cotiza en o por encima del tipo que la Fed paga por las reservas (IORB): al sistema le falta algo de efectivo.",
+  gc_ge_iorb:"El repo general (TGCR/BGCR) también está en o sobre IORB: la tensión no se limita a unos pocos participantes.",
+  srf_material:"Los bancos usan de forma material la ventanilla de repo de la Fed (SRF).",
+  fails_subiendo_sobre_media:"Los fallos de entrega de Treasuries suben y están por encima de su media: el colateral circula peor.",
+  xeurbi_le_m5_ampliando3:"El coste de conseguir dólares fuera de EE. UU. (basis EUR/USD) se amplía.",
+  sofr_le_iorb_m5_gc_estable:"El repo está holgado: SOFR 5 pb o más por debajo de IORB con el repo general estable.",
+  move_110_135:"La volatilidad de los bonos (MOVE) está alta, entre 110 y 135.", move_80_110_subiendo10:"La volatilidad de los bonos (MOVE) sube con fuerza.",
+  move_lt_80:"La volatilidad de los bonos (MOVE) está baja, por debajo de 80.", move_gt_135:"La volatilidad de los bonos (MOVE) está en zona de estrés, por encima de 135.",
+  fedwatch_hawkish:"El mercado descuenta más subidas de tipos que la semana anterior.",
+  fedwatch_dovish_credito_ampliando:"El mercado descuenta menos subidas, pero con el crédito empeorando.",
+  fedwatch_dovish_credito_estable:"El mercado descuenta menos subidas, con el crédito estable.",
+  hy_ge_15:"El diferencial del crédito high yield se ha ampliado 15 pb o más en cinco sesiones.", hy_5_15:"El crédito high yield se amplía entre 5 y 15 pb.",
+  ccc_ge_40:"El crédito de peor calidad (CCC) se amplía 40 pb o más.", tension_bancaria:"Hay tensión bancaria con dato fechado.", hy_le_m10:"El crédito high yield se estrecha 10 pb o más.",
+  gli_contraccion_acelerada:"La liquidez de bancos centrales (GLI) se contrae y acelera.", gli_expansion_acelerada:"La liquidez de bancos centrales (GLI) se expande y acelera.",
+  sub_10y_30y:"Subasta de deuda larga (10 o 30 años): prueba la demanda de duración.", sub_20y:"Subasta a 20 años.", sub_5y_7y:"Subasta a 5 o 7 años.",
+  tips_10y_mas:"Subasta de bonos ligados a la inflación a 10 años o más.", sub_2y_3y:"Subasta a 2 o 3 años.", tips_5y:"Subasta de bonos ligados a la inflación a 5 años.",
+  settle_cupones_nnc10:"Liquidan bonos con 10 bn o más de efectivo nuevo.", macro1:"Dato de EE. UU. de primer nivel (CPI, empleo, decisión de la Fed o PCE).",
+  macro2:"Dato de EE. UU. de segundo nivel (PPI, ventas minoristas, ISM, JOLTS, PIB…).", megacaps:"Resultados de una gran tecnológica.", qra:"Anuncio de refinanciación trimestral del Tesoro.",
+  subasta_cupon_condiciones_2de3:"Subasta larga con señales previas de demanda floja.", tips_condiciones:"Subasta de TIPS con volatilidad alta y sesgo hawkish.",
+  settle_neto_absorcion20:"Ese día el Tesoro retira 20 bn o más de efectivo neto al liquidar deuda, y el repo ya ha reaccionado a días así.",
+  settle_neto_inyeccion20:"Ese día el Tesoro devuelve 20 bn o más de efectivo neto al sistema.",
+  fin_mes:"Fin de mes con presión de funding.", fin_trimestre:"Fin de trimestre con presión de funding.", tax_date:"Fecha de pago de impuestos con presión de funding.", buyback_liquidez:"Recompra de deuda del Tesoro que devuelve efectivo."
+};
+const etiqueta = id => cat.fondo?.[id]?.etiqueta || cat.dispersion?.[id]?.etiqueta || cat.direccion?.[id]?.etiqueta || id;
+
+/* hora ET → Madrid */
+function aMadrid(fecha, hhmm){ const p = pd(fecha), m = String(hhmm || "").match(/(\d{1,2}):(\d{2})/); if (!p || !m) return null;
+  const min = (+m[1])*60 + (+m[2]);
+  try { let u = Date.UTC(p.y,p.m-1,p.d, Math.floor(min/60)+5, min%60);
+    const f = new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",hour:"2-digit",minute:"2-digit",hourCycle:"h23"});
+    for (let k = 0; k < 2; k++) { const [h,mm] = f.format(new Date(u)).split(":").map(Number); u += (min - (h*60+mm))*60000; }
+    return new Intl.DateTimeFormat("es-ES",{timeZone:"Europe/Madrid",hour:"2-digit",minute:"2-digit"}).format(new Date(u)); } catch(e) { return null; } }
+
+/* ---------------------------------------------------------------- datos por día */
+const REG = res.reglas_actualizacion || d3.reglas_actualizacion || [];
+const MACRO = d3.macro_obj || [];
+const flujo = f => (d3.flujo_neto_obj || []).find(x => x.fecha === f)?.neto_bn;
+const lean = p => { const d = p.on - p.off; return d > 0 ? {k:"on", t:`Inclina a risk-on`, n:d} : d < 0 ? {k:"off", t:`Inclina a risk-off`, n:-d} : {k:"eq", t:"Sin inclinación", n:0}; };
+const dias = (res.dias || []).map((r, i) => {
+  const d = (d3.dias || []).find(x => x.fecha === r.fecha) || (d3.dias || [])[i] || {};
+  const cal = (d2.calendario_obj || []).find(x => x.fecha === r.fecha) || {};
+  return {r, d, cal, p: r.prob, l: lean(r.prob), i};
+});
+
+function porque(x){
+  if (x.d.porque) return x.d.porque;
+  const t = (x.r.traza_direccion || []).filter(t => t.pts > 0);
+  const fondo = (x.r.fondo_traza || res.fondo?.traza || []).map(t => t.id);
+  const lado = x.l.k === "off" ? "risk-off" : "risk-on";
+  if (x.l.k === "eq") return x.r.fondo_nota && /festivo/.test(x.r.fondo_nota) ? "Festivo de bonos: sin subastas, settlements ni dato de crédito, el día se queda en la base." : "El día no tiene dirección: lo que suma a un lado se compensa con el otro.";
+  const propio = t.filter(z => (z.lado === x.l.k));
+  const low = t => t && !/^[A-Z]{2}/.test(t) ? t[0].toLowerCase() + t.slice(1) : t;
+  if (propio.length) return `Lo empuja algo propio del día: ${propio.map(z => low((LLANO[z.id] || etiqueta(z.id)).replace(/\.$/,""))).join("; ")}. El fondo de la semana empuja en la misma dirección.`;
+  return `Solo lo empuja el fondo de la semana (${fondo.map(id => etiqueta(id)).join(", ") || "sin factores"}): ese día no tiene nada propio que lo incline.`;
+}
+function eventoCorto(x){
+  if (x.d.bonos_abierto === false) return "Bonos cerrados (festivo)";
+  const ev = [...(x.d.direccion || []), ...(x.d.dispersion || [])].map(e => String(e.evento || "").replace(/\s*\(.*?\)\s*/g," ").replace(/\s+\d{1,2}:\d{2}\s*ET.*$/,"").trim()).filter(Boolean);
+  return ev.length ? ev.slice(0,2).join(" · ") : "Sin eventos de calendario";
+}
+function agenda(x){
+  const f = x.r.fecha, filas = [];
+  MACRO.filter(m => m.fecha === f).forEach(m => filas.push({h:m.hora_et, t:`<b>${esc(m.evento)}</b>${m.consenso ? `<br><span class="mute">Consenso: ${esc(m.consenso)} · anterior: ${esc(m.anterior ?? "—")}</span>` : ""}`}));
+  (d2.subastas || []).filter(s => s.fecha === f && s.semana === "OBJ").forEach(s => filas.push({h:s.hora_et || (s.tipo === "bill" ? "11:30" : null), t:`Subasta ${esc(s.tenor)}${ok(s.importe_bn) ? " · " + num(s.importe_bn,0) + " bn" : ""}${s.settlement ? ` <span class="mute">(liquida el ${esc(fc(s.settlement))})</span>` : ""}`, aprox: !s.hora_et}));
+  const fl = flujo(f);
+  if (ok(fl) && Math.abs(fl) > 0.5) filas.push({h:null, t:`Liquidación de deuda: el Tesoro ${fl > 0 ? "retira" : "devuelve"} <b>${num(Math.abs(fl),1)} bn</b> de efectivo neto.`});
+  if (x.d.bonos_abierto === false || x.cal.bonos_abierto === false) filas.unshift({h:null, t:`<b>Mercado de bonos cerrado.</b> ${esc(x.d.nota || x.cal.nota || "")}`});
+  filas.sort((a,b) => (a.h || "99") < (b.h || "99") ? -1 : 1);
+  return filas.map(z => `<tr><td>${z.h ? `${esc(z.h)} ET<br><span class="mute">${esc(aMadrid(f, z.h) || "")} Madrid${z.aprox ? "*" : ""}</span>` : "todo el día"}</td><td>${z.t}</td></tr>`).join("");
+}
+function factores(x){
+  const t = (x.r.traza_direccion || []), lis = [];
+  t.forEach(z => { const ev = (x.d.direccion || []).find(e => e.id === z.id)?.evento;
+    lis.push(z.pts > 0 ? `<li><span class="pt ${z.lado}">${z.lado} +${num(z.pts,1)}</span><span>${esc(LLANO[z.id] || etiqueta(z.id))}${ev ? `<span class="d">${esc(ev)}</span>` : ""}</span></li>`
+      : `<li><span class="pt two">0</span><span>${esc(LLANO[z.id] || etiqueta(z.id))}<span class="d">No cuenta: ${esc(z.nota || "condición no cumplida")}.</span></span></li>`); });
+  (x.d.dispersion || []).forEach(e => { const c = cat.dispersion?.[e.id];
+    lis.push(`<li><span class="pt two">±${num(c?.pts,1)}</span><span>${esc(LLANO[e.id] || etiqueta(e.id))}<span class="d">${esc(e.evento || "")} · suma a los dos lados: hace el día más movido, no lo inclina.</span></span></li>`); });
+  return lis.join("");
+}
+function fondoSemana(x){
+  const tr = x && x.r.fondo_traza ? x.r.fondo_traza : (res.fondo?.traza || []);
+  if (!tr.length) return "";
+  return tr.map(z => { const f = (d3.fondo || []).find(y => y.id === z.id);
+    return `<li><span class="pt ${z.lado}">${z.lado} +${num(z.pts,1)}</span><span>${esc(LLANO[z.id] || etiqueta(z.id))}${f?.dato ? `<span class="d">${esc(f.dato)}${f.fecha ? " · " + esc(fc(f.fecha)) : ""}</span>` : ""}</span></li>`; }).join("");
+}
+function cambios(x){
+  const f = x.r.fecha, out = [];
+  REG.forEach(r => {
+    if (r.tipo === "macro" && r.dia === f && r.hawkish && r.dovish) {
+      out.push(`<div><span>Si el ${esc(r.evento)} sale <b style="font-family:var(--sans)">hawkish</b> (${esc(r.hawkish_si)})</span><b class="num">${r.hawkish.on} / ${r.hawkish.neu} / ${r.hawkish.off}</b><span class="d">risk-off ${sg(r.hawkish.off - x.p.off,0)} puntos frente a lo publicado.</span></div>`);
+      out.push(`<div><span>Si sale <b style="font-family:var(--sans)">dovish</b> (${esc(r.dovish_si)})</span><b class="num">${r.dovish.on} / ${r.dovish.neu} / ${r.dovish.off}</b><span class="d">risk-off ${sg(r.dovish.off - x.p.off,0)} puntos.</span></div>`);
+    } else if (r.tipo !== "macro" && r.dia_settlement === f && r.floja && r.solida) {
+      out.push(`<div><span>Si la subasta ${esc(r.subasta)} sale floja</span><b class="num">${r.floja.on} / ${r.floja.neu} / ${r.floja.off}</b></div>`);
+      out.push(`<div><span>Si sale sólida</span><b class="num">${r.solida.on} / ${r.solida.neu} / ${r.solida.off}</b></div>`);
+    } else if (r.tipo !== "macro" && r.fecha_subasta === f && !r.floja) {
+      out.push(`<div><span>Subasta ${esc(r.subasta)}: liquida el ${esc(fc(r.dia_settlement))}, fuera de la semana</span><b class="num">—</b><span class="d">${esc(r.nota || "Su resultado no cambia las probabilidades de esta semana.")}</span></div>`);
+    }
+  });
+  const sens = d3.sensibilidad_escenarios || {};
+  const NOMBRE = {sin_hy_ge_15_modo_normal:"Si el crédito HY deja de ampliarse 15 pb (vuelve el modo normal)", move_110_o_fedwatch_hawkish:"Si la MOVE pasa de 110 o FedWatch se vuelve hawkish"};
+  Object.entries(sens).forEach(([k, v]) => { if (k === "nota" || !v?.[f]) return; const a = v[f];
+    out.push(`<div><span>${esc(NOMBRE[k] || k.replace(/_/g," "))}</span><b class="num">${a[0]} / ${a[1]} / ${a[2]}</b><span class="d">risk-off ${sg(a[2] - x.p.off,0)} puntos.</span></div>`); });
+  const t = res.si_modo_tension?.[f];
+  if (t && res.modo !== "tensión" && (Math.abs(t.off - x.p.off) >= 3)) out.push(`<div><span>Si se activara el modo tensión</span><b class="num">${t.on} / ${t.neu} / ${t.off}</b></div>`);
+  return out.join("") || `<p class="note">No hay ningún dato o subasta con regla de actualización este día.</p>`;
+}
+function calculo(x){
+  const c = x.r.calculo || {};
+  const chk = calc?.dias?.[x.i]?.p, igual = chk && chk.on === x.p.on && chk.off === x.p.off;
+  return `<p class="calc">Puntos a risk-off <span class="num">${num(x.r.pts_off,1)}</span> (fondo ${num(x.r.fondo_off,1)} + día ${num(x.r.dir_off,1)} + dispersión ${num(x.r.dispersion,1)}) · a risk-on <span class="num">${num(x.r.pts_on,1)}</span>.
+  Modo ${esc(x.r.modo)}, confianza ${esc(x.r.confianza)}: el modelo pesa el <span class="num">${ok(c.peso_modelo) ? Math.round(c.peso_modelo*100) : "—"} %</span> y la base ${esc((res.base || []).join("/"))} el resto.
+  ${chk ? (igual ? "El cálculo se reproduce en esta página con el mismo motor." : `<b style="color:var(--off)">Aviso: el motor de la página da ${chk.on}/${chk.neu}/${chk.off}.</b>`) : ""}</p>`;
+}
+
+/* ---------------------------------------------------------------- página */
+const reg = d3.regimen || {}, rp = reg.prob || {};
+$("#topT").textContent = obj[0] ? `Liquidez global · semana del ${fc(obj[0])} al ${fc(obj[1])}` : "Liquidez global";
+const frase = (() => { const c = seccion(FINAL, "Conclusión"); const m = c.match(/"([^"]{40,})"/); return m ? m[1] : null; })();
+const T = (d1.tipos || []).filter(t => ok(t.sofr) && ok(t.iorb)), tl = T[T.length-1];
+const spread = (t, k) => ok(t?.[k]) && ok(t?.iorb) ? Math.round((t[k] - t.iorb)*1000)/10 : null;
+const masOff = dias.reduce((a,b) => !a || b.p.off > a.p.off ? b : a, null), masOn = dias.reduce((a,b) => !a || b.p.on > a.p.on ? b : a, null);
+const mv = ((d3.series || {}).move || []).filter(x => ok(x.valor)), mvl = mv[mv.length-1];
+const flMax = (d3.flujo_neto_obj || []).filter(x => ok(x.neto_bn)).sort((a,b) => b.neto_bn - a.neto_bn)[0];
+
+let H = `
+<section id="resumen">
+  <div class="eyebrow">Diagnóstico · corte ${esc(fc(d3.corte))} · semana del ${esc(fc(obj[0]))} al ${esc(fc(obj[1]))}</div>
+  <div class="regime"><h1>${esc(cap(reg.estado || "Sin régimen"))}</h1>
+    <span class="badge">confianza ${esc(d3.confianza || "—")}</span>
+    <span class="badge ${res.modo === "tensión" ? "warn" : ""}">modo ${esc(res.modo || "—")}</span></div>
+  ${frase ? `<p class="thesis">${esc(frase)}</p>` : ""}
+  <div class="facts">
+    <div class="fact"><b>${masOff ? `${masOff.p.off} %` : "—"}</b><span>risk-off el ${masOff ? esc(fdia(masOff.r.fecha) + " " + fc(masOff.r.fecha)) : "—"}, el día más delicado</span></div>
+    <div class="fact"><b>${sg(spread(tl,"sofr"),0)} pb</b><span>SOFR − IORB el ${esc(fc(tl?.fecha))}: el coste del repo frente a las reservas</span></div>
+    <div class="fact"><b>${flMax ? sg(flMax.neto_bn,1) + " bn" : "—"}</b><span>mayor retirada neta de efectivo del Tesoro (${esc(fc(flMax?.fecha))})</span></div>
+    <div class="fact"><b>${mvl ? num(mvl.valor,1) : "—"}</b><span>MOVE el ${esc(fc(mvl?.fecha))}: volatilidad de los bonos</span></div>
+  </div>
+  ${seccion(FINAL, "Qué cambiaría la tesis") ? `<h3>Qué cambiaría la tesis</h3><div class="md-inline">${md(seccion(FINAL, "Qué cambiaría la tesis"))}</div>` : ""}
+</section>
+
+<section id="semana">
+  <div class="eyebrow">Probabilidades diarias</div>
+  <h2>La semana, día a día</h2>
+  <p class="lede">Toca un día para ver por qué sale así, qué lo mueve y qué lo cambiaría.</p>
+  <div class="legend"><span><i style="background:var(--on)"></i>risk-on</span><span><i style="background:var(--neu)"></i>neutral</span><span><i style="background:var(--off)"></i>risk-off</span></div>
+  <div class="days" id="days">${dias.map(x => `
+    <div class="day" id="dia-${x.i}">
+      <button class="dayrow" type="button" aria-expanded="false" aria-controls="det-${x.i}" data-i="${x.i}">
+        <span class="dname">${esc(cap(fdia(x.r.fecha)))}<small>${esc(fc(x.r.fecha))}</small></span>
+        <span class="dlean ${x.l.k}">${x.l.k === "eq" ? "sin inclinación" : `${x.l.k === "off" ? "risk-off" : "risk-on"} ${x.l.k === "off" ? x.p.off : x.p.on} %`}<span class="chev" aria-hidden="true">›</span></span>
+        <span class="bar" aria-hidden="true"><span class="b-on" style="width:${x.p.on}%"></span><span class="b-neu" style="width:${x.p.neu}%"></span><span class="b-off" style="width:${x.p.off}%"></span></span>
+        <span class="dsub"><span class="ev">${esc(eventoCorto(x))}</span><span class="num">${x.p.on} / ${x.p.neu} / ${x.p.off}</span></span>
+      </button>
+      <div class="detail" id="det-${x.i}" hidden>
+        <div class="probs"><div class="p-on"><b>${x.p.on}%</b><span>risk-on</span></div><div><b>${x.p.neu}%</b><span>neutral</span></div><div class="p-off"><b>${x.p.off}%</b><span>risk-off</span></div></div>
+        <p class="verdict"><b style="font-weight:600">${esc(x.l.t)}${x.l.n ? ` por ${x.l.n} puntos` : ""}.</b> ${esc(porque(x))}</p>
+        <div class="dsec"><h4>Qué pasa ese día</h4><table class="agenda"><tbody>${agenda(x) || `<tr><td>—</td><td>Sin eventos de calendario.</td></tr>`}</tbody></table></div>
+        <div class="dsec"><h4>Qué empuja el día</h4><ul class="flist">${factores(x) || `<li><span class="pt two">0</span><span>Nada propio del día: solo pesa el fondo de la semana.</span></li>`}</ul></div>
+        <div class="dsec"><h4>Fondo de la semana que cuenta este día</h4><ul class="flist">${fondoSemana(x) || `<li><span class="pt two">0</span><span>Nada del fondo cuenta este día.</span></li>`}</ul>${x.r.fondo_nota ? `<p class="note">${esc(cap(x.r.fondo_nota))}.</p>` : ""}
+          ${res.modo === "tensión" ? `<p class="note">Modo tensión: hay presión de funding y otra capa la confirma, así que los factores de funding cuentan doble y el modelo pesa más.</p>` : res.presion_funding ? `<p class="note">Hay presión de funding, pero ninguna otra capa la confirma: modo normal.</p>` : ""}</div>
+        <div class="dsec"><h4>Qué lo cambiaría (on / neutral / off)</h4><div class="change">${cambios(x)}</div></div>
+        <div class="dsec"><h4>Cómo se calcula</h4>${calculo(x)}</div>
+      </div>
+    </div>`).join("")}</div>
+  <p class="note">* Hora de subasta de bills orientativa. Las probabilidades se calculan solo para esta semana con el método ${esc(res.metodo || "v6")} y la información disponible al corte.</p>
+</section>`;
+
+/* ---------------------------------------------------------------- mecanismo */
+const F = D.funding || {}, S = F.sensibilidad_settlement || {}, K = F.capa_cash || {};
+const pf = d1.presion_funding || {};
+const rrp = (d1.onrrp || []).filter(x => ok(x.aceptado_bn)), srf = (d1.srf || []).filter(x => ok(x.aceptado_bn)), resv = (d1.reservas || []).filter(x => ok(x.bn));
+const tga = (d2.tga || []).filter(x => ok(x.cierre_bn));
+const L = a => a[a.length-1];
+H += `
+<section id="mecanismo">
+  <div class="eyebrow">Mecanismo · 1</div>
+  <h2>Funding: ¿hay efectivo para financiar posiciones?</h2>
+  <p class="lede">${pf.confirmada ? `Sí hay presión de funding: el repo cotiza en o por encima del tipo de las reservas desde hace ${esc(pf.sesiones_consecutivas ?? "varias")} sesiones. Es de bajo nivel y sin uso del backstop de la Fed.` : "No hay presión de funding confirmada."} ${S.activa ? "Además, el repo ha subido en días en que el Tesoro retiraba mucho efectivo: por eso esos días puntúan." : ""}</p>
+  <div class="grid2">
+    <div class="kv">
+      <span>SOFR − IORB</span><span class="v">${sg(spread(tl,"sofr"),0)} pb</span><span class="s">${esc(fc(tl?.fecha))} · coste del repo frente a reservas</span>
+      <span>TGCR − IORB</span><span class="v">${sg(spread(tl,"tgcr"),0)} pb</span><span class="s">repo general</span>
+      <span>SRF (backstop de la Fed)</span><span class="v">${L(srf) ? num(L(srf).aceptado_bn,3) + " bn" : "—"}</span><span class="s">${esc(fc(L(srf)?.fecha))}</span>
+      <span>ON RRP (colchón)</span><span class="v">${L(rrp) ? num(L(rrp).aceptado_bn,3) + " bn" : "—"}</span><span class="s">${esc(fc(L(rrp)?.fecha))} · casi vacío: cualquier drenaje sale de reservas</span>
+      <span>Reservas bancarias</span><span class="v">${L(resv) ? num(L(resv).bn,1) + " bn" : "—"}</span><span class="s">${esc(fc(L(resv)?.fecha))}${resv.length > 1 ? " · " + sg(L(resv).bn - resv[resv.length-2].bn,1) + " bn en la semana" : ""}</span>
+    </div>
+    <div class="chart"><div class="ckey"><span><i style="background:var(--accent)"></i>SOFR − IORB</span><span><i style="background:var(--on)"></i>TGCR − IORB</span><span class="mute">pb, diario</span></div><div id="chF"></div></div>
+  </div>
+  ${(S.evidencia || []).length ? `<h3>¿Reacciona el repo cuando el Tesoro retira efectivo?</h3>
+  <div class="tw"><table class="t"><thead><tr><th>Día</th><th class="r">Efectivo neto retirado</th><th class="r">Cambio SOFR</th><th class="r">Cambio TGCR</th><th>Reacción</th></tr></thead><tbody>
+  ${S.evidencia.map(e => `<tr><td>${esc(fdia(e.fecha).slice(0,3) + " " + fc(e.fecha))}</td><td class="r num">${sg(e.nnc_neto_bn,1)} bn</td><td class="r num">${sg(e.d_sofr_pb,0)} pb</td><td class="r num">${sg(e.d_tgcr_pb,0)} pb</td><td>${e.subio === "no" ? "no subió" : "subió " + esc(e.subio.replace("≥","≥ "))}</td></tr>`).join("")}</tbody></table></div>
+  <p class="note">${S.activa ? "Regla cumplida: al menos un día subió 2 pb o más." : "Regla no cumplida."} Es coincidencia en el día, no causalidad probada.</p>` : ""}
+</section>
+
+<section>
+  <div class="eyebrow">Mecanismo · 2</div>
+  <h2>Treasury: ¿quién absorbe la deuda?</h2>
+  <p class="lede">Barra hacia arriba: ese día el Tesoro retira efectivo neto al liquidar deuda (emisión menos vencimientos y recompras). Hacia abajo: lo devuelve.</p>
+  <div class="chart"><div class="ckey"><span><i style="background:var(--off)"></i>retira ≥ 20 bn</span><span><i style="background:var(--on)"></i>devuelve ≥ 20 bn</span><span><i style="background:var(--neu)"></i>pequeño</span><span class="mute">bn por día · semana revisada y objetivo</span></div><div id="chN"></div></div>
+  <div class="kv">
+    <span>Cuenta del Tesoro en la Fed (TGA)</span><span class="v">${L(tga) ? num(L(tga).cierre_bn,1) + " bn" : "—"}</span><span class="s">${esc(fc(L(tga)?.fecha))}${ok(d2.tga_delta_rev_bn) ? ` · ${sg(d2.tga_delta_rev_bn,1)} bn en la semana revisada: ${d2.tga_delta_rev_bn < 0 ? "el Tesoro ha devuelto efectivo al sistema" : "el Tesoro ha retenido efectivo"}` : ""}</span>
+    <span>Estado del plumbing</span><span class="v">${esc(d2.estado_plumbing || "—")}</span><span class="s">${d2.qra ? esc(`Refunding ${num(d2.qra.refunding_bn,0)} bn: liquida fuera de la semana. Próximo anuncio: ${fc(d2.qra.proximo_anuncio)}.`) : ""}</span>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Confirmación</div>
+  <h2>Qué capas confirman el estrés</h2>
+  <p class="lede">Para hablar de estrés no basta con el funding: hace falta que otras capas lo confirmen con dato actual.</p>
+  <div class="tw"><table class="t"><thead><tr><th>Capa</th><th>Señal</th><th>Dato</th></tr></thead><tbody>
+  ${(d3.capas || []).map(c => { const s = c.senal || ""; const k = /^CONFIRMA/.test(s) ? "off" : /^CONTRADICE/.test(s) ? "on" : /^MIXTA/.test(s) ? "mix" : "na";
+    const t = {off:"confirma estrés", on:"contradice estrés", mix:"mixta", na: s ? s.toLowerCase() : "sin dato"}[k];
+    return `<tr><td><b style="font-weight:600">${esc(c.capa)}</b></td><td><span class="sig ${k}">${esc(t)}</span></td><td>${esc(c.valor || "—")}<br><span class="mute" style="font-size:12.5px">${c.fecha ? esc(fc(c.fecha)) : "sin fecha"}${c.dato_actual === false ? " · dato atrasado o ausente" : ""}</span></td></tr>`; }).join("")}
+  </tbody></table></div>
+  ${d3.gli?.proxy_actual ? `<p class="note">Liquidez de bancos centrales (proxy G3, solo contexto): ${esc((d3.gli.proxy_actual.estado || "—").toLowerCase())}, antes ${esc((d3.gli.proxy_actual.estado_ant || "—").toLowerCase())}. No puntúa sin tu captura del GLI.</p>` : ""}
+</section>
+
+<section>
+  <div class="eyebrow">Expectativas de tipos</div>
+  <h2>Qué datos pueden mover los tipos</h2>
+  ${(() => { const fw = d3.fedwatch || []; const stale = fw.some(f => f.estado === "STALE" || f.post_fomc === false);
+    return `<p class="lede">${stale ? "La lectura de FedWatch disponible es antigua (anterior a la última reunión de la Fed): el sesgo de tipos no está confirmado y no puntúa." : "FedWatch se compara con la semana anterior."}</p>`; })()}
+  <div class="tw"><table class="t"><thead><tr><th>Día</th><th>Dato</th><th>Consenso</th><th>Anterior</th><th>Sería hawkish si</th><th>Sería dovish si</th></tr></thead><tbody>
+  ${MACRO.map(m => `<tr><td class="num">${esc(fdia(m.fecha).slice(0,3) + " " + fc(m.fecha))}<br><span class="mute">${esc(m.hora_et || "")} ET</span></td><td>${esc(m.evento)}</td><td>${esc(m.consenso || "—")}</td><td>${esc(m.anterior || "—")}</td><td>${esc(m.hawkish_si || "—")}</td><td>${esc(m.dovish_si || "—")}</td></tr>`).join("") || `<tr><td colspan="6">Sin datos de EE. UU. con consenso esta semana.</td></tr>`}
+  </tbody></table></div>
+</section>`;
+
+const tb = seccion(FINAL, "Trading bias");
+if (tb) H += `<section><div class="eyebrow">Ejecución</div><h2>Sesgos de trading</h2><p class="lede">Subordinados al diagnóstico de liquidez. Firme solo cuando el día supera el 50 % de risk-off con capas confirmadas.</p><div class="md" id="mdTb" style="max-width:none">${md(tb)}</div></section>`;
+
+/* ---------------------------------------------------------------- aciertos */
+const ev = D.evaluacion || {}, dr = ev.direccion;
+const VER = {acierto:["acierto","on"], al_reves:["al revés","off"], neutral:["día neutral","na"], nc:["pendiente","na"], sin_direccion:["sin dirección","na"]};
+const acum = (() => { let a = 0, m = 0; ((D.historial || {}).semanas || []).forEach(s => { const r = s.direccion_rev?.recuento; if (r) { a += r.acierto || 0; m += (r.acierto || 0) + (r.al_reves || 0); } }); return {a, m}; })();
+H += `
+<section id="aciertos">
+  <div class="eyebrow">Control de calidad</div>
+  <h2>¿Acertamos la semana pasada?</h2>
+  <p class="lede">Lo que dijimos es el lado (risk-on o risk-off) que iba por delante cada día. Los días neutrales no cuentan como acierto ni como fallo.</p>
+  ${dr?.dias?.length ? `<div class="tw"><table class="t"><thead><tr><th>Día</th><th class="r">Emitido on / neu / off</th><th>Dijimos</th><th>Pasó</th><th>Veredicto</th></tr></thead><tbody>
+  ${dr.dias.map(x => { const v = VER[x.veredicto] || [x.veredicto,"na"]; const R = {on:"risk-on", off:"risk-off", neu:"neutral", nc:"pendiente"};
+    return `<tr><td>${esc(fdia(x.fecha).slice(0,3) + " " + fc(x.fecha))}</td><td class="r num">${x.prob.on} / ${x.prob.neu} / ${x.prob.off}</td><td>${x.dijimos === "eq" ? "—" : esc(R[x.dijimos])} <span class="mute">(+${x.margen_pts})</span></td><td>${esc(R[x.resultado] || x.resultado)}</td><td><span class="sig ${v[1]}">${esc(v[0])}</span>${x.manual?.brier_motor != null ? `<br><span class="mute" style="font-size:12.5px">ajuste manual: ${x.manual.brier_publicado > x.manual.brier_motor ? "peor" : "mejor"} que el motor</span>` : ""}</td></tr>`; }).join("")}
+  </tbody></table></div>` : `<p class="note">Sin evaluación de la semana anterior.</p>`}
+  <div class="kv">
+    <span>Dirección acertada la semana pasada</span><span class="v">${dr?.dias_con_movimiento ? `${dr.recuento.acierto} de ${dr.dias_con_movimiento}` : "—"}</span><span class="s">días con movimiento claro</span>
+    <span>Dirección acertada acumulada</span><span class="v">${acum.m ? `${acum.a} de ${acum.m}` : "—"}</span><span class="s">desde la primera semana registrada; hacen falta 10 días con movimiento para juzgarla</span>
+    <span>Brier de la semana (menor es mejor)</span><span class="v">${num(ev.brier_emitido,3)}</span><span class="s">base ${num(ev.brier_base,3)} · 30/40/30 ${num(ev.brier_304030,3)}</span>
+  </div>
+</section>`;
+
+/* ---------------------------------------------------------------- informe */
+const ANEX = [["parte1","Parte 1 · Funding y money markets"],["parte2","Parte 2 · Treasury plumbing"],["parte3","Parte 3 · Confirmación y probabilidades"],["auditoria","Auditoría de coherencia"]].filter(([k]) => inf[k]);
+H += `
+<section id="informe">
+  <div class="eyebrow">Documento</div>
+  <h2>Informe completo</h2>
+  ${FINAL ? `<div class="md" id="mdFinal">${md(FINAL)}</div>` : `<p class="note">El informe final no está disponible.</p>`}
+  ${ANEX.length ? `<div class="annex"><div class="eyebrow" style="margin-top:8px">Anexos con todo el detalle de fuentes y cálculos</div>${ANEX.map(([k,t]) => `<details><summary>${esc(t)}<span class="mute">abrir</span></summary><div class="md" data-k="${k}"></div></details>`).join("")}</div>` : ""}
+</section>
+<footer><b>GUIVER RESEARCH</b><p style="margin-top:8px;max-width:70ch">Probabilidades calculadas solo para la semana objetivo con el método ${esc(res.metodo || "v6")} y la información disponible al corte del ${esc(fc(d3.corte))}. Generado ${esc(D.generado || "—")}. No constituye recomendación de inversión.</p></footer>`;
+
+app.innerHTML = H;
+$$("#mdFinal, #mdTb, #resumen .md-inline").forEach(wrapTables);
+$$(".annex details").forEach(d => d.addEventListener("toggle", () => { const b = $(".md", d); if (d.open && !b.dataset.done) { b.innerHTML = md(inf[b.dataset.k]); wrapTables(b); b.dataset.done = 1; } }));
+
+/* un toque por día: abre la explicación completa (y cierra la anterior) */
+function abrir(i, scroll){ $$(".day").forEach(d => { const on = d.id === "dia-" + i && !d.classList.contains("open");
+  d.classList.toggle("open", on); $(".detail", d).hidden = !on; $(".dayrow", d).setAttribute("aria-expanded", on); });
+  if (scroll) { const el = $("#dia-" + i); if (el && el.classList.contains("open")) el.scrollIntoView({block:"start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); } }
+$$(".dayrow").forEach(b => b.addEventListener("click", () => abrir(+b.dataset.i, true)));
+if (masOff) abrir(masOff.i, false);
+
+/* gráficos (SVG, escala única, colores del tema) */
+function chartFunding(){
+  const el = $("#chF"); if (!el) return; const t = (d1.tipos || []).filter(x => x.fecha);
+  const sp = t.map(x => spread(x,"sofr")), gc = t.map(x => spread(x,"tgcr")); const v = [...sp, ...gc].filter(ok);
+  if (!v.length) { el.innerHTML = `<p class="note">Sin serie.</p>`; return; }
+  const lo = Math.min(-2, ...v) - 1, hi = Math.max(6, ...v) + 1, W = 400, Hh = 190, l = 30, r = 8, tp = 8, b = 160, n = t.length, bw = (W - l - r)/n;
+  const x = i => l + bw*i + bw/2, y = val => tp + (hi - val)/(hi - lo)*(b - tp);
+  let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="SOFR y TGCR menos IORB por día">`;
+  for (let k = Math.ceil(lo/2)*2; k <= hi; k += 2) s += `<line x1="${l}" x2="${W-r}" y1="${y(k)}" y2="${y(k)}" stroke="var(--rule)" ${k === 0 ? 'stroke-width="1.5" stroke="var(--rule-2)"' : ""}/><text x="${l-5}" y="${y(k)+4}" text-anchor="end">${k > 0 ? "+" + k : k}</text>`;
+  s += `<text x="${W-r}" y="${y(0)-4}" text-anchor="end">IORB</text>`;
+  const ln = (a, c) => { let d = "", u = false; a.forEach((val,i) => { if (!ok(val)) { u = false; return; } d += (u ? "L" : "M") + x(i).toFixed(1) + " " + y(val).toFixed(1); u = true; }); return `<path d="${d}" fill="none" stroke="${c}" stroke-width="2"/>` + a.map((val,i) => ok(val) ? `<circle cx="${x(i)}" cy="${y(val)}" r="2.6" fill="${c}"/>` : "").join(""); };
+  s += ln(gc, "var(--on)") + ln(sp, "var(--accent)");
+  t.forEach((z,i) => { if (i % 2 === 0 || i === n-1) s += `<text x="${x(i)}" y="${Hh-10}" text-anchor="middle">${esc(fc(z.fecha))}</text>`; if (!ok(sp[i])) s += `<text x="${x(i)}" y="${y(0)-14}" text-anchor="middle">T+1</text>`; });
+  el.innerHTML = s + "</svg>";
+}
+function chartNeto(){
+  const el = $("#chN"); if (!el) return;
+  const rows = [...(d2.neto_dia || []), ...(d2.neto_dia_sin_ledger || [])].filter(x => x.fecha).sort((a,b) => a.fecha < b.fecha ? -1 : 1);
+  if (!rows.length) { el.innerHTML = `<p class="note">Sin flujo neto calculado.</p>`; return; }
+  const W = 400, Hh = 210, l = 30, r = 8, tp = 22, b = 170, n = rows.length, bw = (W - l - r)/n;
+  const mx = Math.max(20, ...rows.map(x => Math.abs(x.neto_bn || 0))) * 1.15, y = v => (tp + b)/2 - v/mx*(b - tp)/2, x = i => l + bw*i + bw/2;
+  let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Efectivo neto retirado o devuelto por el Tesoro cada día">`;
+  const oi = rows.map((z,i) => z.semana === "OBJ" ? i : null).filter(i => i !== null);
+  if (oi.length) s += `<rect x="${x(oi[0]) - bw/2}" y="4" width="${bw*oi.length}" height="${b + 4}" fill="var(--accent-soft)"/><text x="${x(oi[0]) - bw/2 + 4}" y="15">semana objetivo</text>`;
+  [-20, 0, 20].forEach(k => s += `<line x1="${l}" x2="${W-r}" y1="${y(k)}" y2="${y(k)}" stroke="${k ? "var(--rule)" : "var(--rule-2)"}" ${k ? 'stroke-dasharray="3 3"' : ""}/><text x="${l-5}" y="${y(k)+4}" text-anchor="end">${k > 0 ? "+" + k : k}</text>`);
+  rows.forEach((z,i) => { const v = z.neto_bn; s += `<text x="${x(i)}" y="${Hh-8}" text-anchor="middle">${esc(fc(z.fecha).replace(" "," "))}</text>`;
+    if (!ok(v)) { s += `<text x="${x(i)}" y="${y(0)-6}" text-anchor="middle">cerrado</text>`; return; }
+    const top = Math.min(y(v), y(0)), h = Math.max(1.5, Math.abs(y(v) - y(0)));
+    s += `<rect x="${x(i) - bw*.3}" y="${top}" width="${bw*.6}" height="${h}" fill="${v >= 20 ? "var(--off)" : v <= -20 ? "var(--on)" : "var(--neu)"}"/><text x="${x(i)}" y="${v >= 0 ? top - 4 : top + h + 12}" text-anchor="middle" style="fill:var(--ink-2)">${sg(v,0)}</text>`; });
+  el.innerHTML = s + "</svg>";
+}
+chartFunding(); chartNeto();
+})();
+</script>
